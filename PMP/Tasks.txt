@@ -1,0 +1,9 @@
+1) Database Structure/Prepare SQL files
+2) Configuration File
+3) Classes
+4) PDO
+5) htaccess
+6) Templates
+7) GIT
+8) Password & Salt (Unique)
+9) PassHash

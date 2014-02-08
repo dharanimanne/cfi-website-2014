@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^articles/([^/]+)/?$ display_article.php?articleId=$1 [L]
