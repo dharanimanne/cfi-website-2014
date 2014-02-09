@@ -1,0 +1,11 @@
+CREATE TABLE cfi_users
+(
+id INT AUTO_INCREMENT,
+username VARCHAR(30) NOT NULL,
+password VARCHAR(50) NOT NULL,
+name VARCHAR(50) NOT NULL,
+email VARCHAR(50) NOT NULL UNIQUE ,
+
+  PRIMARY KEY     (id)
+
+);
