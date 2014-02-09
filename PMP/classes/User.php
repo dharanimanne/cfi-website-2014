@@ -50,8 +50,8 @@
 			if( isset( $data['id'] ) ) 					{ $this->id = (int) $data['id']; echo "the id is set as ".$data['id']." "; }
 			if( isset( $data['username'] ) ) 			$this->username = preg_replace ( "/[^\.\_ a-zA-Z0-9]/", "", $data['username'] );
 			if( isset( $data['password'] ) ) 			$this->password = $data['password'];
-			if( isset( $data['joinDateTime'] ) ) 		$this->joinDateTime = (int) $data['joinDateTime'];
-			if( isset( $data['lastLoginDateTime'] ) ) 	$this->lastLoginDateTime = (int) $data['lastLoginDateTime'];
+			if( isset( $data['joinDateTime'] ) ) 		$this->joinDateTime =  $data['joinDateTime'];
+			if( isset( $data['lastLoginDateTime'] ) ) 	$this->lastLoginDateTime = $data['lastLoginDateTime'];
 			if( isset( $data['lastLoginFrom'] ) ) 		$this->lastLoginFrom = $data['lastLoginFrom'];
 			if( isset( $data['userType'] ) ) 			$this->userType = $data['userType'];
 			if( isset( $data['name'] ) ) 				$this->name = preg_replace( "/[^a-zA-Z0-9]/", "", $data['name'] );
@@ -70,27 +70,7 @@
 		}
 		
 	
-		public function storeFormValues( $params ){
-			$this->__construct( $params );
-
-			if ( isset($params['joinDateTime']) ) {
-		 	    $joinDateTime = explode ( '-', $params['joinDateTime'] );
-			 
-			    if ( count($joinDateTime) == 3 ) {
-			        list ( $y, $m, $d ) = $joinDateTime;
-			        $this->joinDateTime = mktime ( 0, 0, 0, $m, $d, $y );
-			    }
-		    }
-
-		    if ( isset($params['lastLoginDateTime']) ) {
-		 	    $lastLoginDateTime = explode ( '-', $params['lastLoginDateTime'] );
-			 
-			    if ( count($lastLoginDateTime) == 3 ) {
-			        list ( $y, $m, $d ) = $lastLoginDateTime;
-			        $this->lastLoginDateTime = mktime ( 0, 0, 0, $m, $d, $y );
-			    }
-		    }
-		}
+	
 	
 		
 		public static function getById( $id ){
@@ -123,7 +103,7 @@
 			if( !is_null( $this->id ) ) trigger_error( "User::insert(): Attempt to insert a user object that already has its ID property set to $this->id.", E_USER_ERROR );
 		
 			//Set the join datetime
-			$this->joinDateTime = time();
+		
 			
 			//Hash the password
 			$this->password = Password::hash($this->password);
@@ -135,9 +115,10 @@
 			$st->bindValue( ":username", $this->username, PDO::PARAM_STR );
 			echo " ".$this->username." ";
 			$st->bindValue( ":password", $this->password, PDO::PARAM_STR );
-			$st->bindValue( ":joinDateTime", $this->joinDateTime, PDO::PARAM_INT );
+			$st->bindValue( ":joinDateTime", $this->joinDateTime, PDO::PARAM_INT);
 			echo " ".$this->joinDateTime." ";
 			$st->bindValue( ":lastLoginDateTime", $this->lastLoginDateTime, PDO::PARAM_INT );
+				echo " ".$this->lastLoginDateTime." ";
 			$st->bindValue( ":lastLoginFrom", $this->lastLoginFrom, PDO::PARAM_STR );
 			$st->bindValue( ":userType", $this->userType, PDO::PARAM_STR );
 			$st->bindValue( ":name", $this->name, PDO::PARAM_STR );
