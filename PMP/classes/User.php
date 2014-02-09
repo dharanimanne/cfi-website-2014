@@ -110,7 +110,8 @@
 			
 			//Insert the object
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO ".TABLENAME_USERS." ( username, password, joinDateTime, lastLoginDateTime, lastLoginFrom, userType, name, rollNo, hostel, room, phone, email, socialMediaUrl, avatarLocation, expertise, rating, aboutMe, coreRemark ) VALUES ( :username, :password, FROM_UNIXTIME(:joinDateTime), FROM_UNIXTIME(:lastLoginDateTime), :lastLoginFrom, :userType, :name, :rollNo, :hostel, :room, :phone, :email, :socialMediaUrl, :avatarLocation, :expertise, :rating, :aboutMe, :coreRemark )";
+			$sql = "INSERT INTO ".TABLENAME_USERS." ( username, password, joinDateTime, lastLoginDateTime, lastLoginFrom, userType, name, rollNo, hostel, room, phone, email, socialMediaUrl, avatarLocation, expertise, rating, aboutMe, coreRemark ) VALUES ( :username, :password, :joinDateTime, :lastLoginDateTime, :lastLoginFrom, :userType, :name, :rollNo, :hostel, :room, :phone, :email, :socialMediaUrl, :avatarLocation, :expertise, :rating, :aboutMe, :coreRemark )";
+
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":username", $this->username, PDO::PARAM_STR );
 			echo " ".$this->username." ";
