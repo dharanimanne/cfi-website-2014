@@ -1,11 +1,11 @@
 ﻿<?php
 ini_set( "display_errors", true );
 date_default_timezone_set( "Asia/Calcutta" );
-define( "DB_DSN", "mysql:host=localhost;dbname=pmp" );
-define( "DB_USERNAME", "username" );
-define( "DB_PASSWORD", "password" );
-define( "CLASS_PATH", "classes" );
-define( "TEMPLATE_PATH", "templates" );
+define( "DB_DSN", "mysql:host=localhost;dbname=cfi-2014" );
+define( "DB_USERNAME", "root" );
+define( "DB_PASSWORD", "" );
+define( "CLASS_PATH", "/classes" );
+define( "TEMPLATE_PATH", "/templates" );
 define( "ADMIN_USERNAME", "admin" );
 define( "ADMIN_PASSWORD", "pass" );
 define( "TABLENAME_USERS", "user" );
