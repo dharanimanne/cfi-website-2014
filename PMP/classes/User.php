@@ -1,6 +1,6 @@
 <?php
 	require_once('Password.php');
-//	require_once('../config.php');
+//	include('/../config.php');
 	
 	//PHP User Class
 	class User {
@@ -47,11 +47,11 @@
 		
 		
 		public function __construct( $data = array() ) {
-			if( isset( $data['id'] ) ) 					$this->id = (int) $data['id'];
+			if( isset( $data['id'] ) ) 					{ $this->id = (int) $data['id']; echo "the id is set as ".$data['id']." "; }
 			if( isset( $data['username'] ) ) 			$this->username = preg_replace ( "/[^\.\_ a-zA-Z0-9]/", "", $data['username'] );
 			if( isset( $data['password'] ) ) 			$this->password = $data['password'];
-			if( isset( $data['joinDateTime'] ) ) 		$this->joinDateTime = $data['joinDateTime'];
-			if( isset( $data['lastLoginDateTime'] ) ) 	$this->lastLoginDateTime = $data['lastLoginDateTime'];
+			if( isset( $data['joinDateTime'] ) ) 		$this->joinDateTime = (int) $data['joinDateTime'];
+			if( isset( $data['lastLoginDateTime'] ) ) 	$this->lastLoginDateTime = (int) $data['lastLoginDateTime'];
 			if( isset( $data['lastLoginFrom'] ) ) 		$this->lastLoginFrom = $data['lastLoginFrom'];
 			if( isset( $data['userType'] ) ) 			$this->userType = $data['userType'];
 			if( isset( $data['name'] ) ) 				$this->name = preg_replace( "/[^a-zA-Z0-9]/", "", $data['name'] );
@@ -66,11 +66,30 @@
 			if( isset( $data['rating'] ) ) 				$this->rating = (float) $data['rating'];
 			if( isset( $data['aboutMe'] ) ) 			$this->aboutMe = $data['aboutMe'];
 			if( isset( $data['coreRemark'] ) ) 			$this->coreRemark = $data['coreRemark'];
+			echo "this phase is out!";
 		}
 		
 	
 		public function storeFormValues( $params ){
 			$this->__construct( $params );
+
+			if ( isset($params['joinDateTime']) ) {
+		 	    $joinDateTime = explode ( '-', $params['joinDateTime'] );
+			 
+			    if ( count($joinDateTime) == 3 ) {
+			        list ( $y, $m, $d ) = $joinDateTime;
+			        $this->joinDateTime = mktime ( 0, 0, 0, $m, $d, $y );
+			    }
+		    }
+
+		    if ( isset($params['lastLoginDateTime']) ) {
+		 	    $lastLoginDateTime = explode ( '-', $params['lastLoginDateTime'] );
+			 
+			    if ( count($lastLoginDateTime) == 3 ) {
+			        list ( $y, $m, $d ) = $lastLoginDateTime;
+			        $this->lastLoginDateTime = mktime ( 0, 0, 0, $m, $d, $y );
+			    }
+		    }
 		}
 	
 		
@@ -114,8 +133,10 @@
 			$sql = "INSERT INTO ".TABLENAME_USERS." ( username, password, joinDateTime, lastLoginDateTime, lastLoginFrom, userType, name, rollNo, hostel, room, phone, email, socialMediaUrl, avatarLocation, expertise, rating, aboutMe, coreRemark ) VALUES ( :username, :password, FROM_UNIXTIME(:joinDateTime), FROM_UNIXTIME(:lastLoginDateTime), :lastLoginFrom, :userType, :name, :rollNo, :hostel, :room, :phone, :email, :socialMediaUrl, :avatarLocation, :expertise, :rating, :aboutMe, :coreRemark )";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":username", $this->username, PDO::PARAM_STR );
+			echo " ".$this->username." ";
 			$st->bindValue( ":password", $this->password, PDO::PARAM_STR );
 			$st->bindValue( ":joinDateTime", $this->joinDateTime, PDO::PARAM_INT );
+			echo " ".$this->joinDateTime." ";
 			$st->bindValue( ":lastLoginDateTime", $this->lastLoginDateTime, PDO::PARAM_INT );
 			$st->bindValue( ":lastLoginFrom", $this->lastLoginFrom, PDO::PARAM_STR );
 			$st->bindValue( ":userType", $this->userType, PDO::PARAM_STR );
