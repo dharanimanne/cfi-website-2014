@@ -8,7 +8,7 @@ define( "CLASS_PATH", "/classes" );
 define( "TEMPLATE_PATH", "/templates" );
 define( "ADMIN_USERNAME", "admin" );
 define( "ADMIN_PASSWORD", "pass" );
-define( "TABLENAME_USERS", "user" );
+define( "TABLENAME_USERS", "users" );
 define( "TABLENAME_ACTIVITY", "activity" );
 require( CLASS_PATH . "/index.php" );
 ?>

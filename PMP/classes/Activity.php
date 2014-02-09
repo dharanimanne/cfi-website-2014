@@ -1,33 +1,20 @@
 <?php
 
-	/**
-	* 
-	*/
 	class Activity
 	{
 		/* All fields are very self explanatory... */
 		public $id = null;
-
 		public $title = null;
-
 		public $brief_writeup = null;
-
 		public $detailed_writeup = null;
-
 		public $status = null;
-
 		public $tags = null;
-
 		public $overall_budget = null;
-
 		public $utilized_budget = null;
-
 		public $icon_link = null;
-
 		public $bg_image_link = null;
 
-
-		function __construct( $data = array() )
+		public function __construct( $data = array() )
 		{
 			# code...
 			if( isset( $data['id'] ) ) 					$this->id = (int) $data['id'];
@@ -47,17 +34,6 @@
 			$this->__construct( $params );
 		}
 
-		public static function getById( $id ){
-			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "SELECT * FROM ".TABLENAME_ACTIVITY." WHERE `id` = :id ";
-			$st = $conn->prepare( $sql );
-			$st->bindValue( ":id", $id, PDO::PARAM_INT );
-			$st->execute();
-			$row = $st->fetch();
-			$conn = null;
-			if( $row ) return new Activity( $row );
-		}
-
 		public function insert(){
 		
 			//Does the object already have an ID?
@@ -65,7 +41,7 @@
 		
 			//Insert the object
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO ".TABLENAME_ACTIVITY." ( title, brief_writeup, detailed_writeup, status, tags, overall_budget, utilized_budget, icon_link, bg_image_link ) VALUES ( :title, :brief_writeup, :detailed_writeup, :status, :tags, :overall_budget, :utilized_budget, :icon_link, :bg_image_link )";
+			$sql = "INSERT INTO activity ( title, brief_writeup, detailed_writeup, status, tags, overall_budget, utilized_budget, icon_link, bg_image_link) VALUES ( :title, :brief_writeup, :detailed_writeup, :status, :tags, :overall_budget, :utilized_budget, :icon_link, :bg_image_link )";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
 			$st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
@@ -78,13 +54,16 @@
 			$st->bindValue( ":bg_image_link", $this->bg_image_link, PDO::PARAM_STR );
 			$st->execute();
 			$this->id = $conn->lastInsertId();
+			echo $this->id;
 			$conn = null;		
+
+			echo "insertion successful!";
 		}
 
 		public function update(){
 		
 			//Does the object have an ID?
-			if( is_null( $this->ID ) ) trigger_error( "Activity::update(): Attempt to update an Activity object that does not have its ID property set.", E_ACTIVITY_ERROR );
+			if( is_null( $this->id ) ) trigger_error( "Activity::update(): Attempt to update an Activity object that does not have its ID property set.", E_ACTIVITY_ERROR );
 			
 			//Update the object
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
@@ -102,6 +81,17 @@
 			$st->bindValue( ":bg_image_link", $this->bg_image_link, PDO::PARAM_STR );
 			$st->execute();
 			$conn = null;
+		}
+
+		public static function getById( $id ){
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = "SELECT * FROM ".TABLENAME_ACTIVITY." WHERE `id` = :id ";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":id", $id, PDO::PARAM_INT );
+			$st->execute();
+			$row = $st->fetch();
+			$conn = null;
+			if( $row ) return new Activity( $row );
 		}
 
 		public function delete(){

@@ -1,56 +1,100 @@
 <?php
 
-	class user {
+	class Activity {
 	
 		
 		public $id = null;
-		public $username = null;
-		public $password = null;
-		public $name = null;
-		public $email = null;
-		
-			public function __construct( $data = array() ) {
+		public $title = null;
+		public $brief_writeup = null;
+		public $detailed_writeup = null;
+		public $status = null;
+		public $tags = null;
+		public $overall_budget = null;
+		public $utilized_budget = null;
+		public $icon_link = null;
+		public $bg_image_link = null;
+
+		public function __construct( $data = array() ) {
 			if( isset( $data['id'] ) ) 					$this->id = (int) $data['id'];
-			if( isset( $data['username'] ) ) 			$this->username = preg_replace ( "/[^\.\_ a-zA-Z0-9]/", "", $data['username'] );
-			if( isset( $data['password'] ) ) 			$this->password = $data['password'];
-		    if( isset( $data['name'] ) ) 				$this->name = preg_replace( "/[^a-zA-Z0-9]/", "", $data['name'] );
-			if( isset( $data['email'] ) ) 				$this->email = preg_replace ( "/[^\.\@\_ a-zA-Z0-9]/", "", $data['email'] );
-			
-			}
+			if( isset( $data['title'] ) ) 			    $this->title = $data['title'];
+			if( isset( $data['brief_writeup'] ) ) 		$this->brief_writeup = $data['brief_writeup'];
+			if( isset( $data['detailed_writeup'] ) ) 	$this->detailed_writeup = $data['detailed_writeup'];
+			if( isset( $data['status'] ) ) 	            $this->status = $data['status'];
+			if( isset( $data['tags'] ) ) 				$this->tags = $data['tags'];
+			if( isset( $data['overall_budget'] ) ) 		$this->overall_budget = (int) $data['overall_budget'];
+			if( isset( $data['utilized_budget'] ) ) 	$this->utilized_budget = (int) $data['utilized_budget'];
+			if( isset( $data['icon_link'] ) ) 			$this->icon_link = $data['icon_link'];
+			if( isset( $data['bg_image_link'] ) ) 		$this->bg_image_link = $data['bg_image_link'];
+		}
 			
 		
 		public function insert(){
 	
 	
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-		$sql = "INSERT INTO cfi_users ( username, password, name, email) VALUES ( :username, :password, :name, :email )";
-		$st = $conn->prepare( $sql );
-		$st->bindValue( ":username", $this->username, PDO::PARAM_STR );
-		$st->bindValue( ":password", $this->password, PDO::PARAM_STR );
-		$st->bindValue( ":name", $this->name, PDO::PARAM_STR );
-		$st->bindValue( ":email", $this->email, PDO::PARAM_STR );
-		$st->execute();
-	$this->id = $conn->lastInsertId();
-	echo $this->id;
-	$conn = null;	
+			$sql = "INSERT INTO activity ( title, brief_writeup, detailed_writeup, status, tags, overall_budget, utilized_budget, icon_link, bg_image_link ) VALUES ( :title, :brief_writeup, :detailed_writeup, :status, :tags, :overall_budget, :utilized_budget, :icon_link, :bg_image_link )";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
+			$st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
+			$st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
+			$st->bindValue( ":status", $this->status, PDO::PARAM_STR );
+			$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
+			$st->bindValue( ":overall_budget", $this->overall_budget, PDO::PARAM_INT );
+			$st->bindValue( ":utilized_budget", $this->utilized_budget, PDO::PARAM_INT );
+			$st->bindValue( ":icon_link", $this->icon_link, PDO::PARAM_STR );
+			$st->bindValue( ":bg_image_link", $this->bg_image_link, PDO::PARAM_STR );
+			$st->execute();
+			$this->id = $conn->lastInsertId();
+			$conn = null;		
+
+			echo "insertion successful!";
+		}
 	
-        echo "insertion successful!!!!"		;
-	}
-	public function update(){
-		
-		if( is_null( $this->ID ) ) trigger_error( "User::update(): Attempt to update a user object that does not have its ID property set.", E_USER_ERROR );
-		$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
-		$sql = "UPDATE users SET username=:username, name=:name, email=:email  WHERE id = :id";
-		$st = $conn->prepare( $sql );
-		$st->bindValue( ":name", $this->name, PDO::PARAM_STR );
-		$st->bindValue( ":email", $this->email, PDO::PARAM_STR );
-		$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
-		$st->execute();
-		$conn = null;		
-	}
+
+		public function update(){
+				
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
+			$sql = "UPDATE activity SET title = :title, brief_writeup = :brief_writeup, detailed_writeup = :detailed_writeup, status = :status, tags = :tags, overall_budget = :overall_budget, utilized_budget = :utilized_budget WHERE id = :id";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
+			$st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
+			$st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
+			$st->bindValue( ":status", $this->status, PDO::PARAM_STR );
+			$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
+			$st->bindValue( ":overall_budget", $this->overall_budget, PDO::PARAM_INT );
+			$st->bindValue( ":utilized_budget", $this->utilized_budget, PDO::PARAM_INT );
+			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+			$st->bindValue( ":icon_link", $this->icon_link, PDO::PARAM_STR );
+			$st->bindValue( ":bg_image_link", $this->bg_image_link, PDO::PARAM_STR );
+			$st->execute();
+			$conn = null;		
+		}
 	
 	
+		public static function getById( $id ){
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS `joinDateTime`, UNIX_TIMESTAMP(lastLoginDateTime) AS `lastLoginDateTime` FROM `".TABLENAME_ACTIVITY."` WHERE `id` = :id ";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":id", $id, PDO::PARAM_INT );
+			$st->execute();
+			$row = $st->fetch();
+			$conn = null;
+			if( $row ) return new User( $row );
+		}
+
 	
+		public function delete(){
+					
+			//Does the object have an ID?
+			if( is_null( $this->id ) ) trigger_error( "User::delete(): Attempt to delete an activity object that does not have its ID property set.", E_ACTIVITY_ERROR );
+			
+			//Delete the object
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$st = $conn->prepare ( "DELETE FROM ".TABLENAME_ACTIVITY." WHERE id = :id LIMIT 1" );
+			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+			$st->execute();
+			$conn = null;		
+		}	
 	
 	
 	

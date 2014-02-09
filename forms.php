@@ -7,7 +7,7 @@
 		<link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css"/>
 </head>
 <body class="well">
-	<form action="process.php" method="post" enctype="multipart/form-data">
+	<form action="testing.php" method="post" enctype="multipart/form-data">
 		<label>USER NAME:</label><br/>
 		<input type="text" class="span3" name="username" value=""/>
 		<br/>
@@ -18,14 +18,14 @@
 		<input type="text" class="span3" name="name" value=""/>
 		<br/>
 		<label>ROLL NUMBER:</label><br/>
-		<input type="text" name="mm" value=""/>
+		<input type="text" name="roll" value=""/>
 		<br/>
 		
 		<label>HOSTEL:</label><br/>
 		<input type="text" name="hostel" value=""/>
 		<br/>
 		<label>ROOM NUMBER:</label><br/>
-		<input type="text" name="me" value=""/>
+		<input type="text" name="room" value=""/>
 		<br/>
 		
 		<br/>
