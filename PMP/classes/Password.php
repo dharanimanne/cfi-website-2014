@@ -12,7 +12,7 @@
 	 
 		//Generate password hash
 		public static function hash( $password ){	 
-			return crypt( $password,	self::$algo . self::$cost . '$' . $salt );	 
+			return crypt( $password,	self::$algo . self::$cost . '$' . self::$salt );	 
 		}	 
 		
 		//Comapre hash and password

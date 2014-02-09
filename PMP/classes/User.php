@@ -1,6 +1,6 @@
 <?php
 	require_once('Password.php');
-	require_once('../config.php');
+//	require_once('../config.php');
 	
 	//PHP User Class
 	class User {
@@ -101,7 +101,7 @@
 		public function insert(){
 			
 			//Does the object already have an ID?
-			if( !is_null( $this->ID ) ) trigger_error( "User::insert(): Attempt to insert a user object that already has its ID property set to $this->id.", E_USER_ERROR );
+			if( !is_null( $this->id ) ) trigger_error( "User::insert(): Attempt to insert a user object that already has its ID property set to $this->id.", E_USER_ERROR );
 		
 			//Set the join datetime
 			$this->joinDateTime = time();
@@ -184,4 +184,5 @@
 			$st->execute();
 			$conn = null;		
 		}
+	}
 ?>

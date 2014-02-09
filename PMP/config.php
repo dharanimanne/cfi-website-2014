@@ -11,11 +11,4 @@ define( "ADMIN_PASSWORD", "pass" );
 define( "TABLENAME_USERS", "user" );
 define( "TABLENAME_ACTIVITY", "activity" );
 require( CLASS_PATH . "/index.php" );
- 
-function handleException( $exception ) {
-  echo "Sorry, a problem occurred. Please try later.";
-  error_log( $exception->getMessage() );
-}
- 
-set_exception_handler( 'handleException' );
 ?>
