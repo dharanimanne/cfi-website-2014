@@ -74,7 +74,7 @@
 			$sql = "UPDATE ".TABLENAME_ACTIVITY." SET title = :title, brief_writeup = :brief_writeup, detailed_writeup = :detailed_writeup, status = :status, tags = :tags, overall_budget = :overall_budget, utilized_budget = :utilized_budget WHERE id = :id";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
-			$st->bindValue( "activity_type", $this->activity_type, PDO::PARAM_STR );
+			$st->bindValue( ":activity_type", $this->activity_type, PDO::PARAM_STR );
 			$st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
 			$st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
 			$st->bindValue( ":status", $this->status, PDO::PARAM_STR );
