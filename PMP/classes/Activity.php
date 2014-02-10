@@ -104,6 +104,18 @@ $conn = null;
 if( $row ) return new Activity( $row );
 }
 
+public static function getByAvtivityType( $activity_type ){
+$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+$sql = "SELECT * FROM ".TABLENAME_ACTIVITY." WHERE activity_type = :activity_type ";
+$st = $conn->prepare( $sql );
+$st->bindValue( ":activity_type", $activity_type, PDO::PARAM_STR );
+$st->execute();
+$row = $st->fetch();
+$conn = null;
+if( $row ) return new Activity( $row );
+}
+
+
 public function delete(){
 
 //Does the object have an ID?
