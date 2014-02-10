@@ -46,7 +46,7 @@
 			$sql = "INSERT INTO activity ( title, activity_type, brief_writeup, detailed_writeup, status, tags, overall_budget, utilized_budget, icon_link, bg_image_link) VALUES ( :title, :activity_type, :brief_writeup, :detailed_writeup, :status, :tags, :overall_budget, :utilized_budget, :icon_link, :bg_image_link )";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
-			$st->bindValue( "activity_type", $this->activity_type, PDO::PARAM_STR );
+			$st->bindValue( ":activity_type", $this->activity_type, PDO::PARAM_STR );
 			$st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
 			$st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
 			$st->bindValue( ":status", $this->status, PDO::PARAM_STR );
