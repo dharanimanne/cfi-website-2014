@@ -11,6 +11,7 @@
 		public $tags = null;
 		public $overall_budget = null;
 		public $utilized_budget = null;
+		public $activity_type = null;
 		public $icon_link = null;
 		public $bg_image_link = null;
 
@@ -18,6 +19,7 @@
 		{
 			# code...
 			if( isset( $data['id'] ) ) 					$this->id = (int) $data['id'];
+			if( isset( $data['activity_type'] ) )		$this->activity_type = $data['activity_type'];
 			if( isset( $data['title'] ) ) 			    $this->title = $data['title'];
 			if( isset( $data['brief_writeup'] ) ) 		$this->brief_writeup = $data['brief_writeup'];
 			if( isset( $data['detailed_writeup'] ) ) 	$this->detailed_writeup = $data['detailed_writeup'];
@@ -44,6 +46,7 @@
 			$sql = "INSERT INTO activity ( title, brief_writeup, detailed_writeup, status, tags, overall_budget, utilized_budget, icon_link, bg_image_link) VALUES ( :title, :brief_writeup, :detailed_writeup, :status, :tags, :overall_budget, :utilized_budget, :icon_link, :bg_image_link )";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
+			$st->bindValue( "activity_type", $this->activity_type, PDO::PARAM_STR );
 			$st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
 			$st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
 			$st->bindValue( ":status", $this->status, PDO::PARAM_STR );
@@ -70,6 +73,7 @@
 			$sql = "UPDATE ".TABLENAME_ACTIVITY." SET title = :title, brief_writeup = :brief_writeup, detailed_writeup = :detailed_writeup, status = :status, tags = :tags, overall_budget = :overall_budget, utilized_budget = :utilized_budget WHERE id = :id";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
+			$st->bindValue( "activity_type", $this->activity_type, PDO::PARAM_STR );
 			$st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
 			$st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
 			$st->bindValue( ":status", $this->status, PDO::PARAM_STR );
