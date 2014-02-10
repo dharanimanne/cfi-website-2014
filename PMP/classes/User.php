@@ -50,7 +50,7 @@
 		public function storeFormValues( $params ){
 			$this->__construct( $params );
 		}	
-		
+			
 		public function insert(){
 	
 			if( !is_null( $this->id ) ) trigger_error( "User::insert(): Attempt to insert a user object that already has its ID property set to $this->id.", E_USER_ERROR );
@@ -119,7 +119,7 @@
 		
 		public static function getById( $id ){
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS `joinDateTime`, UNIX_TIMESTAMP(lastLoginDateTime) AS `lastLoginDateTime` FROM `".TABLENAME_USERS."` WHERE `id` = :id ";
+			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS joinDateTime, UNIX_TIMESTAMP(lastLoginDateTime) AS lastLoginDateTime FROM ".TABLENAME_USERS." WHERE id = :id ";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":id", $id, PDO::PARAM_INT );
 			$st->execute();
@@ -131,7 +131,7 @@
 		
 		public static function getByUsername( $username ){
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS `joinDateTime`, UNIX_TIMESTAMP(lastLoginDateTime) AS `lastLoginDateTime` FROM `".TABLENAME_USERS."` WHERE `username` = :username ";
+			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS joinDateTime, UNIX_TIMESTAMP(lastLoginDateTime) AS lastLoginDateTime FROM ".TABLENAME_USERS." WHERE username = :username ";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":username", $username, PDO::PARAM_STR );
 			$st->execute();

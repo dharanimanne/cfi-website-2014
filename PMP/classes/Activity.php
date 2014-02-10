@@ -43,7 +43,7 @@
 		
 			//Insert the object
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO activity ( title, brief_writeup, detailed_writeup, status, tags, overall_budget, utilized_budget, icon_link, bg_image_link) VALUES ( :title, :brief_writeup, :detailed_writeup, :status, :tags, :overall_budget, :utilized_budget, :icon_link, :bg_image_link )";
+			$sql = "INSERT INTO activity ( title, activity_type, brief_writeup, detailed_writeup, status, tags, overall_budget, utilized_budget, icon_link, bg_image_link) VALUES ( :title, :activity_type, :brief_writeup, :detailed_writeup, :status, :tags, :overall_budget, :utilized_budget, :icon_link, :bg_image_link )";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
 			$st->bindValue( "activity_type", $this->activity_type, PDO::PARAM_STR );
@@ -59,8 +59,9 @@
 			$this->id = $conn->lastInsertId();
 			echo $this->id;
 			$conn = null;		
-
-			echo "insertion successful!";
+			if ($this->id != 0) {
+				echo "insertion successful!";
+			}
 		}
 
 		public function update(){
