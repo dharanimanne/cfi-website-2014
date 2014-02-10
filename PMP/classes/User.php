@@ -139,6 +139,17 @@
 			$conn = null;
 			if( $row ) return new User( $row );
 		}
+
+		public static function getByEmail( $email ){
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS joinDateTime, UNIX_TIMESTAMP(lastLoginDateTime) AS lastLoginDateTime FROM ".TABLENAME_USERS." WHERE email = :email ";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":email", $email, PDO::PARAM_STR );
+			$st->execute();
+			$row = $st->fetch();
+			$conn = null;
+			if( $row ) return new User( $row );
+		}
 		
 		public function delete(){
 						
