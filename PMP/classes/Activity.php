@@ -27,6 +27,8 @@
 			if( isset( $data['tags'] ) ) 				$this->tags = $data['tags'];
 			if( isset( $data['overall_budget'] ) ) 		$this->overall_budget = (int) $data['overall_budget'];
 			if( isset( $data['utilized_budget'] ) ) 	$this->utilized_budget = (int) $data['utilized_budget'];
+			echo $utilized_budget;
+			echo $overall_budget;
 			if( isset( $data['icon_link'] ) ) 			$this->icon_link = $data['icon_link'];
 			if( isset( $data['bg_image_link'] ) ) 		$this->bg_image_link = $data['bg_image_link'];
 		}
