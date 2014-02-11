@@ -6,7 +6,7 @@
 <body class="well">
 
 
-<form class="form-horizontal" id="form-registration" method="post" action=""   name="registration" style="left:50%"> 
+<form class="form-horizontal" id="form-registration" method="post" action="index.php"   name="registration" style="left:50%"> 
 	<div style="left:50%">
     		<div class="form-group">
                 <label  class="col-sm-2 control-label">Name</label>
