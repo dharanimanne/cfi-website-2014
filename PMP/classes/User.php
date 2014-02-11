@@ -130,6 +130,7 @@
 			
 		
 		public static function getByUsername( $username ){
+			$username = trim( $username );
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS joinDateTime, UNIX_TIMESTAMP(lastLoginDateTime) AS lastLoginDateTime FROM ".TABLENAME_USERS." WHERE username = :username ";
 			$st = $conn->prepare( $sql );
@@ -141,6 +142,7 @@
 		}
 
 		public static function getByEmail( $email ){
+			$email = trim( $email );
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS joinDateTime, UNIX_TIMESTAMP(lastLoginDateTime) AS lastLoginDateTime FROM ".TABLENAME_USERS." WHERE email = :email ";
 			$st = $conn->prepare( $sql );
