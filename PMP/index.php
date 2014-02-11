@@ -6,7 +6,7 @@
 	$username = isset( $_SESSION['username'] ) ? $_SESSION['username']: "";
 	
 	// Send to login by default
-	if( $action != "login" && $action != "logout" && !$username && != 'register'){
+	if( $action != "login" && $action != "logout" && !$username &&  $action != "register"){
 		login();
 		exit;
 	}
