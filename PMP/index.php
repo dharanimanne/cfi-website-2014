@@ -6,7 +6,7 @@
 	$username = isset( $_SESSION['username'] ) ? $_SESSION['username']: "";
 	
 	// Send to login by default
-	if( $action != "login" && $action != "logout" && !$username ){
+	if( $action != "login" && $action != "logout" && !$username && != 'register'){
 		login();
 		exit;
 	}
@@ -18,6 +18,8 @@
 		case 'logout';
 			logout();
 			break;
+		case 'register';
+			register();
 		default:
 			login();
 	}
@@ -71,6 +73,48 @@
 		$results['pageTitle'] = "Home | ".$user->name." | CFI Projects Management Portal";
 		$results['user'] = $user;
 		require( TEMPLATE_PATH . "/dashboard.php" );
+	}
+
+	function register(){
+		$results = array();
+		$results['pageTitle'] = "Register | CFI Projects Management Portal";
+
+		$user_table = array();
+		$user_table['username'] = $_POST['user_name'];
+		$user_table['password'] = $_POST['user_password'];
+		$user_table['user_email'] = $_POST['user_email'];
+		$user_table['name'] = $_POST['name'];
+		$user_table['user_roll'] = $_POST['user_roll'];
+		$user_table['user_hostel'] = $_POST['user_hostel'];
+		$user_table['user_room'] = $_POST['user_room'];
+
+		if ( $user = new User($user_table) ) {
+			if ( $user->insert() ) {
+				echo "Registration successful. Please enjoy yourself";
+				dashboard( $user );
+			}		
+		}
+		else
+		{
+			$result['errorMessage'] = "Registration unsuccessful. Please try again.";
+			require( TEMPLATE_PATH . "/register.php" );
+		}		
+	}
+
+	function getProjects()
+	{
+		$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+		$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS joinDateTime, UNIX_TIMESTAMP(lastLoginDateTime) AS lastLoginDateTime FROM ".TABLENAME_ACTIVITY." WHERE activity_type = :activity_type ";
+		$st = $conn->prepare( $sql );
+		$st->bindValue( ":activity_type", $activity_type, PDO::PARAM_STR );
+		$st->execute();
+		$row = $st->fetch();
+		$conn = null;
+		$i = 0;
+		while ($row[$i] != null) {
+			echo $row[$i];
+			echo <br/>;
+		}
 	}
 	
 ?>
