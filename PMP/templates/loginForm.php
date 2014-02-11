@@ -6,7 +6,7 @@
 <body >
 
 <div class="well" style="width:30%;height:40%;margin-left:30%;margin-top:18%">
-<form class="form-horizontal" id="form-registration"  method="post" action="PMP/index.php"   name="registration" > 
+<form class="form-horizontal" id="form-registration"  method="post" action="/../index.php"   name="registration" > 
   <div id="login">
         
                       <div class="form-group" style="">
