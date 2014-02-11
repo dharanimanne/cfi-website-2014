@@ -14,6 +14,7 @@
 		public $hostel = null;
 		public $phone = null;
 		public $email = null;
+		public $membership = null;
 		public $joinDateTime = null;
 		public $lastLoginDateTime = null;
 		public $expertise = null;
@@ -40,6 +41,7 @@
 			if( isset( $data['avatarLocation'] ) ) 		$this->avatarLocation = $data['avatarLocation'];
 			if( isset( $data['aboutMe'] ) ) 			$this->aboutMe = $data['aboutMe'];
 			if( isset( $data['coreRemark'] ) ) 			$this->coreRemark = $data['coreRemark'];
+			if( isset( $data['membership'] ) ) 			$this->membership = $data['membership'];
 			if( isset( $data['phone'] ) ) 				$this->phone = preg_replace ( "/[^\+ 0-9]/", "", $data['phone'] );
 			if( isset( $data['rollNo'] ) ) 				$this->rollNo = preg_replace( "/[^a-zA-Z0-9]/", "", $data['rollNo'] );
 			if( isset( $data['hostel'] ) ) 				$this->hostel = preg_replace ( "/[^a-zA-Z]/", "", $data['hostel'] );
@@ -57,7 +59,7 @@
 			$this->password = Password::hash($this->password);
 
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO users ( username, password, name, lastLoginFrom, rollNo, hostel, room, phone, email, joinDateTime, lastLoginDateTime, expertise, rating, userType, socialMediaUrl, avatarLocation, aboutMe, coreRemark) VALUES ( :username, :password, :name, :lastLoginFrom, :rollNo, :hostel, :room, :phone, :email, :joinDateTime, :lastLoginDateTime, :expertise, :rating, :userType, :socialMediaUrl, :avatarLocation, :aboutMe, :coreRemark)";
+			$sql = "INSERT INTO users ( username, password, name, lastLoginFrom, membership, rollNo, hostel, room, phone, email, joinDateTime, lastLoginDateTime, expertise, rating, userType, socialMediaUrl, avatarLocation, aboutMe, coreRemark) VALUES ( :username, :password, :name, :lastLoginFrom, :membership, :rollNo, :hostel, :room, :phone, :email, :joinDateTime, :lastLoginDateTime, :expertise, :rating, :userType, :socialMediaUrl, :avatarLocation, :aboutMe, :coreRemark)";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":username", $this->username, PDO::PARAM_STR );
 			$st->bindValue( ":password", $this->password, PDO::PARAM_STR );
@@ -75,6 +77,7 @@
 			$st->bindValue( ":socialMediaUrl", $this->socialMediaUrl, PDO::PARAM_STR );
 			$st->bindValue( ":avatarLocation", $this->avatarLocation, PDO::PARAM_STR );
 			$st->bindValue( ":aboutMe", $this->aboutMe, PDO::PARAM_STR );
+			$st->bindValue( ":membership", $this->membership, PDO::PARAM_STR );
 			$st->bindValue( ":coreRemark", $this->coreRemark, PDO::PARAM_STR );
 			$st->bindValue( ":phone", $this->phone, PDO::PARAM_STR );
 			$st->execute();
@@ -110,6 +113,7 @@
 			$st->bindValue( ":expertise", $this->expertise, PDO::PARAM_STR );
 			$st->bindValue( ":rating", $this->rating, PDO::PARAM_STR );
 			$st->bindValue( ":aboutMe", $this->aboutMe, PDO::PARAM_STR );
+			$st->bindValue( ":membership", $this->membership, PDO::PARAM_STR );
 			$st->bindValue( ":coreRemark", $this->coreRemark, PDO::PARAM_STR );
 			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
 			$st->execute();
