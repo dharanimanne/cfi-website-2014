@@ -1,8 +1,9 @@
 <?php
 	require_once('Password.php');
-
+	define("MINIMUM_NAME_LENGTH", 4);
+	define("MINIMUM_ROLLNO_LENGTH", 8);
+		
 	class User {
-	
 		
 		public $id = null;
 		public $username = null;
@@ -23,15 +24,22 @@
 		public $avatarLocation = null;
 		public $aboutMe = null;
 		public $coreRemark = null;
-
+		public $userType = null;
+		public static $errorMessage;
+		public static $errorCode;
+		public static $successMessage;
 
 		public function __construct( $data = array() ) {
-		
+			
 			if( isset( $data['id'] ) ) 					$this->id = (int) $data['id'];
-			if( isset( $data['username'] ) ) 			$this->username = preg_replace ( "/[^\.\_ a-zA-Z0-9]/", "", $data['username'] );
+			// if( isset( $data['username'] ) ) 		$this->username = preg_replace ( "/[^\.\@\_ a-zA-Z0-9]/", "", $data['username'] );
 			if( isset( $data['password'] ) ) 			$this->password = $data['password'];
 		    if( isset( $data['name'] ) ) 				$this->name = preg_replace( "/[^a-zA-Z0-9]/", "", $data['name'] );
-			if( isset( $data['email'] ) ) 				$this->email = preg_replace ( "/[^\.\@\_ a-zA-Z0-9]/", "", $data['email'] );
+			/* Email as username */
+			if( isset( $data['email'] ) ){ 				
+				$this->email = trim( preg_replace( "/[^\.\@\_ a-zA-Z0-9]/", "", $data['email'] ) );
+				$this->username = $this->email;
+			}
 			if( isset( $data['joinDateTime'] ) ) 		$this->joinDateTime =  $data['joinDateTime'];
 			if( isset( $data['lastLoginDateTime'] ) ) 	$this->lastLoginDateTime = $data['lastLoginDateTime'];
 			if( isset( $data['expertise'] ) ) 			$this->expertise = $data['expertise'];
@@ -47,6 +55,15 @@
 			if( isset( $data['hostel'] ) ) 				$this->hostel = preg_replace ( "/[^a-zA-Z]/", "", $data['hostel'] );
 			if( isset( $data['room'] ) ) 				$this->room = preg_replace ( "/[^a-zA-Z0-9]/", "", $data['room'] );
 			if( isset( $data['lastLoginFrom'] ) ) 		$this->lastLoginFrom = $data['lastLoginFrom'];
+			
+		}
+		
+		public static function errorInfo(){
+			return self::$errorMessage;
+		}
+		
+		public static function errorCode(){
+			return self::$errorCode;
 		}
 		
 		public function storeFormValues( $params ){
@@ -56,10 +73,29 @@
 		public function insert(){
 	
 			if( !is_null( $this->id ) ) trigger_error( "User::insert(): Attempt to insert a user object that already has its ID property set to $this->id.", E_USER_ERROR );
+			
+			// Set Values
 			$this->password = Password::hash($this->password);
-
+			$this->joinDateTime = date("Y-m-d H:i:s");   
+			$this->userType = "0";
+			$this->avatarlocation = "default.png";
+			
+			// Validation
+			if( !filter_var( $this->email, FILTER_VALIDATE_EMAIL ) ){
+				self::$errorCode ="ERR_INV_EMAIL";
+				return false;
+			}
+			else if( strlen( $this->name ) < MINIMUM_NAME_LENGTH || preg_match("/[^a-zA-Z'-]/", $this->name) ){
+				self::$errorCode ="ERR_INV_NAME";
+				return false;
+			}
+			else if( strlen( $this->rollNo ) < MINIMUM_ROLLNO_LENGTH || preg_match("/[^a-zA-Z0-9'-]/", $this->rollNo) ){
+				self::$errorCode ="ERR_INV_ROLL";
+				return false;
+			}
+			
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO users ( username, password, name, lastLoginFrom, membership, rollNo, hostel, room, phone, email, joinDateTime, lastLoginDateTime, expertise, rating, userType, socialMediaUrl, avatarLocation, aboutMe, coreRemark) VALUES ( :username, :password, :name, :lastLoginFrom, :membership, :rollNo, :hostel, :room, :phone, :email, :joinDateTime, :lastLoginDateTime, :expertise, :rating, :userType, :socialMediaUrl, :avatarLocation, :aboutMe, :coreRemark)";
+			$sql = "INSERT INTO ".TABLENAME_USERS." ( username, password, name, lastLoginFrom, membership, rollNo, hostel, room, phone, email, joinDateTime, lastLoginDateTime, expertise, rating, userType, socialMediaUrl, avatarLocation, aboutMe, coreRemark) VALUES ( :username, :password, :name, :lastLoginFrom, :membership, :rollNo, :hostel, :room, :phone, :email, :joinDateTime, :lastLoginDateTime, :expertise, :rating, :userType, :socialMediaUrl, :avatarLocation, :aboutMe, :coreRemark)";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":username", $this->username, PDO::PARAM_STR );
 			$st->bindValue( ":password", $this->password, PDO::PARAM_STR );
@@ -80,12 +116,19 @@
 			$st->bindValue( ":membership", $this->membership, PDO::PARAM_STR );
 			$st->bindValue( ":coreRemark", $this->coreRemark, PDO::PARAM_STR );
 			$st->bindValue( ":phone", $this->phone, PDO::PARAM_STR );
-			$st->execute();
+			$result = $st->execute();
 			$this->id = $conn->lastInsertId();
-			echo $this->id;
-			$conn = null;	
-		
-	        echo "insertion successful!!!!"		;
+			$conn = null;
+			
+			if( !$result ){
+				self::$errorMessage = "User::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
+				self::$errorCode = $st->errorCode();
+				return false;
+			}
+			else{		
+				self::$successMessage = "User::insert: User successfully inserted with id ".$this->id;			
+				return true;
+			}
 		}
 	
 

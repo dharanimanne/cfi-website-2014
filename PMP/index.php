@@ -6,10 +6,10 @@
 	$username = isset( $_SESSION['username'] ) ? $_SESSION['username']: "";
 	
 	// Send to login by default
-	if( $action != "login" && $action != "logout" && !$username &&  $action != "register"){
-		login();
-		exit;
-	}
+	//if( $action != "login" && $action != "logout" && !$username){
+		//login();
+		//exit;
+	//}
 	
 	switch( $action ){
 		case 'login';
@@ -20,6 +20,7 @@
 			break;
 		case 'register';
 			register();
+			break;
 		default:
 			login();
 	}
@@ -76,29 +77,28 @@
 	}
 
 	function register(){
-		$results = array();
-		$results['pageTitle'] = "Register | CFI Projects Management Portal";
-
-		$user_table = array();
-		$user_table['username'] = $_POST['user_name'];
-		$user_table['password'] = $_POST['user_password'];
-		$user_table['user_email'] = $_POST['user_email'];
-		$user_table['name'] = $_POST['name'];
-		$user_table['user_roll'] = $_POST['user_roll'];
-		$user_table['user_hostel'] = $_POST['user_hostel'];
-		$user_table['user_room'] = $_POST['user_room'];
-
-		if ( $user = new User($user_table) ) {
-			if ( $user->insert() ) {
-				echo "Registration successful. Please enjoy yourself";
-				dashboard( $user );
-			}		
-		}
-		else
-		{
-			$result['errorMessage'] = "Registration unsuccessful. Please try again.";
-			require( TEMPLATE_PATH . "/register.php" );
+		$results = array();	
+		$results['pageTitle'] = "Login | CFI Projects Management Portal";	
+		$user = new User( $_POST );
+		
+		if( $user->insert() ){
+			$results['successMessage'] = "Registration successful. Please login.";
 		}		
+		else{
+			//echo User::errorInfo();
+			if( User::errorCode() == 23000 )
+				$results['errorMessage'] = "Registration unsuccessful, user already exists. <a href=\"#\">Forgot Password?</a>";
+			else if( User::errorCode() == "ERR_INV_EMAIL" )
+				$results['errorMessage'] = "Registration unsuccessful, invalid email address provided.";
+			else if( User::errorCode() == "ERR_INV_NAME" )
+				$results['errorMessage'] = "Registration unsuccessful, invalid name provided.";
+			else if( User::errorCode() == "ERR_INV_ROLL" )
+				$results['errorMessage'] = "Registration unsuccessful, invalid roll no provided.";
+			else
+				$results['errorMessage'] = "Registration unsuccessful. Please try again.";
+		}
+		
+		require( TEMPLATE_PATH . "/loginForm.php" );
 	}
 
 	function getProjects()
@@ -113,7 +113,7 @@
 		$i = 0;
 		while ($row[$i] != null) {
 			echo $row[$i];
-			echo <br/>;
+			echo "<br/>";
 		}
 	}
 	

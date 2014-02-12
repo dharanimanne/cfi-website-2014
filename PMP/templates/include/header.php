@@ -7,7 +7,7 @@
 <!--<![endif]-->
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title><?php echo htmlspecialchars( $results['pageTitle'] ); ?></title>
+		<title><?php if( isset( $results['pageTitle'] )){ echo htmlspecialchars( $results['pageTitle'] ); } else{ echo "Centre For Innovation";} ?></title>
 	</head>
 	<body>
 		<div id="container">

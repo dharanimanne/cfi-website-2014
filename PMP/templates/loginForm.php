@@ -1,111 +1,37 @@
-<html>
-<link href="css/bootstrap.css" rel="stylesheet">
-<script src="js/jquery2.min.js"></script> 
-<script src="js/bootstrap.min.js"></script>
-<style>.form-group{max-width:100%}</style>
-<body >
+<?php include("templates/include/header.php"); ?>
+	<div id="content">
+		<div id="loginDiv">
+			<form name="loginForm" action="index.php?action=login" method="POST">
+				Username <input type="text" name="username" placeholder="Username" /> <br>
+				Password <input type="password" name="password" placeholder="Password" /> <br>
+				<input type="submit" name="login_form" value="Login" /> 
+			</form>
+		</div>
+		<div id="registerDiv">
+			Not registered? Please register below. <br>
+			<form name="registrationForm" action="index.php?action=register" method="POST">
+				Email <input type="text" name="email" placeholder="Email as Username" /><br>
+				Name <input type="text" name="name" placeholder="Name" /><br>
+				Roll No. <input type="text" name="rollNo" placeholder="Roll No." /><br>
+				Room <input type="text" name="room" placeholder="Room No." /><br>
+				Hostel <input type="text" name="hostel" placeholder="Hostel" /><br>
+				Phone <input type="text" name="phone" placeholder="Contact No." /><br>
+				Password <input type="password" name="password" placeholder="Choose Password" /><br>
+				<input type="submit" name="register_form" value="Register" /> 
+			</form>
+		</div>
+		<div id="messageDiv">
+			<?php if( isset( $results['successMessage'] ) ) { ?>
+			<div class="message success">
+				<?php echo $results['successMessage']; ?> 
+			</div>
+			<?php } 
+				if( isset( $results['errorMessage'] ) ) { ?>
+				<div class="message error">
+					<?php echo $results['errorMessage']; ?> 
+				</div>
+			<?php } ?>			
+		</div>
+	</div>
+<?php include("templates/include/footer.php"); ?>
 
-<div class="well" style="width:30%;height:40%;margin-left:30%;margin-top:18%">
-<form class="form-horizontal" id="form-registration"  method="post" action="/../index.php"   name="registration" > 
-  <div id="login">
-        
-                      <div class="form-group" style="">
-                        <label  class="col-sm-2 control-label"></label>
-                        <div class="col-sm-6 row2">
-                          <input  class="form-control"  name="user_email" id="user_email" placeholder="UserEmail" >
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label"></label>
-                        
-                          <div class="col-sm-6 row2">
-                            <input type="password" class="form-control" name="user_password_new" id="user_password_new" placeholder="Password" required="required" pattern=".{6,}" required autocomplete="off">
-                          </div>
-                          
-                      </div>
-                      </div>
-                       
-                      <div class="form-group" style="float:left;position:relative;left:90px">
-                     <button type="submit" name="Login" class="btn btn-primary">Login</button>
-                   
-                      </div>
-                    
-                      
-
-            </div>
-            <br/>
-      </form>
-</div>
-<br/>
-<div id="showregistration" style="visibility:hidden">
-  <form class="form-horizontal" id="form-registration"   name="registration" style="left:50%"> 
-  <div style="left:50%">
-        <div class="form-group">
-                <label  class="col-sm-2 control-label">Name</label>
-                  <div class="row">
-                      <div class="col-xs-2">
-                        <input type="text" class="form-control" name="user_name" id="user_name" placeholder="Name" required="required">
-                      </div>
-                        
-                    </div>
-                 </div>
-    
-            <div class="form-group">
-                        <label  class="col-sm-2 control-label">User Name</label>
-                        <div class="col-sm-2 row2">
-                          <input type="text" class="form-control"  name="user_name" id="user_name" placeholder="Username"  required="required">
-                        </div>
-                      </div>
-                      
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label">Useremail</label>
-                        <div class="col-sm-2 row2">
-                          <input type="email" class="form-control"  name="user_email" id="user_email" placeholder="Email" required="required">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label">Password</label>
-                        <div class="row">
-                          <div class="col-xs-2">
-                            <input type="password" class="form-control" name="user_password_new" id="user_password_new" placeholder="Password" required="required" pattern=".{6,}" required autocomplete="off">
-                          </div>
-                          
-                      </div>
-                      </div>
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label">Roll number</label>
-                        <div class="col-sm-2 row2">
-                          <input type="email" class="form-control"  name="user_roll" id="user_roll" placeholder="Roll number" required="required">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label">Hostel</label>
-                        <div class="col-sm-2 row2">
-                          <input type="email" class="form-control"  name="user_hostel" id="user_hostel" placeholder="Hostel" required="required">
-                        </div>
-                      </div> 
-                      <div class="form-group">
-                        <label  class="col-sm-2 control-label">Roomno.</label>
-                        <div class="col-sm-2 row2">
-                          <input type="email" class="form-control"  name="user_room" id="user_room" placeholder="roomno." required="required">
-                        </div>
-                      </div>
-                      <div class="form-group" style="float:left;position:relative;left:140px">
-                     <button type="submit" name="register" class="btn btn-primary" >Register</button>
-                      </div>
-
-      </form>
-
-</div>
-</body>
-<script>
-function showDiv() {
-   document.getElementById('showregistration').style.visibility = "hidden";
-    document.getElementById('regbut').style.visibility = "hidden";
-    document.getElementById('login').style.visibility = "";
-   
-   window.open('register.html',"currentwindow","");
-
-}
-</script>
-</html>
