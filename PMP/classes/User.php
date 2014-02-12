@@ -213,16 +213,27 @@
 			$conn = null;		
 		}
 
-		public function getProjectByUsername($username, $activityType){
+		public function getActivityOfUser( $activityType ){
 			$username = trim( $username );
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS joinDateTime, UNIX_TIMESTAMP(lastLoginDateTime) AS lastLoginDateTime FROM ".TABLENAME_USERS." WHERE username = :username AND activityType = :activityType ";
+			$sql = "SELECT * FROM ".TABLENAME_MEMBERSHIP." WHERE userID = :userID AND activity_type = :activity_type ";
 			$st = $conn->prepare( $sql );
-			$st->bindValue( ":username", $username, PDO::PARAM_STR );
+			$st->bindValue( ":userID", $this->id, PDO::PARAM_INT );
+			$st->bindValue( ":activity_type", $activity_type, PDO::PARAM_STR );
 			$st->execute();
 			$row = $st->fetch();
+			$activityId = $row['activityId'];
 			$conn = null;
-			if( $row ) return new User( $row );
+			if( $row ) return new Activity::getById( $activityId );
+
+			/*
+			for multiple activities, we can use fetchAll() and a foreach loop to get all of them.
+			$result = $st->fetchAll();
+			foreach( $result as $row ) {
+    			echo $row['id'];
+    			echo $row['title'];
+			}
+			*/
 		}		
 	}
 ?>

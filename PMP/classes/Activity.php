@@ -104,7 +104,7 @@ $conn = null;
 if( $row ) return new Activity( $row );
 }
 
-public static function getByAvtivityType( $activity_type ){
+public static function getByActivityType( $activity_type ){
 $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 $sql = "SELECT * FROM ".TABLENAME_ACTIVITY." WHERE activity_type = :activity_type ";
 $st = $conn->prepare( $sql );
