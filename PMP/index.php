@@ -101,20 +101,19 @@
 		require( TEMPLATE_PATH . "/loginForm.php" );
 	}
 
-	function getProjects()
+	function getActivity( $activity_type )
 	{
 		$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 		$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS joinDateTime, UNIX_TIMESTAMP(lastLoginDateTime) AS lastLoginDateTime FROM ".TABLENAME_ACTIVITY." WHERE activity_type = :activity_type ";
 		$st = $conn->prepare( $sql );
 		$st->bindValue( ":activity_type", $activity_type, PDO::PARAM_STR );
 		$st->execute();
-		$row = $st->fetch();
-		$conn = null;
-		$i = 0;
-		while ($row[$i] != null) {
-			echo $row[$i];
-			echo "<br/>";
+		$result = $st -> fetchAll();
+		foreach( $result as $row ) {
+    		echo $row['id'];
+    		echo $row['title'];
 		}
+		$conn = null;
 	}
 	
 ?>

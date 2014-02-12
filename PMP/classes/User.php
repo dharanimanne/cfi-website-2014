@@ -211,6 +211,18 @@
 			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
 			$st->execute();
 			$conn = null;		
+		}
+
+		public function getProjectByUsername($username, $activityType){
+			$username = trim( $username );
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = "SELECT *, UNIX_TIMESTAMP(joinDateTime) AS joinDateTime, UNIX_TIMESTAMP(lastLoginDateTime) AS lastLoginDateTime FROM ".TABLENAME_USERS." WHERE username = :username AND activityType = :activityType ";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":username", $username, PDO::PARAM_STR );
+			$st->execute();
+			$row = $st->fetch();
+			$conn = null;
+			if( $row ) return new User( $row );
 		}		
 	}
 ?>
