@@ -21,6 +21,9 @@
 		case 'register';
 			register();
 			break;
+		case 'update';
+			update();
+			break;
 		default:
 			login();
 	}
@@ -101,6 +104,13 @@
 		require( TEMPLATE_PATH . "/loginForm.php" );
 	}
 
+	function update(){
+		$results = array();	
+		$results['pageTitle'] = "Login | CFI Projects Management Portal";	
+		$results['user'] = User::getByUsername( $_SESSION['username'] );	
+		require( TEMPLATE_PATH . "/updateForm.php" );		
+	}
+	
 	function getActivity( $activity_type )
 	{
 		$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );

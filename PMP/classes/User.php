@@ -1,5 +1,6 @@
 <?php
 	require_once('Password.php');
+	require_once('Activity.php');
 	define("MINIMUM_NAME_LENGTH", 4);
 	define("MINIMUM_ROLLNO_LENGTH", 8);
 		
@@ -224,7 +225,8 @@
 			$row = $st->fetch();
 			$activityId = $row['activityId'];
 			$conn = null;
-			if( $row ) return new Activity::getById( $activityId );
+			$activity = Activity::getById( $activityId );
+			if( $row ) return $activity;
 
 			/*
 			for multiple activities, we can use fetchAll() and a foreach loop to get all of them.
