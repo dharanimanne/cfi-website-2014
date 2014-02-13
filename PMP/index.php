@@ -24,6 +24,9 @@
 		case 'update';
 			update();
 			break;
+		case 'add_activity';
+            add_activity();		
+				break;
 		default:
 			login();
 	}
@@ -97,43 +100,30 @@
 				$results['errorMessage'] = "Registration unsuccessful, invalid name provided.";
 			else if( User::errorCode() == "ERR_INV_ROLL" )
 				$results['errorMessage'] = "Registration unsuccessful, invalid roll no provided.";
-			else if( User::errorCode() == "ERR_INV_PHONE" )
-				$results['errorMessage'] = "Registration unsuccessful, invalid phone number provided.";
 			else
 				$results['errorMessage'] = "Registration unsuccessful. Please try again.";
 		}
 		
 		require( TEMPLATE_PATH . "/loginForm.php" );
 	}
+	function add_activity(){
+		$results = array();	
+		$results['pageTitle'] = " | CFI Projects Management Portal";	
+		$activity = new Activity( $_POST );
+		
+		if( $activity->insert() ){
+			$results['successMessage'] = "Added activity successful.";
+		}		
+		
+		
+		
+	}
 
 	function update(){
 		$results = array();	
 		$results['pageTitle'] = "Login | CFI Projects Management Portal";	
-		$results['user'] = User::getByUsername( $_SESSION['username'] );
-		$user = new User( $_POST );
-	//	print_r($user);
-	//	print_r($results['user']);
-		$vars = get_object_vars($user);
-        foreach($vars as $name => $value) {
-      		if ( !$value ) {
-      			$results['user']->$name = $value;
-      		}
-        }
-
-		if( $results['user']->update() ) 
-		{
-			$results['successMessage'] = "Update successful.";
-		}
-		else{
-			//echo User::errorInfo();
-			if( User::errorCode() == "ERR_INV_NAME" )
-				$results['errorMessage'] = "Update unsuccessful, invalid name provided.";
-			else if( User::errorCode() == "ERR_INV_PHONE" )
-				$results['errorMessage'] = "Update unsuccessful, invalid phone number provided.";
-			else
-				$results['errorMessage'] = "Update unsuccessful. Please try again.";
-		}
-		require( TEMPLATE_PATH . "/updateForm.php" );
+		$results['user'] = User::getByUsername( $_SESSION['username'] );	
+		require( TEMPLATE_PATH . "/updateForm.php" );		
 	}
 	
 	function getActivity( $activity_type )
@@ -150,4 +140,5 @@
 		}
 		$conn = null;
 	}
+	
 ?>
