@@ -8,22 +8,22 @@
 		
 		public $id = null;
 		public $username = null;
-		public $password = null;
+		public $password = null;//
 		public $lastLoginFrom = null;
 		public $name = null;
-		public $room = null;		
-		public $rollNo = null;		
-		public $hostel = null;
-		public $phone = null;
+		public $room = null;//	
+		public $rollNo = null;
+		public $hostel = null;//
+		public $phone = null;//
 		public $email = null;
 		public $membership = null;
 		public $joinDateTime = null;
 		public $lastLoginDateTime = null;
-		public $expertise = null;
+		public $expertise = null;//
 		public $rating = null;
-		public $socialMediaUrl = null;
+		public $socialMediaUrl = null;//
 		public $avatarLocation = null;
-		public $aboutMe = null;
+		public $aboutMe = null;//
 		public $coreRemark = null;
 		public $userType = null;
 		public static $errorMessage;
@@ -88,6 +88,10 @@
 			}
 			else if( strlen( $this->name ) < MINIMUM_NAME_LENGTH || preg_match("/[^a-zA-Z'-]/", $this->name) ){
 				self::$errorCode ="ERR_INV_NAME";
+				return false;
+			}
+			else if( strlen( $this->phone ) != 10 !! preg_match(pattern, $this->phone) ){
+				self::$errorCode ="ERR_INV_PHONE";
 				return false;
 			}
 			else if( strlen( $this->rollNo ) < MINIMUM_ROLLNO_LENGTH || preg_match("/[^a-zA-Z0-9'-]/", $this->rollNo) ){

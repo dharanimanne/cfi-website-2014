@@ -97,6 +97,8 @@
 				$results['errorMessage'] = "Registration unsuccessful, invalid name provided.";
 			else if( User::errorCode() == "ERR_INV_ROLL" )
 				$results['errorMessage'] = "Registration unsuccessful, invalid roll no provided.";
+			else if( User::errorCode() == "ERR_INV_PHONE" )
+				$results['errorMessage'] = "Registration unsuccessful, invalid phone number provided.";
 			else
 				$results['errorMessage'] = "Registration unsuccessful. Please try again.";
 		}
@@ -107,7 +109,22 @@
 	function update(){
 		$results = array();	
 		$results['pageTitle'] = "Login | CFI Projects Management Portal";	
-		$results['user'] = User::getByUsername( $_SESSION['username'] );	
+//		$results['user'] = User::getByUsername( $_SESSION['username'] );
+		User::getByUsername( $_SESSION['username'] = new User( $_POST );
+		$user = User::getByUsername( $_SESSION['username'] );
+		if( $user->update() ) 
+		{
+			$results['successMessage'] = "Update successful.";
+		}
+		else{
+			//echo User::errorInfo();
+			if( User::errorCode() == "ERR_INV_NAME" )
+				$results['errorMessage'] = "Update unsuccessful, invalid name provided.";
+			else if( User::errorCode() == "ERR_INV_PHONE" )
+				$results['errorMessage'] = "Update unsuccessful, invalid phone number provided.";
+			else
+				$results['errorMessage'] = "Update unsuccessful. Please try again.";
+		}	
 		require( TEMPLATE_PATH . "/updateForm.php" );		
 	}
 	
