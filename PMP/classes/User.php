@@ -8,22 +8,22 @@
 		
 		public $id = null;
 		public $username = null;
-		public $password = null;//
+		public $password = null;
 		public $lastLoginFrom = null;
 		public $name = null;
-		public $room = null;//	
+		public $room = null;	
 		public $rollNo = null;
-		public $hostel = null;//
-		public $phone = null;//
+		public $hostel = null;
+		public $phone = null;
 		public $email = null;
 		public $membership = null;
 		public $joinDateTime = null;
 		public $lastLoginDateTime = null;
-		public $expertise = null;//
+		public $expertise = null;
 		public $rating = null;
-		public $socialMediaUrl = null;//
+		public $socialMediaUrl = null;
 		public $avatarLocation = null;
-		public $aboutMe = null;//
+		public $aboutMe = null;
 		public $coreRemark = null;
 		public $userType = null;
 		public static $errorMessage;
