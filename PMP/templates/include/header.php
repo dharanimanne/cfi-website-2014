@@ -16,6 +16,7 @@
 	<body>
 		<div id="container">
 			<div id="header">
+<<<<<<< HEAD
 
 		<div class="navbar navbar-fixed-top">  
 		  <div class="navbar-inner">  
@@ -50,4 +51,19 @@
             </div>
 
 
+=======
+				<div id="navbar">
+					Navbar<br>
+					<?php 
+						if( isset( $results['user'] ) ){
+							echo $results['user']->name;  echo "<br>"; echo $results['user']->email; 
+							echo "<a href='/updateForm.php'>Update Profile</a>";
+						}
+						else{
+							echo "Please login";
+						}
+					?>
+					<br>Navbar ends<br><br>
+				</div>
+>>>>>>> 07712ac51a880b62ee8791ebfae5c523e02dd059
 			</div>
