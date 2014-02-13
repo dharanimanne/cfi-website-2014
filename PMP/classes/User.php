@@ -143,28 +143,31 @@
 			if( is_null( $this->id ) ) trigger_error( "User::update(): Attempt to update a user object that does not have its ID property set.", E_USER_ERROR );
 			
 			//Update the object
+			$this->password = Password::hash($this->password);
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
-			$sql = "UPDATE ".TABLENAME_USERS." SET username=:username, joinDateTime=FROM_UNIXTIME(:joinDateTime), lastLoginDateTime=FROM_UNIXTIME(:lastLoginDateTime), lastLoginFrom=:lastLoginFrom, userType=:userType, name=:name, rollNo=:rollNo, hostel=:hostel, room=:room, phone=:phone, email=:email, socialMediaUrl=:socialMediaUrl, avatarLocation=:avatarLocation, expertise=:expertise, rating=:rating, aboutMe=:aboutMe, coreRemark=:coreRemark WHERE id = :id";
+			$sql = "UPDATE ".TABLENAME_USERS." SET name=:name, password=:password, hostel=:hostel, room=:room, phone=:phone, socialMediaUrl=:socialMediaUrl, expertise=:expertise, aboutMe=:aboutMe WHERE id = :id";
 			$st = $conn->prepare( $sql );
-			$st->bindValue( ":joinDateTime", $this->joinDateTime, PDO::PARAM_INT );
-			$st->bindValue( ":lastLoginDateTime", $this->lastLoginDateTime, PDO::PARAM_INT );
-			$st->bindValue( ":lastLoginFrom", $this->lastLoginFrom, PDO::PARAM_STR );
-			$st->bindValue( ":userType", $this->userType, PDO::PARAM_STR );
 			$st->bindValue( ":name", $this->name, PDO::PARAM_STR );
-			$st->bindValue( ":rollNo", $this->rollNo, PDO::PARAM_STR );
+			echo $this->name ;
+			$st->bindValue( ":password", $this->password, PDO::PARAM_STR );
+			echo $this->password;
 			$st->bindValue( ":hostel", $this->hostel, PDO::PARAM_STR );
+			echo $this->hostel;
 			$st->bindValue( ":room", $this->room, PDO::PARAM_STR );
+			echo $this->room;
 			$st->bindValue( ":phone", $this->phone, PDO::PARAM_STR );
-			$st->bindValue( ":email", $this->email, PDO::PARAM_STR );
+			echo $this->phone;
 			$st->bindValue( ":socialMediaUrl", $this->socialMediaUrl, PDO::PARAM_STR );
-			$st->bindValue( ":avatarLocation", $this->avatarLocation, PDO::PARAM_STR );
+			echo $this->socialMediaUrl;
 			$st->bindValue( ":expertise", $this->expertise, PDO::PARAM_STR );
-			$st->bindValue( ":rating", $this->rating, PDO::PARAM_STR );
+			echo $this->expertise;
 			$st->bindValue( ":aboutMe", $this->aboutMe, PDO::PARAM_STR );
-			$st->bindValue( ":membership", $this->membership, PDO::PARAM_STR );
-			$st->bindValue( ":coreRemark", $this->coreRemark, PDO::PARAM_STR );
+			echo $this->aboutMe;
 			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+			echo $this->id;
+			echo "<br>";
 			$st->execute();
+			print_r($st->errorInfo());
 			$conn = null;		
 		}
 		

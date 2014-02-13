@@ -3,6 +3,7 @@
 		<div id="UpdateDiv">
 			Update your profile. <br>
 			<form name="updateForm" action="index.php?action=update" method="POST">
+				Name <input type="text" name="name" placeholder="Name" value="<?php if( isset( $results['user']->name ) ) echo $results['user']->name; ?>" /><br>
 				Room <input type="text" name="room" placeholder="Room No." value="<?php if( isset( $results['user']->room ) ) echo $results['user']->room; ?>" /><br>
 				Hostel <input type="text" name="hostel" placeholder="Hostel" value="<?php if( isset( $results['user']->hostel ) ) echo $results['user']->hostel; ?>" /><br>
 				Phone <input type="text" name="phone" placeholder="Contact No." value="<?php if( isset( $results['user']->phone ) ) echo $results['user']->phone; ?>" /><br>
