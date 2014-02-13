@@ -17,6 +17,7 @@
 					<?php 
 						if( isset( $results['user'] ) ){
 							echo $results['user']->name;  echo "<br>"; echo $results['user']->email; 
+							echo "<a href='/updateForm.php'>Update Profile</a>";
 						}
 						else{
 							echo "Please login";

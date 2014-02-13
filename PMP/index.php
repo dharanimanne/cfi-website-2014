@@ -109,10 +109,18 @@
 	function update(){
 		$results = array();	
 		$results['pageTitle'] = "Login | CFI Projects Management Portal";	
-//		$results['user'] = User::getByUsername( $_SESSION['username'] );
-		User::getByUsername( $_SESSION['username'] = new User( $_POST );
-		$user = User::getByUsername( $_SESSION['username'] );
-		if( $user->update() ) 
+		$results['user'] = User::getByUsername( $_SESSION['username'] );
+		$user = new User( $_POST );
+	//	print_r($user);
+	//	print_r($results['user']);
+		$vars = get_object_vars($user);
+        foreach($vars as $name => $value) {
+      		if ( !$value ) {
+      			$results['user']->$name = $value;
+      		}
+        }
+
+		if( $results['user']->update() ) 
 		{
 			$results['successMessage'] = "Update successful.";
 		}
@@ -124,8 +132,8 @@
 				$results['errorMessage'] = "Update unsuccessful, invalid phone number provided.";
 			else
 				$results['errorMessage'] = "Update unsuccessful. Please try again.";
-		}	
-		require( TEMPLATE_PATH . "/updateForm.php" );		
+		}
+		require( TEMPLATE_PATH . "/updateForm.php" );
 	}
 	
 	function getActivity( $activity_type )
@@ -142,5 +150,4 @@
 		}
 		$conn = null;
 	}
-	
 ?>

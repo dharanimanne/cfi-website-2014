@@ -90,7 +90,7 @@
 				self::$errorCode ="ERR_INV_NAME";
 				return false;
 			}
-			else if( strlen( $this->phone ) != 10 !! preg_match(pattern, $this->phone) ){
+			else if( strlen( $this->phone ) != 10 || preg_match("^[0-9]{10}", $this->phone) ){
 				self::$errorCode ="ERR_INV_PHONE";
 				return false;
 			}
@@ -140,7 +140,7 @@
 		public function update(){
 				
 			//Does the object have an ID?
-			if( is_null( $this->ID ) ) trigger_error( "User::update(): Attempt to update a user object that does not have its ID property set.", E_USER_ERROR );
+			if( is_null( $this->id ) ) trigger_error( "User::update(): Attempt to update a user object that does not have its ID property set.", E_USER_ERROR );
 			
 			//Update the object
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
