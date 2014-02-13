@@ -214,7 +214,6 @@
 		}
 
 		public function getActivityOfUser( $activityType ){
-			$username = trim( $username );
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 			$sql = "SELECT * FROM ".TABLENAME_MEMBERSHIP." WHERE userID = :userID AND activity_type = :activity_type ";
 			$st = $conn->prepare( $sql );
@@ -222,9 +221,9 @@
 			$st->bindValue( ":activity_type", $activity_type, PDO::PARAM_STR );
 			$st->execute();
 			$row = $st->fetch();
-			$activityId = $row['activityId'];
+		//	$activityId = $row['activityId'];
 			$conn = null;
-			if( $row ) return new Activity::getById( $activityId );
+			if( $row ) return new Activity( $row );
 
 			/*
 			for multiple activities, we can use fetchAll() and a foreach loop to get all of them.
