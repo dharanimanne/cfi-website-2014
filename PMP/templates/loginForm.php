@@ -1,4 +1,6 @@
-<?php include("templates/include/header.php"); ?>
+<?php include("include/header.php"); ?>
+<?php include("include/sidebar.php"); ?>
+
 	<div id="content">
 		<div id="loginDiv">
 			<form name="loginForm" action="index.php?action=login" method="POST">
@@ -33,5 +35,5 @@
 			<?php } ?>			
 		</div>
 	</div>
-<?php include("templates/include/footer.php"); ?>
+<?php include("include/footer.php"); ?>
 
