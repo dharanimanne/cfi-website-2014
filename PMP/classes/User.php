@@ -223,23 +223,32 @@
 
 		public function getActivityOfUser( $activityType ){
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "SELECT * FROM ".TABLENAME_MEMBERSHIP." WHERE userID = :userID AND activity_type = :activity_type ";
+			$sql = "SELECT * FROM ".TABLENAME_MEMBERSHIP." WHERE userId = :userId AND activityType = :activityType ";
+	//		print_r($sql);
 			$st = $conn->prepare( $sql );
-			$st->bindValue( ":userID", $this->id, PDO::PARAM_INT );
-			$st->bindValue( ":activity_type", $activity_type, PDO::PARAM_STR );
+			$st->bindValue( ":userId", $this->id, PDO::PARAM_INT );
+	//		echo $this->id;
+			$st->bindValue( ":activityType", $activityType, PDO::PARAM_STR );
+	//		echo $activityType;
+	//		print_r($st->errorLog());
 			$st->execute();
 			$row = $st->fetch();
-		//	$activityId = $row['activityId'];
-			$conn = null;
-			if( $row ) return Activity( $row );
-			/*
-			for multiple activities, we can use fetchAll() and a foreach loop to get all of them.
-			$result = $st->fetchAll();
+	//		echo "hey there...$row is printed next";
+	//		print_r($row);
+	//		echo "$row is in between these comments";
+			$activityId = $row['activityId'];
+	//		echo $activityId;
+			
+	//		for multiple activities, we can use fetchAll() and a foreach loop to get all of them.
+	/*		$result = $st->fetchAll();
 			foreach( $result as $row ) {
     			echo $row['id'];
     			echo $row['title'];
 			}
-			*/
+	*/		
+			$conn = null;
+			if( $row ) return Activity::getById( $activityId );
+			
 		}		
 	}
 ?>
