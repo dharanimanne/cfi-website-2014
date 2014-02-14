@@ -24,6 +24,9 @@
 		case 'update';
 			update();
 			break;
+		case 'updatePassword'
+			updatePassword();
+			break;	
 		case 'add_activity';
             add_activity();		
 				break;
@@ -106,29 +109,58 @@
 		
 		require( TEMPLATE_PATH . "/loginForm.php" );
 	}
+
 	function add_activity(){
 		$results = array();	
-		$results['pageTitle'] = " | CFI Projects Management Portal";	
+		$results['pageTitle'] = " | CFI Projects Management Portal";
 		$activity = new Activity( $_POST );
 		
 		if( $activity->insert() ){
 			$results['successMessage'] = "Added activity successful.";
-		}		
-		
-		
-		
+		}			
+	}
+
+	function updatePassword(){
+		$results = array();	
+		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
+		$results['user'] = User::getByUsername( $_SESSION['username'] );
+
+		if( isset( $_POST['update_form'] && $_POST['password'] == $_POST['password_confirmation'] ) ){
+			$user = new User( $_POST );
+			$user->id = $results['user']->id;
+			echo $user->id;
+
+			if( $user->updatePassword() )
+				{
+					$results['successMessage'] = "Update successful.";
+					$results['user'] = $user;
+				}
+				else{
+					//echo User::errorInfo();
+					if( User::errorCode() == "ERR_INV_PASS" )
+						$results['errorMessage'] = "Update unsuccessful, password should atleast be 6 characters long.";
+					else
+						$results['errorMessage'] = "Update unsuccessful. Please try again.";
+				}
+			}
+			require( TEMPLATE_PATH . "/updateForm.php" );
+		}
+		else{
+			$results['errorMessage'] = "Update unsuccessful. Passwords do not match.";
+			require( TEMPLATE_PATH . "/updateForm.php" );
+		}
 	}
 
 	function update(){
 		$results = array();	
-		$results['pageTitle'] = "Login | CFI Projects Management Portal";	
+		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
 
 		if( isset( $_POST['update_form'] ) ){
 			$user = new User( $_POST );
 			$user->id = $results['user']->id;
 			echo $user->id;
-			print_r($user);
+		//	print_r($user);
 		//	print_r($user);
 		//	print_r($results['user']);
 /*			$vars = get_object_vars($user);

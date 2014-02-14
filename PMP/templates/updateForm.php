@@ -14,6 +14,14 @@
 				<input type="submit" name="update_form" value="Update" /> 
 			</form>
 		</div>
+		<div id="UpdatePasswordDiv">
+			Update your password. <br>
+			<form name="updatePasswordForm" action="index.php?action=updatePassword" method="POST">
+				New Password <input type="password" name="password" placeholder="Choose Password" /><br>
+				Confirm New Password <input type="password" name="password_confirmation" placeholder="Re-type Password" /><br>
+				<input type="submit" name="update_password_form" value="Update Password" /> 
+			</form>
+		</div>
 		<div id="messageDiv">
 			<?php if( isset( $results['successMessage'] ) ) { ?>
 			<div class="message success">

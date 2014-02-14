@@ -3,6 +3,7 @@
 	require_once('Activity.php');
 	define("MINIMUM_NAME_LENGTH", 4);
 	define("MINIMUM_ROLLNO_LENGTH", 8);
+	define("MINIMUM_PASSWORD_LENGTH", 6);
 		
 	class User {
 		
@@ -142,15 +143,22 @@
 			//Does the object have an ID?
 			if( is_null( $this->id ) ) trigger_error( "User::update(): Attempt to update a user object that does not have its ID property set.", E_USER_ERROR );
 			
+			else if( strlen( $this->name ) < MINIMUM_NAME_LENGTH || preg_match("/[^a-zA-Z'-]/", $this->name) ){
+				self::$errorCode ="ERR_INV_NAME";
+				return false;
+			}
+			else if( strlen( $this->phone ) != 10 || preg_match("^[0-9]{10}", $this->phone) ){
+				self::$errorCode ="ERR_INV_PHONE";
+				return false;
+			}
+
 			//Update the object
 			$this->password = Password::hash($this->password);
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
-			$sql = "UPDATE ".TABLENAME_USERS." SET name=:name, password=:password, hostel=:hostel, room=:room, phone=:phone, socialMediaUrl=:socialMediaUrl, expertise=:expertise, aboutMe=:aboutMe WHERE id = :id";
+			$sql = "UPDATE ".TABLENAME_USERS." SET name=:name, hostel=:hostel, room=:room, phone=:phone, socialMediaUrl=:socialMediaUrl, expertise=:expertise, aboutMe=:aboutMe WHERE id = :id";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":name", $this->name, PDO::PARAM_STR );
 			echo $this->name ;
-			$st->bindValue( ":password", $this->password, PDO::PARAM_STR );
-			echo $this->password;
 			$st->bindValue( ":hostel", $this->hostel, PDO::PARAM_STR );
 			echo $this->hostel;
 			$st->bindValue( ":room", $this->room, PDO::PARAM_STR );
@@ -167,11 +175,33 @@
 			echo $this->id;
 			echo "<br>";
 			$st->execute();
-			print_r($st->errorInfo());
+		//	print_r($st->errorInfo());
 			$conn = null;	
 			
 			return true;
 		}
+
+		public function updatePassword(){
+
+			if( is_null( $this->id ) ) trigger_error( "User::update(): Attempt to update a user object that does not have its ID property set.", E_USER_ERROR );
+			
+			if( strlen( $this->password ) < MINIMUM_PASSWORD_LENGTH ){
+				self::$errorCode ="ERR_INV_PASS";
+				return false;
+			}
+			//Update the object
+			$this->password = Password::hash($this->password);
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
+			$sql = "UPDATE ".TABLENAME_USERS." SET password=:password WHERE id = :id";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":password", $this->password, PDO::PARAM_STR );
+			echo $this->password;
+			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+			$st->execute()
+			$conn = null;
+
+			return true;
+			}
 		
 		
 		public static function getById( $id ){
