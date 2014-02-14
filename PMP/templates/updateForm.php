@@ -10,7 +10,6 @@
 				Expertise <input type="text" name="expertise" placeholder="coding" value="<?php if( isset( $results['user']->expertise ) ) echo $results['user']->expertise; ?>" /><br>
 				SocialMediaUrl <input type="text" name="socialMediaUrl" placeholder="" value="<?php if( isset( $results['user']->socialMediaUrl ) ) echo $results['user']->socialMediaUrl; ?>" /><br>
 				About Me <input type="text" name="aboutMe" placeholder="I am the dude" value="<?php if( isset( $results['user']->aboutMe ) ) echo $results['user']->aboutMe; ?>" /><br><br>
-				Password <input type="password" name="password" placeholder="Choose Password" /><br>
 				<input type="submit" name="update_form" value="Update" /> 
 			</form>
 		</div>

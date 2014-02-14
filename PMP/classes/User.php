@@ -153,7 +153,6 @@
 			}
 
 			//Update the object
-			$this->password = Password::hash($this->password);
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
 			$sql = "UPDATE ".TABLENAME_USERS." SET name=:name, hostel=:hostel, room=:room, phone=:phone, socialMediaUrl=:socialMediaUrl, expertise=:expertise, aboutMe=:aboutMe WHERE id = :id";
 			$st = $conn->prepare( $sql );
