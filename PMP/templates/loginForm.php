@@ -1,5 +1,4 @@
 <?php include("include/header.php"); ?>
-<?php include("include/sidebar.php"); ?>
 
 	<div id="content">
 		<div id="loginDiv">

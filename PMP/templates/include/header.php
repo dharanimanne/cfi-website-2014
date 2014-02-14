@@ -9,49 +9,64 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><?php if( isset( $results['pageTitle'] )){ echo htmlspecialchars( $results['pageTitle'] ); } else{ echo "Centre For Innovation";} ?></title>
         
-        <link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.css">
-        <script src="../../js/jquery.min.js"></script>
-        <script src="../../css/bootstrap/js/bootstrap.js"></script>
+        <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/bootstrap.css">
+        <script src="<?php echo MEDIA_URL;?>javascript/jquery-1.11.0.min.js"></script>
+        <script src="<?php echo MEDIA_URL;?>javascript/bootstrap.js"></script>
 	</head>
 	<body>
 		<div id="container">
 			<div id="header">
-<<<<<<< HEAD
-
-		<div class="navbar navbar-fixed-top">  
-		  <div class="navbar-inner">  
-    		<div class="container"> 
-				<ul class="nav">
-				  <li class="active">
-				    <a class="brand" href="#">CFI Portal</a>
-				  </li>	
-				  <li><a href="#">About</a></li>
-  					<li><a href="#">Portfolio</a></li>
-  					<li><a href="#">Contact</a></li>
-                    </ul>
-                <ul class="nav">
-			  		<li class="dropdown">  
-    <a href="#"  
-          class="dropdown-toggle"  
-          data-toggle="dropdown">  
-          Services  
-          <b class="caret"></b>  
-    </a>  
- 			   <ul class="dropdown-menu">  
-     			<li><a href="#">Ravi Prakash</a></li> 
-				  <li><a href="#">vsvrp.1995@gmail.com</a></li>  
-				  <li><a href="#">Settings</a></li>  
-			    </ul>  
-			  </li>  
-			</ul> 
-
-
- </div>
-            </div>
-            </div>
-
-
-=======
+				<div class="navbar navbar-fixed-top">  
+				  <div class="navbar-inner">  
+						<div class="container"> 
+							<ul class="nav">
+							  <li class="active">
+								<a class="brand" href="index.php">CFI Projects Management Portal</a>
+							  </li>	
+							  <li>
+								<a href="#">About</a>
+							  </li>
+							  <li>
+								<a href="#">Help</a>
+							  </li>
+							  <li>
+								<a href="#">Contacts</a>
+							  </li>
+							</ul>
+							<ul class="nav pull-right">
+							  <li class="dropdown">  
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Profile <b class="caret"></b></a>  
+								<?php
+									if( !isset( $_SESSION['username'] ) ) {
+								?>
+									<ul class="dropdown-menu">  
+										<li>
+											<a href="#">Please Login</a>
+										</li>
+									</ul>
+								<?php } else { ?>
+								<ul class="dropdown-menu">  
+									<li>
+										<a href="#"><?php echo $results['user']->name; ?></a>
+									</li> 
+									<li>
+										<a href="#"><?php echo $results['user']->email; ?></a>
+									</li>  
+									<li>
+										<a href="index.php?action=update">Settings</a>
+									</li>  
+									<li>
+										<a href="index.php?action=logout">Logout</a>
+									</li>  
+								</ul> 
+								<?php } ?>
+							  </li>  
+							</ul> 
+						</div>
+					</div>
+				</div>
+			</div>
+<!--
 				<div id="navbar">
 					Navbar<br>
 					<?php 
@@ -65,5 +80,4 @@
 					?>
 					<br>Navbar ends<br><br>
 				</div>
->>>>>>> 07712ac51a880b62ee8791ebfae5c523e02dd059
-			</div>
+-->

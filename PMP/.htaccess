@@ -1,2 +1,2 @@
 RewriteEngine on
-RewriteRule ^articles/([^/]+)/?$ index.php?action=$1 [L]
+RewriteRule ^action/([^/]+)/?$ index.php?action=$1 [L]

@@ -10,7 +10,8 @@
 	define( "ADMIN_PASSWORD", "pass" );
 	define( "TABLENAME_USERS", "users" );
 	define( "TABLENAME_ACTIVITY", "activity" );
-	define(  "TABLENAME_MEMBERSHIP", "memberships" );
+	define( "TABLENAME_MEMBERSHIP", "memberships" );
+	define( "MEDIA_URL", "/CFI/PMP/media/" );
 	
 	require( CLASS_PATH . "/Activity.php" );
 	require( CLASS_PATH . "/Password.php" );
