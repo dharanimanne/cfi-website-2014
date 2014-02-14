@@ -125,7 +125,7 @@
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
 
-		if( isset( $_POST['update_form'] ) && ( $_POST['password'] == $_POST['password_confirmation'] ) ){
+		if( isset( $_POST['update_password_form'] ) && ( $_POST['password'] == $_POST['password_confirmation'] ) ){
 			$user = new User( $_POST );
 			$user->id = $results['user']->id;
 			echo $user->id;
@@ -186,7 +186,7 @@
 		require( TEMPLATE_PATH . "/updateForm.php" );
 	}
 	
-	
+	/*
 	function getActivity( $activity_type )
 	{
 		$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
