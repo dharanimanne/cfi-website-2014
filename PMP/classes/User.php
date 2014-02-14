@@ -168,7 +168,9 @@
 			echo "<br>";
 			$st->execute();
 			print_r($st->errorInfo());
-			$conn = null;		
+			$conn = null;	
+			
+			return true;
 		}
 		
 		

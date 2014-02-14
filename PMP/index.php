@@ -141,6 +141,7 @@
 			if( $user->update() )
 			{
 				$results['successMessage'] = "Update successful.";
+				$results['user'] = $user;
 			}
 			else{
 				//echo User::errorInfo();
