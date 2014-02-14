@@ -243,7 +243,7 @@
 		public function delete(){
 						
 			//Does the object have an ID?
-			if( is_null( $this->ID ) ) trigger_error( "User::delete(): Attempt to delete a user object that does not have its ID property set.", E_USER_ERROR );
+			if( is_null( $this->id ) ) trigger_error( "User::delete(): Attempt to delete a user object that does not have its ID property set.", E_USER_ERROR );
 			
 			//Delete the object
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );

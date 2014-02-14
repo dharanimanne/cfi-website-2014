@@ -42,7 +42,57 @@
 	
 			if( !is_null( $this->id ) ) trigger_error( "User::insert(): Attempt to insert a user object that already has its ID property set to $this->id.", E_USER_ERROR );
 			
-			$this->joinDateTime = date("Y-m-d H:i:s");	
+			$this->joinDateTime = date("Y-m-d H:i:s");
+
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = "INSERT INTO ".TABLENAME_USERS." ( username, password, name, lastLoginFrom, membership, rollNo, hostel, room, phone, email, joinDateTime, lastLoginDateTime, expertise, rating, userType, socialMediaUrl, avatarLocation, aboutMe, coreRemark) VALUES ( :username, :password, :name, :lastLoginFrom, :membership, :rollNo, :hostel, :room, :phone, :email, :joinDateTime, :lastLoginDateTime, :expertise, :rating, :userType, :socialMediaUrl, :avatarLocation, :aboutMe, :coreRemark)";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":userId", $this->userId, PDO::PARAM_INT );
+			$st->bindValue( ":activityId", $this->activityId, PDO::PARAM_INT );
+			$st->bindValue( ":activityType", $this->activityType, PDO::PARAM_STR );	
+			$st->bindValue( ":membershipType", $this->membershipType, PDO::PARAM_STR );
+			$st->bindValue( ":memberSince", $this->memberSince, PDO::PARAM_INT);	
+			$result = $st->execute();
+			$this->id = $conn->lastInsertId();
+			$conn = null;
+
+			if( !$result ){
+				self::$errorMessage = "Membership::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
+				self::$errorCode = $st->errorCode();
+				return false;
+			}
+			else{		
+				self::$successMessage = "Membership::insert: Membership successfully inserted with id ".$this->id;			
+				return true;
+			}
+		}
+
+		public function update(){
+				
+			//Does the object have an ID?
+			if( is_null( $this->id ) ) trigger_error( "Membership::update(): Attempt to update a membership object that does not have its ID property set.", E_MEMBERSHIP_ERROR );
+			
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
+			$sql = "UPDATE ".TABLENAME_MEMBERSHIPS." SET membershipType=:membershipType WHERE id = :id";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":membershipType", $this->membershipType, PDO::PARAM_STR );
+			$st->execute();
+			$conn = null;	
+			
+			return true;
+		}
+
+		public function delete(){
+						
+			//Does the object have an ID?
+			if( is_null( $this->id ) ) trigger_error( "Membership::delete(): Attempt to delete a membership object that does not have its ID property set.", E_MEMBERSHIP_ERROR );
+			
+			//Delete the object
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$st = $conn->prepare ( "DELETE FROM ".TABLENAME_MEMBERSHIPS." WHERE id = :id LIMIT 1" );
+			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+			$st->execute();
+			$conn = null;		
 		}
 	}
 
