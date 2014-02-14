@@ -6,7 +6,8 @@ CREATE TABLE memberships
   activityId        smallint NOT NULL,
   activityType      VARCHAR(100) NULL,
   membershipType    TEXT NOT NULL,
- 
+  memberSince		datetime NOT NULL,
+
   PRIMARY KEY     (id)
 );
  
