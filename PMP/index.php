@@ -24,7 +24,7 @@
 		case 'update';
 			update();
 			break;
-		case 'updatePassword'
+		case 'updatePassword';
 			updatePassword();
 			break;	
 		case 'add_activity';
@@ -125,7 +125,7 @@
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
 
-		if( isset( $_POST['update_form'] && $_POST['password'] == $_POST['password_confirmation'] ) ){
+		if( isset( $_POST['update_form'] ) && ( $_POST['password'] == $_POST['password_confirmation'] ) ){
 			$user = new User( $_POST );
 			$user->id = $results['user']->id;
 			echo $user->id;
@@ -143,12 +143,10 @@
 						$results['errorMessage'] = "Update unsuccessful. Please try again.";
 				}
 			}
-			require( TEMPLATE_PATH . "/updateForm.php" );
-		}
 		else{
 			$results['errorMessage'] = "Update unsuccessful. Passwords do not match.";
-			require( TEMPLATE_PATH . "/updateForm.php" );
 		}
+		require( TEMPLATE_PATH . "/updateForm.php" );
 	}
 
 	function update(){
@@ -187,6 +185,7 @@
 		}
 		require( TEMPLATE_PATH . "/updateForm.php" );
 	}
+	
 	
 	function getActivity( $activity_type )
 	{

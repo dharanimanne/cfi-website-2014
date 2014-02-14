@@ -91,7 +91,7 @@
 				self::$errorCode ="ERR_INV_NAME";
 				return false;
 			}
-			else if( strlen( $this->phone ) != 10 || preg_match("^[0-9]{10}", $this->phone) ){
+			else if( strlen( $this->phone ) != 10 || preg_match("/[^[0-9]{10}]/", $this->phone) ){
 				self::$errorCode ="ERR_INV_PHONE";
 				return false;
 			}
@@ -197,7 +197,7 @@
 			$st->bindValue( ":password", $this->password, PDO::PARAM_STR );
 			echo $this->password;
 			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
-			$st->execute()
+			$st->execute();
 			$conn = null;
 
 			return true;
