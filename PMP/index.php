@@ -30,6 +30,9 @@
 		case 'add_activity';
             add_activity();		
 				break;
+		case 'update_activity';
+            update_activity();		
+				break;
 		default:
 			login();
 	}
@@ -89,7 +92,7 @@
 		$results = array();	
 		$results['pageTitle'] = "Login | CFI Projects Management Portal";	
 		$user = new User( $_POST );
-		
+		print_r($user);
 		if( $user->insert() ){
 			$results['successMessage'] = "Registration successful. Please login.";
 		}		
@@ -107,7 +110,7 @@
 				$results['errorMessage'] = "Registration unsuccessful. Please try again.";
 		}
 		
-		require( TEMPLATE_PATH . "/loginForm.php" );
+		
 	}
 
 	function add_activity(){
@@ -119,7 +122,15 @@
 			$results['successMessage'] = "Added activity successful.";
 		}			
 	}
-
+	function update_activity(){
+		$results = array();	
+		$results['pageTitle'] = " | CFI Projects Management Portal";
+		$results['activity'] = Activity::getById( $_POST['id'] );
+		$activity = new Activity( $_POST );
+		if( $activity->update() ){
+			$results['successMessage'] = "Added activity successful.";
+		}			
+	}
 	function updatePassword(){
 		$results = array();	
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
