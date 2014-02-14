@@ -1,6 +1,6 @@
 <?php include("include/header.php"); ?>
 
-	<div id="content">
+	<div id="content"><br><br><br>
 		<div id="loginDiv">
 			<form name="loginForm" action="index.php?action=login" method="POST">
 				Username <input type="text" name="username" placeholder="Username" /> <br>
