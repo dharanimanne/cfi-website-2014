@@ -267,16 +267,16 @@
 	//		echo "hey there...$row is printed next";
 	//		print_r($row);
 	//		echo "$row is in between these comments";
-			$activityId = $row['activityId'];
+	//		$activityId = $row['activityId'];
 	//		echo $activityId;
 			
 	//		for multiple activities, we can use fetchAll() and a foreach loop to get all of them.
 			$result = $st->fetchAll();
-			foreach( $result as $row ) {
+	/*		foreach( $result as $row ) {
     			print_r( $row );
 			}
-			$conn = null;
-			if( $result ) return true;
+	*/		$conn = null;
+			if( $result ) return $result;
 			
 		}		
 	}

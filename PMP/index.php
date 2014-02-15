@@ -255,6 +255,6 @@ $allowedExts = array("gif", "jpeg", "jpg", "png");
     		echo $row['title'];
 		}
 		$conn = null;
-	}
+	}*/
 	
 ?>
