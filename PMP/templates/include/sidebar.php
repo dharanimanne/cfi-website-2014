@@ -11,6 +11,7 @@
 			<li class="divider"></li>  
 			<li><a href="#"><i class="icon-flag"></i> Help</a></li>  
 		</ul>
+		
 	</div>
 	<div class='span9 main'>
 		<h2>Main Content Section</h2>
