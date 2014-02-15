@@ -1,4 +1,5 @@
-<div id='content' class='row-fluid' style="margin-top:50px;">
+
+<!--<div id='content' class='row-fluid' style="margin-top:50px;">
 	<div class='span3 sidebar'> 
 		<ul class="nav nav-list">  
 			<li class="nav-header">List header</li>  
@@ -16,4 +17,4 @@
 	<div class='span9 main'>
 		<h2>Main Content Section</h2>
 	</div>
-</div>
+</div>-->
