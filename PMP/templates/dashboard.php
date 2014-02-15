@@ -6,7 +6,7 @@
 		<div id="addMemberDiv">
 			Need to add a member? Please enter details below. <br>
 			<form name="addMemberForm" action="index.php?action=addMember" method="POST">
-				Username <input type="text" name="username" placeholder="Email as Username" /><br>
+				Username <input type="text" name="add_username" placeholder="Email as Username" /><br>
 				Activity ID <input type="text" name="activityId" placeholder="" /><br> 
 			   <input type="submit" name="add_member_form" value="addMember" /> 
 			</form>	

@@ -3,6 +3,7 @@
 //	require_once('Activity.php');
 //	require_once('User.php');
 
+
 	class Membership {
 
 		public $id = null;
@@ -40,12 +41,12 @@
 
 		public function insert(){
 	
-			if( !is_null( $this->id ) ) trigger_error( "User::insert(): Attempt to insert a user object that already has its ID property set to $this->id.", E_USER_ERROR );
+			if( !is_null( $this->id ) ) trigger_error( "Membership::insert(): Attempt to insert a membership object that already has its ID property set to $this->id.", E_MEMBERSHIP_ERROR );
 			
-			$this->joinDateTime = date("Y-m-d H:i:s");
+			$this->memberSince = date("Y-m-d H:i:s");
 
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO ".TABLENAME_USERS." ( userId, activityId, activityType, membershipType, memberSince) VALUES ( :userId, :activityId, :activityType, :membershipType, :memberSince )";
+			$sql = "INSERT INTO ".TABLENAME_MEMBERSHIP." ( userId, activityId, activityType, membershipType, memberSince) VALUES ( :userId, :activityId, :activityType, :membershipType, :memberSince )";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":userId", $this->userId, PDO::PARAM_INT );
 			$st->bindValue( ":activityId", $this->activityId, PDO::PARAM_INT );
@@ -55,7 +56,17 @@
 			$result = $st->execute();
 			$this->id = $conn->lastInsertId();
 			$conn = null;
-
+		//	print_r( $result );
+	/*		echo $this->userId;
+			echo "<br>";
+			echo $this->activityId;
+			echo "<br>";
+			echo $this->activityType;
+			echo "<br>";
+			echo $this->membershipType;
+			echo "<br>";
+			echo $this->memberSince;
+	*/
 			if( !$result ){
 				self::$errorMessage = "Membership::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
 				self::$errorCode = $st->errorCode();
@@ -73,7 +84,7 @@
 			if( is_null( $this->id ) ) trigger_error( "Membership::update(): Attempt to update a membership object that does not have its ID property set.", E_MEMBERSHIP_ERROR );
 			
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
-			$sql = "UPDATE ".TABLENAME_MEMBERSHIPS." SET membershipType=:membershipType WHERE id = :id";
+			$sql = "UPDATE ".TABLENAME_MEMBERSHIP." SET membershipType=:membershipType WHERE id = :id";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":membershipType", $this->membershipType, PDO::PARAM_STR );
 			$st->execute();
@@ -89,7 +100,7 @@
 			
 			//Delete the object
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$st = $conn->prepare ( "DELETE FROM ".TABLENAME_MEMBERSHIPS." WHERE id = :id LIMIT 1" );
+			$st = $conn->prepare ( "DELETE FROM ".TABLENAME_MEMBERSHIP." WHERE id = :id LIMIT 1" );
 			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
 			$st->execute();
 			$conn = null;		

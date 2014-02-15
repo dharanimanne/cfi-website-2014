@@ -217,7 +217,7 @@ $allowedExts = array("gif", "jpeg", "jpg", "png");
 		if( isset( $_POST['update_form'] ) ){
 			$user = new User( $_POST );
 			$user->id = $results['user']->id;
-			echo $user->id;
+		//	echo $user->id;
 		//	print_r($user);
 		//	print_r($user);
 		//	print_r($results['user']);
@@ -263,8 +263,11 @@ $allowedExts = array("gif", "jpeg", "jpg", "png");
 	}*/
 
 	function addMember(){
+//		$results = array();
+//		echo "yayy! this came until addMember function in index.php";
+		global $username;
 		$data = array();
-		$user = User::getByUsername( $_POST['username'] );
+		$user = User::getByUsername( $_POST['add_username'] );
 		$activity = Activity::getById( (int) $_POST['activityId'] );
 		$data['userId'] = $user->id;
 		$data['activityId'] = $activity->id;
@@ -272,7 +275,7 @@ $allowedExts = array("gif", "jpeg", "jpg", "png");
 		$data['membershipType'] = 'member';
 		$data['memberSince'] = date("Y-m-d H:i:s");
 
-		print_r( $activity );
+//		print_r( $activity );
 //		print_r( $data );
 
 		$membership = new Membership( $data );
@@ -283,7 +286,7 @@ $allowedExts = array("gif", "jpeg", "jpg", "png");
 		else{
 			$results['errorMessage'] = "Member not added. Please retry.";
 		}
-		require( TEMPLATE_PATH. "/dashboard.php" );
+	//	dashboard( User::getByUsername($username) );
 	}
 	
 ?>
