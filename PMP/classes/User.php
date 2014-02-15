@@ -272,6 +272,7 @@
 			$i = 0;
 	//		for multiple activities, we can use fetchAll() and a foreach loop to get all of them.
 			$result = $st->fetchAll();
+			$activities = array();
 			foreach( $result as $row ) {
     			$activities[ $i ] = Activity::getById( $row['activityId'] );
     			$i++;
