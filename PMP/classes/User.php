@@ -274,11 +274,12 @@
 			$result = $st->fetchAll();
 			$activities = array();
 			foreach( $result as $row ) {
-    			$activities[ $i ] = Activity::getById( $row['activityId'] );
-    			$i++;
-    //			print_r( $row );
-    			//echo $i;				
+				$activities[$i] = Activity::getById( $row['activityId'] );
+				$i++;
+	//			print_r( $row );
+				//echo $i;				
 			}
+			
 			$conn = null;
 			if( $activities ) return $activities;
 			
