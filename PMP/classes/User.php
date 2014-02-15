@@ -269,14 +269,17 @@
 	//		echo "$row is in between these comments";
 	//		$activityId = $row['activityId'];
 	//		echo $activityId;
-			
+			$i = 0;
 	//		for multiple activities, we can use fetchAll() and a foreach loop to get all of them.
 			$result = $st->fetchAll();
-	/*		foreach( $result as $row ) {
-    			print_r( $row );
+			foreach( $result as $row ) {
+    			$activities[ $i ] = Activity::getById( $row['activityId'] );
+    			$i++;
+    //			print_r( $row );
+    			echo $i;				
 			}
-	*/		$conn = null;
-			if( $result ) return $result;
+			$conn = null;
+			if( $activities ) return $activities;
 			
 		}		
 	}
