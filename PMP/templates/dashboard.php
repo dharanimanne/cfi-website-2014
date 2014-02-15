@@ -15,18 +15,33 @@
 			<?php 
 				$clubs = $results['user']->getActivityOfUser('club'); 
 				foreach( $clubs as $club ) {
-					print_r( $club );
+					echo $club->title;
+					//print_r( $club );
 			?> 
 				<br>
 			<?php } ?>
 		</div>
 		<div id="competitionsDiv">
-			<h1>Clubs</h1><br>
-			<?php $clubs = $results['user']->getActivityOfUser('competition'); ?> 
+			<h1>Competition</h1><br>
+			<?php 
+				$competitions = $results['user']->getActivityOfUser('competition'); 
+				foreach( $competitions as $competition ) {
+					echo $competition->title;
+					//print_r( $club );
+			?> 
+				<br>
+			<?php } ?>
 		</div>
 		<div id="projectsDiv">
-			<h1>Clubs</h1><br>
-			<?php $clubs = $results['user']->getActivityOfUser('project'); ?> 
+			<h1>Projects</h1><br>
+			<?php 
+				$projects = $results['user']->getActivityOfUser('project'); 
+				foreach( $projects as $project ) {
+					echo $project->title;
+					//print_r( $club );
+			?> 
+				<br>
+			<?php } ?>
 		</div>
 	</div>
 <?php include("templates/include/footer.php"); ?>

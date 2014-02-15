@@ -276,7 +276,7 @@
     			$activities[ $i ] = Activity::getById( $row['activityId'] );
     			$i++;
     //			print_r( $row );
-    			echo $i;				
+    			//echo $i;				
 			}
 			$conn = null;
 			if( $activities ) return $activities;
