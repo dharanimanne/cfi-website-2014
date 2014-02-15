@@ -131,18 +131,18 @@
 			echo $user->id;
 
 			if( $user->updatePassword() )
-				{
-					$results['successMessage'] = "Update successful.";
-					$results['user'] = $user;
-				}
-				else{
-					//echo User::errorInfo();
-					if( User::errorCode() == "ERR_INV_PASS" )
-						$results['errorMessage'] = "Update unsuccessful, password should atleast be 6 characters long.";
-					else
-						$results['errorMessage'] = "Update unsuccessful. Please try again.";
-				}
+			{
+				$results['successMessage'] = "Update successful.";
+				$results['user'] = $user;
 			}
+			else{
+				//echo User::errorInfo();
+				if( User::errorCode() == "ERR_INV_PASS" )
+					$results['errorMessage'] = "Update unsuccessful, password should atleast be 6 characters long.";
+				else
+					$results['errorMessage'] = "Update unsuccessful. Please try again.";
+			}
+		}
 		else{
 			$results['errorMessage'] = "Update unsuccessful. Passwords do not match.";
 		}
