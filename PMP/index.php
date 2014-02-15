@@ -33,6 +33,9 @@
 		case 'update_activity';
             update_activity();		
 				break;
+		case 'addMember';
+			addMember();
+				break;
 		default:
 			login();
 	}
@@ -166,6 +169,7 @@ $allowedExts = array("gif", "jpeg", "jpg", "png");
 			$results['successMessage'] = "Added activity successful.";
 		}			
 	}
+
 	function update_activity(){
 		$results = array();	
 		$results['pageTitle'] = " | CFI Projects Management Portal";
@@ -175,6 +179,7 @@ $allowedExts = array("gif", "jpeg", "jpg", "png");
 			$results['successMessage'] = "Added activity successful.";
 		}			
 	}
+
 	function updatePassword(){
 		$results = array();	
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
@@ -256,5 +261,29 @@ $allowedExts = array("gif", "jpeg", "jpg", "png");
 		}
 		$conn = null;
 	}*/
+
+	function addMember(){
+		$data = array();
+		$user = User::getByUsername( $_POST['username'] );
+		$activity = Activity::getById( (int) $_POST['activityId'] );
+		$data['userId'] = $user->id;
+		$data['activityId'] = $activity->id;
+		$data['activityType'] = $activity->activity_type;
+		$data['membershipType'] = 'member';
+		$data['memberSince'] = date("Y-m-d H:i:s");
+
+		print_r( $activity );
+//		print_r( $data );
+
+		$membership = new Membership( $data );
+
+		if ( $membership->insert() ) {
+			$results['successMessage'] = "".$username." added successfully into the ".$data['activityType']." ".$activity->title." as a member";
+		}
+		else{
+			$results['errorMessage'] = "Member not added. Please retry.";
+		}
+		require( TEMPLATE_PATH. "/dashboard.php" );
+	}
 	
 ?>

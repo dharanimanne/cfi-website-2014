@@ -1,12 +1,12 @@
 <?php
 
-	require_once('Activity.php');
-	require_once('User.php');
+//	require_once('Activity.php');
+//	require_once('User.php');
 
 	class Membership {
 
 		public $id = null;
-		public $userId - null;
+		public $userId = null;
 		public $activityId = null;
 		public $activityType = null;
 		public $membershipType = null;
@@ -45,7 +45,7 @@
 			$this->joinDateTime = date("Y-m-d H:i:s");
 
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO ".TABLENAME_USERS." ( username, password, name, lastLoginFrom, membership, rollNo, hostel, room, phone, email, joinDateTime, lastLoginDateTime, expertise, rating, userType, socialMediaUrl, avatarLocation, aboutMe, coreRemark) VALUES ( :username, :password, :name, :lastLoginFrom, :membership, :rollNo, :hostel, :room, :phone, :email, :joinDateTime, :lastLoginDateTime, :expertise, :rating, :userType, :socialMediaUrl, :avatarLocation, :aboutMe, :coreRemark)";
+			$sql = "INSERT INTO ".TABLENAME_USERS." ( userId, activityId, activityType, membershipType, memberSince) VALUES ( :userId, :activityId, :activityType, :membershipType, :memberSince )";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":userId", $this->userId, PDO::PARAM_INT );
 			$st->bindValue( ":activityId", $this->activityId, PDO::PARAM_INT );
