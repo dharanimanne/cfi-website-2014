@@ -263,7 +263,7 @@
 	//		echo $activityType;
 	//		print_r($st->errorLog());
 			$st->execute();
-			$row = $st->fetch();
+	//		$row = $st->fetch();
 	//		echo "hey there...$row is printed next";
 	//		print_r($row);
 	//		echo "$row is in between these comments";
@@ -271,14 +271,12 @@
 	//		echo $activityId;
 			
 	//		for multiple activities, we can use fetchAll() and a foreach loop to get all of them.
-	/*		$result = $st->fetchAll();
+			$result = $st->fetchAll();
 			foreach( $result as $row ) {
-    			echo $row['id'];
-    			echo $row['title'];
+    			print_r( $row );
 			}
-	*/		
 			$conn = null;
-			if( $row ) return Activity::getById( $activityId );
+			if( $result ) return true;
 			
 		}		
 	}
