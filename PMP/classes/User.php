@@ -80,7 +80,6 @@
 			$this->password = Password::hash($this->password);
 			$this->joinDateTime = date("Y-m-d H:i:s");   
 			$this->userType = "0";
-			$this->avatarLocation = "default.png";
 			
 			// Validation
 			if( !filter_var( $this->email, FILTER_VALIDATE_EMAIL ) ){
