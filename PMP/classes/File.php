@@ -6,7 +6,7 @@
 		public $fileName = null;
 		public $uploadedOn = null;
 		public $fileType = null;
-		public $uploadedById = null;
+		public $uploadedBy = null;
 		public $fileLocation = null;	
 		public static $errorMessage;
 		public static $errorCode;
@@ -15,7 +15,7 @@
 		public function __construct( $data = array() ) {
 			
 			if( isset( $data['id'] ) ) 					$this->id = (int) $data['id'];
-		    if( isset( $data['fileName'] ) ) 			$this->name = preg_replace( "/[^a-zA-Z0-9]/", "", $data['name'] );
+		    if( isset( $data['fileName'] ) ) 			$this->fileName = $data['fileName'] ;
 			if( isset( $data['uploadedOn'] ) ) 			$this->uploadedOn =  $data['uploadedOn'];
 			if( isset( $data['fileType'] ) ) 			$this->fileType = $data['fileType'];
 			if( isset( $data['fileLocation'] ) ) 		$this->fileLocation = $data['fileLocation'];

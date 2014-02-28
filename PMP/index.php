@@ -164,8 +164,10 @@
 
 	function uploadFile(){
 
-		$results = array();
-
+		if ( !isset($results) ) {
+			$results = array();
+		}
+		
 		if ($_FILES['file']['error'] === UPLOAD_ERR_OK) 
 		{ 
   			$fileData = array();
@@ -173,21 +175,22 @@
 
 	        if( is_dir( FILE_UPLOAD_DIRECTORY ) == false )
 	        {
-            	mkdir( FILE_UPLOAD_DIRECTORY, 0777 );// Create directory if it does not exist
+            	mkdir( FILE_UPLOAD_DIRECTORY, 0777 );		// Create directory if it does not exist
             }
-            if( is_file( FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] )==false )
+            if( is_file( FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] ) == false )
             {
-                move_uploaded_file( $FILES["file"]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] );
+                move_uploaded_file( $_FILES["file"]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] );
             }
             else
             {    //rename the file if another one exist
-                $fileData['fileName'] = $FILES["file"]["name"].time();
-                move_uploaded_file( $FILES["file"]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] ); 
+            	$temp = explode(".", $_FILES["file"]["name"]);
+                $fileData['fileName'] = $temp[0].time().".".$temp[1];
+                move_uploaded_file( $_FILES["file"]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] ); 
             }
 
             $fileData['fileType'] = $_FILES["file"]["type"];
 			$fileData['fileLocation'] = FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'];    //to add later (the location of the file)
-	        $fileData['uploadedBy'] = $_SESSION['username'];
+	        $fileData['uploadedBy'] =   "dharani";             //$_SESSION['username']; kept aside for testing
 	        
 	        $file = new File( $fileData );
 
@@ -199,7 +202,34 @@
 		}
 		else
 		{ 
-			throw new UploadException($_FILES['file']['error']); 
+			switch ( $_FILES['file']['error'] ) {
+	            case UPLOAD_ERR_INI_SIZE:
+	                $results['errorMessage'] = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
+	                break;
+	            case UPLOAD_ERR_FORM_SIZE:
+	                $results['errorMessage'] = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
+	                break;
+	            case UPLOAD_ERR_PARTIAL:
+	                $results['errorMessage'] = "The uploaded file was only partially uploaded";
+	                break;
+	            case UPLOAD_ERR_NO_FILE:
+	                $results['errorMessage'] = "No file was uploaded";
+	                break;
+	            case UPLOAD_ERR_NO_TMP_DIR:
+	                $results['errorMessage'] = "Missing a temporary folder";
+	                break;
+	            case UPLOAD_ERR_CANT_WRITE:
+	                $results['errorMessage'] = "Failed to write file to disk";
+	                break;
+	            case UPLOAD_ERR_EXTENSION:
+	                $results['errorMessage'] = "File upload stopped by extension";
+	                break;
+
+	            default:
+	                $results['errorMessage'] = "Unknown upload error";
+	                break;
+	        }
+	        echo $results['errorMessage'];
 		}   
 	}
 
