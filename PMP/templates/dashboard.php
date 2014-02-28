@@ -31,7 +31,7 @@
 		//print_r( $clubs );
 		?>
 		<div id="user_profile">
-		<img src="../upload/<?php echo $results['user']->avatarLocation; ?>" width="360" height="350">
+		<img src="./upload/<?php echo $results['user']->avatarLocation; ?>" width="360" height="350">
 		</div>
 		<div id="Messages">
 		<h3>Messages received</h3><br>
