@@ -233,8 +233,6 @@
 			$results['successMessage'] = "Added activity successful.";
 		}
 
-			
-		
 		$user = User::getByUsername( $_SESSION['username'] );
 		dashboard( $user );
 	}
@@ -275,27 +273,24 @@
     /*    $fileName = "bgimgpic";
 		$fileLocation = FILE_UPLOAD_LOCATION."/ActivityImages"; 
 		 uploadFile( $fileName, $fileLocation );
-	*/		$user = new User( $_POST );
-			$user->id = $results['user']->id;
-			$fileName = "file";
+*/		$user = new User( $_POST );
+		$user->id = $results['user']->id;
+		$fileName = "file";
 		$fileLocation = FILE_UPLOAD_LOCATION;
-			$user->avatarLocation = uploadFile( $fileName, $fileLocation );
-			//echo $user->id;
+		$user->avatarLocation = uploadFile( $fileName, $fileLocation );
+		//echo $user->id;
 
-			if( $user->updateProfilePic() )
-			{
-				$results['successMessage'] = "Update successful.";
-				$results['user'] = $user;
-			}
-			else{
-				//echo User::errorInfo();
-				if( User::errorCode() == "ERR_INV_PASS" )
-					$results['errorMessage'] = "Update unsuccessful, password should atleast be 6 characters long.";
-				else
-					$results['errorMessage'] = "Update unsuccessful. Please try again.";
-			}
-		
-		require( TEMPLATE_PATH . "/updateForm.php" );
+		if( $user->updateProfilePic() )
+		{
+			$results['successMessage'] = "Update successful.";
+			$results['user'] = $user;
+		}
+		else{
+			//echo User::errorInfo();
+			if( User::errorCode() == "ERR_INV_PASS" )	$results['errorMessage'] = "Update unsuccessful, password should atleast be 6 characters long.";
+			else    $results['errorMessage'] = "Update unsuccessful. Please try again.";
+			require( TEMPLATE_PATH . "/updateForm.php" );
+		}
 	}
 
 	function update(){
