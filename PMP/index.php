@@ -264,6 +264,7 @@
 		if( isset( $_POST['update_form'] ) ){
 			$user = new User( $_POST );
 			$user->id = $results['user']->id;
+			$user->avatarLocation =  uploadFile();
 		//	echo $user->id;
 		//	print_r($user);
 		//	print_r($user);
