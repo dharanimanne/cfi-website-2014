@@ -42,28 +42,28 @@ $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 $sql = "INSERT INTO activity ( title, brief_writeup, detailed_writeup, status, tags, overall_budget, utilized_budget,activity_type, icon_link, bg_image_link) VALUES ( :title, :brief_writeup, :detailed_writeup, :status, :tags, :overall_budget, :utilized_budget, :activity_type, :icon_link, :bg_image_link )";
 $st = $conn->prepare( $sql );
 $st->bindValue( ":title", $this->title, PDO::PARAM_STR );
-       echo $this->title;	
+//       echo $this->title;	
     $st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
-            echo $this->brief_writeup;	  
+  //          echo $this->brief_writeup;	  
  $st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
-  echo $this->detailed_writeup;
+ // echo $this->detailed_writeup;
 $st->bindValue( ":status", $this->status, PDO::PARAM_STR );
-echo $this->status;
+//echo $this->status;
 $st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
-echo $this->tags;
+//echo $this->tags;
 $st->bindValue( ":overall_budget", $this->overall_budget, PDO::PARAM_INT );
-echo $this->overall_budget;
+//echo $this->overall_budget;
 $st->bindValue( ":utilized_budget", $this->utilized_budget, PDO::PARAM_INT );
-echo $this->utilized_budget;
+//echo $this->utilized_budget;
 $st->bindValue( ":activity_type", $this->activity_type, PDO::PARAM_STR );
-echo $this->activity_type;
+//echo $this->activity_type;
 $st->bindValue( ":icon_link", $this->icon_link, PDO::PARAM_STR );
-echo $this->icon_link;
+//echo $this->icon_link;
 $st->bindValue( ":bg_image_link", $this->bg_image_link, PDO::PARAM_STR );
-echo $this->bg_image_link;
+//echo $this->bg_image_link;
 $st->execute();
 $this->id = $conn->lastInsertId();
-echo $this->id;
+//echo $this->id;
 $conn = null;	
 
 echo "insertion successful!";
@@ -76,7 +76,7 @@ if( is_null( $this->id ) ) trigger_error( "Activity::update(): Attempt to update
 
 //Update the object
 $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );	
-$sql = "UPDATE ".TABLENAME_ACTIVITY." SET title = :title, brief_writeup = :brief_writeup, detailed_writeup = :detailed_writeup, status = :status, tags = :tags, overall_budget = :overall_budget, utilized_budget = :utilized_budget WHERE id = :id";
+$sql = "UPDATE ".TABLENAME_ACTIVITY." SET icon_link =:icon_link , bg_image_link = :bg_image_link, title = :title, brief_writeup = :brief_writeup, detailed_writeup = :detailed_writeup, status = :status, tags = :tags, overall_budget = :overall_budget, utilized_budget = :utilized_budget WHERE id = :id";
 $st = $conn->prepare( $sql );
 $st->bindValue( ":title", $this->title, PDO::PARAM_STR );
 $st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
@@ -86,6 +86,8 @@ $st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
 $st->bindValue( ":overall_budget", $this->overall_budget, PDO::PARAM_INT );
 $st->bindValue( ":utilized_budget", $this->utilized_budget, PDO::PARAM_INT );
 $st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+$st->bindValue( ":icon_link", $this->icon_link, PDO::PARAM_STR );
+$st->bindValue( ":bg_image_link", $this->bg_image_link, PDO::PARAM_STR );
 $st->execute();
 $conn = null;
 }

@@ -220,9 +220,21 @@
 		$results['pageTitle'] = " | CFI Projects Management Portal";
 		$results['activity'] = Activity::getById( $_POST['id'] );
 		$activity = new Activity( $_POST );
+
+		$fileName1 = "icon";
+		$fileLocation1 = FILE_UPLOAD_LOCATION."/ActivityImages";
+		$activity->icon_link = uploadFile( $fileName1, $fileLocation1 );
+
+		$fileName2 = "bgImg";
+		$fileLocation2 = FILE_UPLOAD_LOCATION."/ActivityImages";
+		$activity->bg_image_link = uploadFile( $fileName2, $fileLocation2 );	
+
 		if( $activity->update() ){
 			$results['successMessage'] = "Added activity successful.";
 		}
+
+			
+		
 		$user = User::getByUsername( $_SESSION['username'] );
 		dashboard( $user );
 	}

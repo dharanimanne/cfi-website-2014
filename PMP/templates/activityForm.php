@@ -1,5 +1,5 @@
 
-<form name="update_activity" class="form-horizontal" action="index.php?action=update_activity" method="POST" style="width:500px;">
+<form name="update_activity" class="form-horizontal" action="index.php?action=update_activity" method="POST" style="width:500px;" enctype="multipart/form-data">
 	<fieldset> 
           <legend><?php echo $activity->title;?></legend>  
 <div class="control-group">  
@@ -66,14 +66,14 @@
             <div class="control-group">
     <label class="control-label" for="Icon">Icon</label>
     <div class="controls">
-    <input type="file" id="exampleInputFile">
+    <input type="file" name="icon" id="exampleInputFile">
     <p class="help-block"><?php echo $activity->icon_link;?> - To be fixed later</p>
     </div>
   </div>   
     <div class="control-group">
     <label class="control-label" for="Icon">BG - Image</label>
     <div class="controls">
-    <input type="file" id="exampleInputFile">
+    <input type="file" name="bgImg" id="exampleInputFile">
     <p class="help-block"><?php echo $activity->bg_image_link;?> - To be fixed later</p>
     </div>
   </div>
