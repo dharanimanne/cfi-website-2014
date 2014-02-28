@@ -12,5 +12,14 @@ define( "TABLENAME_USERS", "users" );
 define( "TABLENAME_ACTIVITY", "activity" );
 define( "TABLENAME_FILES", "files" );
 define( "FILE_UPLOAD_DIRECTORY", "upload" );
+
+
 //require( CLASS_PATH . "/index.php" );
+require( CLASS_PATH . "/User.php" );
+require( CLASS_PATH . "/Activity.php" );
+require( CLASS_PATH . "/Membership.php" );
+require( CLASS_PATH . "/File.php" );
+require( CLASS_PATH . "/Password.php" );
+require( CLASS_PATH . "/UploadException.php" );
+
 ?>

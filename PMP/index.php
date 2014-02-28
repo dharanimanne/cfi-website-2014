@@ -96,7 +96,7 @@
 
 	function register(){
 		$results = array();	
-		$results['pageTitle'] = "Regsiter | CFI Projects Management Portal";	
+		$results['pageTitle'] = "Register | CFI Projects Management Portal";	
 		$user = new User( $_POST );
 		if ( ! isset($_FILES["file"]))
 		{
@@ -145,6 +145,7 @@
 				
 		if( $user->insert() ){
 			$results['successMessage'] = "Registration successful. Please login.";
+			require( TEMPLATE_PATH . "/loginForm.php" );
 		}		
 		else{
 			//echo User::errorInfo();
@@ -193,7 +194,8 @@
 	        if( $file->insert() )
 			{
 				$results['successMessage'] = "File upload successful. Thank you";
-			} 
+				require( TEMPLATE_PATH . "/loginForm.php" );
+			}
 		}
 		else
 		{ 
