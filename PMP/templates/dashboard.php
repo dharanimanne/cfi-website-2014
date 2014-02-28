@@ -1,6 +1,6 @@
 <?php include("templates/include/header.php"); ?>
 <?php include("templates/include/sidebar.php"); ?>
-	<div id="content">
+<!--	<div id="content">
 		dashboard<br>
 
 		<div id="addMemberDiv">
