@@ -73,15 +73,15 @@
 		}	
 			
 		public function insert(){
-	
+		//	echo "im a man";
 			if( !is_null( $this->id ) ) trigger_error( "User::insert(): Attempt to insert a user object that already has its ID property set to $this->id.", E_USER_ERROR );
-			
+		//	echo "yo boy";
 			// Set Values
 			$this->password = Password::hash($this->password);
 			$this->joinDateTime = date("Y-m-d H:i:s");   
 			$this->userType = "0";
-			
-			// Validation
+			echo "oh boy";
+/*			// Validation
 			if( !filter_var( $this->email, FILTER_VALIDATE_EMAIL ) ){
 				self::$errorCode ="ERR_INV_EMAIL";
 				return false;
@@ -98,7 +98,7 @@
 				self::$errorCode ="ERR_INV_ROLL";
 				return false;
 			}
-			
+*/			echo "yo man";	
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 			$sql = "INSERT INTO ".TABLENAME_USERS." ( username, password, name, lastLoginFrom, membership, rollNo, hostel, room, phone, email, joinDateTime, lastLoginDateTime, expertise, rating, userType, socialMediaUrl, avatarLocation, aboutMe, coreRemark) VALUES ( :username, :password, :name, :lastLoginFrom, :membership, :rollNo, :hostel, :room, :phone, :email, :joinDateTime, :lastLoginDateTime, :expertise, :rating, :userType, :socialMediaUrl, :avatarLocation, :aboutMe, :coreRemark)";
 			$st = $conn->prepare( $sql );
@@ -128,6 +128,7 @@
 			if( !$result ){
 				self::$errorMessage = "User::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
 				self::$errorCode = $st->errorCode();
+//				echo $errorMessage;
 				return false;
 			}
 			else{		
