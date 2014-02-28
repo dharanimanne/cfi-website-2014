@@ -26,9 +26,6 @@
 			break;
 		case 'updatePassword';
 			updatePassword();
-			break;
-		case 'uploadFile';
-			uploadFile();
 			break;	
 		case 'add_activity';
             add_activity();		
@@ -123,16 +120,16 @@
 		}	
 	}
 
-	function uploadFile(){
+	function uploadFile( $fileName ){
 
 		if ( !isset($results) ) {
 			$results = array();
 		}
 		
-		if ($_FILES['file']['error'] === UPLOAD_ERR_OK) 
+		if ($_FILES[$fileName]['error'] === UPLOAD_ERR_OK) 
 		{ 
   			$fileData = array();
-			$fileData['fileName'] = $_FILES["file"]["name"];
+			$fileData['fileName'] = $_FILES[$fileName]["name"];
 
 	        if( is_dir( FILE_UPLOAD_DIRECTORY ) == false )
 	        {
@@ -140,16 +137,16 @@
             }
             if( is_file( FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] ) == false )
             {
-                move_uploaded_file( $_FILES["file"]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] );
+                move_uploaded_file( $_FILES[$fileName]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] );
             }
             else
             {    //rename the file if another one exist
-            	$temp = explode(".", $_FILES["file"]["name"]);
+            	$temp = explode(".", $_FILES[$fileName]["name"]);
                 $fileData['fileName'] = $temp[0].time().".".$temp[1];
-                move_uploaded_file( $_FILES["file"]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] ); 
+                move_uploaded_file( $_FILES[$fileName]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] ); 
             }
 
-            $fileData['fileType'] = $_FILES["file"]["type"];
+            $fileData['fileType'] = $_FILES[$fileName]["type"];
 			$fileData['fileLocation'] = FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'];    //to add later (the location of the file)
 	        $fileData['uploadedBy'] =   "dharani";             //$_SESSION['username']; kept aside for testing
 	        
@@ -164,7 +161,7 @@
 		}
 		else
 		{ 
-			switch ( $_FILES['file']['error'] ) {
+			switch ( $_FILES[$fileName]['error'] ) {
 	            case UPLOAD_ERR_INI_SIZE:
 	                $results['errorMessage'] = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
 	                break;
