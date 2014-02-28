@@ -1,4 +1,12 @@
-		<div id="UpdateDiv">
+<?php		session_start();
+
+			require("../config.php");
+	$username = isset( $_SESSION['username'] ) ? $_SESSION['username']: "";
+	$user = User::getByUsername( $_SESSION['username'] );
+				$results['user'] = $user;
+	?>
+    
+    	<div id="UpdateDiv">
 			<form name="updateForm" class="form-horizontal" action="index.php?action=update" method="POST" style="width:500px;">
             	<fieldset> 
                 <legend>Update Your Profile</legend>  
@@ -99,6 +107,36 @@
           </div>  
 			</form>
 		</div>
+        
+       <form name="updateprofilepic"  class="form-horizontal" action="" method="POST" style="width:500px;">
+    <div class="control-group">
+    <label class="control-label" for="Icon">ProfilePic</label>  <img style="position:absolute; margin-left:230px; height:50px ;size:auto;" src="../Content/Images/logo.png" /> 
+    <div class="controls">
+    <input type="file" id="profpic">
+    <p class="help-block"></p>
+    </div>
+  </div>
+  
+  
+  <div class="control-group">
+    <label class="control-label" for="Icon">BG-Pic</label> <img style="position:absolute; margin-left:230px; height:50px ;size:auto;" src="../Content/Images/logo.png" /> 
+    <div class="controls">
+    <input type="file" id="bgimgpic">
+    <p class="help-block"></p>
+    </div>
+  </div>
+  
+  
+            <div class="form-actions">  <center>
+            <button type="submit" class="btn btn-primary">Save changes</button> </center>  
+          </div>  
+</form>
+        
+        
+        
+        
+        
+        
 		<div id="messageDiv">
 			<?php if( isset( $results['successMessage'] ) ) { ?>
 			<div class="message success">
