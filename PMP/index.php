@@ -99,7 +99,9 @@
 		$results['pageTitle'] = "Register | CFI Projects Management Portal";	
 		$user = new User( $_POST );
 	
-		$user->avatarLocation = uploadFile();
+		$fileName = "file";
+		$fileLocation = FILE_UPLOAD_LOCATION;
+		$user->avatarLocation = uploadFile( $fileName, $fileLocation );
 				
 		if( $user->insert() ){
 			$results['successMessage'] = "Registration successful. Please login.";
@@ -120,7 +122,7 @@
 		}	
 	}
 
-	function uploadFile( $fileName ){
+	function uploadFile( $fileName, $fileLocation ){
 
 		if ( !isset($results) ) {
 			$results = array();
@@ -131,23 +133,23 @@
   			$fileData = array();
 			$fileData['fileName'] = $_FILES[$fileName]["name"];
 
-	        if( is_dir( FILE_UPLOAD_DIRECTORY ) == false )
+	        if( is_dir( $fileLocation ) == false )
 	        {
-            	mkdir( FILE_UPLOAD_DIRECTORY, 0777 );		// Create directory if it does not exist
+            	mkdir( $fileLocation, 0777 );		// Create directory if it does not exist
             }
-            if( is_file( FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] ) == false )
+            if( is_file( $fileLocation.'/'.$fileData['fileName'] ) == false )
             {
-                move_uploaded_file( $_FILES[$fileName]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] );
+                move_uploaded_file( $_FILES[$fileName]["tmp_name"], $fileLocation.'/'.$fileData['fileName'] );
             }
             else
             {    //rename the file if another one exist
             	$temp = explode(".", $_FILES[$fileName]["name"]);
                 $fileData['fileName'] = $temp[0].time().".".$temp[1];
-                move_uploaded_file( $_FILES[$fileName]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] ); 
+                move_uploaded_file( $_FILES[$fileName]["tmp_name"], $fileLocation.'/'.$fileData['fileName'] ); 
             }
 
             $fileData['fileType'] = $_FILES[$fileName]["type"];
-			$fileData['fileLocation'] = FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'];    //to add later (the location of the file)
+			$fileData['fileLocation'] = $fileLocation.'/'.$fileData['fileName'];    //to add later (the location of the file)
 	        $fileData['uploadedBy'] =   "dharani";             //$_SESSION['username']; kept aside for testing
 	        
 	        $file = new File( $fileData );
