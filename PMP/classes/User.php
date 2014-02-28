@@ -181,7 +181,23 @@
 			
 			return true;
 		}
+        public function updateProfilePic(){
+				
+			//Does the object have an ID?
+			if( is_null( $this->id ) ) trigger_error( "User::update(): Attempt to update a user object that does not have its ID property set.", E_USER_ERROR );
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
+			$sql = "UPDATE ".TABLENAME_USERS." SET avatarLocation=:avatarLocation WHERE id = :id";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":avatarLocation", $this->avatarLocation, PDO::PARAM_STR );
+			
+			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+			$st->execute();
+			$conn = null;
 
+			return true;
+			
+			}
+			
 		public function updatePassword(){
 
 			if( is_null( $this->id ) ) trigger_error( "User::update(): Attempt to update a user object that does not have its ID property set.", E_USER_ERROR );

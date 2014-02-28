@@ -233,7 +233,7 @@
 		if( isset( $_POST['update_password_form'] ) && ( $_POST['password'] == $_POST['password_confirmation'] ) ){
 			$user = new User( $_POST );
 			$user->id = $results['user']->id;
-			echo $user->id;
+			//echo $user->id;
 
 			if( $user->updatePassword() )
 			{
@@ -253,7 +253,35 @@
 		}
 		require( TEMPLATE_PATH . "/updateForm.php" );
 	}
+	function updateProfilePic(){
+		$results = array();	
+		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
+		$results['user'] = User::getByUsername( $_SESSION['username'] );
+        $fileName = "bgimgpic";
+		$fileLocation = FILE_UPLOAD_LOCATION."/ActivityImages";
+		 uploadFile( $fileName, $fileLocation );
+			$user = new User( $_POST );
+			$user->id = $results['user']->id;
+			$fileName = "profpic";
+		$fileLocation = FILE_UPLOAD_LOCATION;
+			$user->avatarLocation = uploadFile( $fileName, $fileLocation );
+			//echo $user->id;
 
+			if( $user->updateProfilePic() )
+			{
+				$results['successMessage'] = "Update successful.";
+				$results['user'] = $user;
+			}
+			else{
+				//echo User::errorInfo();
+				if( User::errorCode() == "ERR_INV_PASS" )
+					$results['errorMessage'] = "Update unsuccessful, password should atleast be 6 characters long.";
+				else
+					$results['errorMessage'] = "Update unsuccessful. Please try again.";
+			}
+		
+		require( TEMPLATE_PATH . "/updateForm.php" );
+	}
 
 	function update(){
 		$results = array();	

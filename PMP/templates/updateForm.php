@@ -112,7 +112,7 @@
     <div class="control-group">
     <label class="control-label" for="Icon">ProfilePic</label>  <img style="position:absolute; margin-left:230px; height:50px ;size:auto;" src="../Content/Images/logo.png" /> 
     <div class="controls">
-    <input type="file" id="profpic">
+    <input type="file" name="profpic" id="profpic">
     <p class="help-block"></p>
     </div>
   </div>
@@ -121,7 +121,7 @@
   <div class="control-group">
     <label class="control-label" for="Icon">BG-Pic</label> <img style="position:absolute; margin-left:230px; height:50px ;size:auto;" src="../Content/Images/logo.png" /> 
     <div class="controls">
-    <input type="file" id="bgimgpic">
+    <input type="file" name="bgimgpic" id="bgimgpic">
     <p class="help-block"></p>
     </div>
   </div>
