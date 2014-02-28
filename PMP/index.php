@@ -39,6 +39,9 @@
 		case 'addMember';
 			addMember();
 				break;
+		case 'create_message';
+		      createMessage();
+			    break;		
 		default:
 			login();
 	}
@@ -198,6 +201,7 @@
 			{
 				$results['successMessage'] = "File upload successful. Thank you";
 				require( TEMPLATE_PATH . "/loginForm.php" );
+				return $fileData['fileName'];
 			}
 		}
 		else
