@@ -117,15 +117,7 @@
     </div>
   </div>
   
-  
-  <div class="control-group">
-    <label class="control-label" for="Icon">BG-Pic</label> <img style="position:absolute; margin-left:230px; height:50px ;size:auto;" src="../Content/Images/logo.png" /> 
-    <div class="controls">
-    <input type="file" name="bgimgpic" id="bgimgpic">
-    <p class="help-block"></p>
-    </div>
-  </div>
-  
+
   
             <div class="form-actions">  <center>
             <button type="submit" class="btn btn-primary">Save changes</button> </center>  
