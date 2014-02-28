@@ -62,7 +62,7 @@
 										<a href="#"><?php echo $results['user']->email; ?></a>
 									</li>  
 									<li>
-										<a href="index.php?action=update">Settings</a>
+										<a href="javascript:update_content('updateform');">Settings</a>
 									</li>  
 									<li>
 										<a href="index.php?action=logout">Logout</a>
@@ -90,3 +90,32 @@
 					<br>Navbar ends<br><br>
 				</div>
 -->
+
+
+
+
+<script>
+function update_content(str)
+{
+if (str.length==0)
+  { 
+  document.getElementById("content").innerHTML="";
+  return;
+  }
+var xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("content").innerHTML=xmlhttp.responseText;
+    }
+  }
+if(str == "Clubs" || str == "Competitions" || str == "Projects") {
+xmlhttp.open("GET","templates/include/membership.php?type="+str,true); }
+else
+{
+xmlhttp.open("GET","templates/"+str+".php",true);
+}
+xmlhttp.send();
+}
+</script>

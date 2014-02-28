@@ -321,6 +321,7 @@
 			}
 		}
 		require( TEMPLATE_PATH . "/updateForm.php" );
+		
 	}
 	
 	/*
@@ -368,3 +369,4 @@
 	}
 	
 ?>
+

@@ -1,23 +1,3 @@
-<script>
-function membership(str)
-{
-if (str.length==0)
-  { 
-  document.getElementById("txtHint").innerHTML="";
-  return;
-  }
-var xmlhttp=new XMLHttpRequest();
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("content").innerHTML=xmlhttp.responseText;
-    }
-  }
-xmlhttp.open("GET","templates/include/membership.php?type="+str,true);
-xmlhttp.send();
-}
-</script>
 <div id="menu" class="hidden-print hidden-sm">
 			<div id="menuInner">
 
@@ -33,7 +13,7 @@ xmlhttp.send();
 					<li class="hasSubmenu">
 						<a data-toggle="collapse" class="glyphicons group" href="#menu_account"><span>My Account</span></a>
 						<ul class="menuCollapse" id="menu_account">
-							<li class=""><a href="index.php?action=update"><span>Edit account</span></a></li>
+							<li class=""><a href="javascript:update_content('updateform');"><span>Edit account</span></a></li>
 							<li class=""><a href="index.php?action=logout"><span>Logout</span></a></li>
 						</ul>
 					</li>
@@ -49,9 +29,9 @@ xmlhttp.send();
 				</ul>
 				<ul>
 					<li class="heading"><span>Memberships</span></li>
-					<li class="glyphicons notes"><a href="javascript:membership('Projects');"><span>Projects</span></a></li>
-					<li class="glyphicons notes"><a href="javascript:membership('Clubs');"><span>Clubs</span></a></li>
-					<li class="glyphicons notes"><a href="javascript:membership('Competitions');"><span>Competitions</span></a></li>
+					<li class="glyphicons notes"><a href="javascript:update_content('Projects');"><span>Projects</span></a></li>
+					<li class="glyphicons notes"><a href="javascript:update_content('Clubs');"><span>Clubs</span></a></li>
+					<li class="glyphicons notes"><a href="javascript:update_content('Competitions');"><span>Competitions</span></a></li>
 				</ul>
 				</div>
 				</div>
