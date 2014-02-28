@@ -79,7 +79,6 @@ $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 $sql = "UPDATE ".TABLENAME_ACTIVITY." SET title = :title, brief_writeup = :brief_writeup, detailed_writeup = :detailed_writeup, status = :status, tags = :tags, overall_budget = :overall_budget, utilized_budget = :utilized_budget WHERE id = :id";
 $st = $conn->prepare( $sql );
 $st->bindValue( ":title", $this->title, PDO::PARAM_STR );
-$st->bindValue( "activity_type", $this->activity_type, PDO::PARAM_STR );
 $st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
 $st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
 $st->bindValue( ":status", $this->status, PDO::PARAM_STR );
@@ -87,8 +86,6 @@ $st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
 $st->bindValue( ":overall_budget", $this->overall_budget, PDO::PARAM_INT );
 $st->bindValue( ":utilized_budget", $this->utilized_budget, PDO::PARAM_INT );
 $st->bindValue( ":id", $this->id, PDO::PARAM_INT );
-$st->bindValue( ":icon_link", $this->icon_link, PDO::PARAM_STR );
-$st->bindValue( ":bg_image_link", $this->bg_image_link, PDO::PARAM_STR );
 $st->execute();
 $conn = null;
 }
