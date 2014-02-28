@@ -10,11 +10,16 @@
 		<title><?php if( isset( $results['pageTitle'] )){ echo htmlspecialchars( $results['pageTitle'] ); } else{ echo "Centre For Innovation";} ?></title>
         
         <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/glyphicons.css">
         <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/style.css">
         <script src="<?php echo MEDIA_URL;?>javascript/jquery-1.11.0.min.js"></script>
+        <script src="<?php echo MEDIA_URL;?>javascript/jquery.slimscroll.min.js"></script>
+        <script src="<?php echo MEDIA_URL;?>javascript/custom.js"></script>
         <script src="<?php echo MEDIA_URL;?>javascript/bootstrap.js"></script>
-		
+        <script src="<?php echo MEDIA_URL;?>javascript/bootstrap.min.js"></script>
+	
+	
 	</head>
 	<body>
 		<div id="container">

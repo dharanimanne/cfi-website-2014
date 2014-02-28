@@ -2,7 +2,7 @@
 
 	<div id="content"><br><br><br>
 		<div id="loginDiv">
-			<form name="loginForm" action="../index.php?action=login" method="POST">
+			<form name="loginForm" action="index.php?action=login" method="POST">
 				Username <input type="text" name="username" placeholder="Username" /> <br>
 				Password <input type="password" name="password" placeholder="Password" /> <br>
 				<input type="submit" name="login_form" value="Login" /> 
