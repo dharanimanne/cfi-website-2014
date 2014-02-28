@@ -1,6 +1,6 @@
 <?php include("templates/include/header.php"); ?>
 <?php include("templates/include/sidebar.php"); ?>
-	<!--<div id="content">
+	<div id="content">
 		dashboard<br>
 
 		<div id="addMemberDiv">
@@ -76,22 +76,14 @@
 				else{
 					echo " No enrolled projects to display<br>";
 				}
+				
 			?>
 		</div>
 	</div>-->
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+    
+    
+    
+    
 	<div id="content">
 		<ul class="breadcrumb">
 			<li><a href="index.php" class="glyphicons home">CFI PMP</a></li>
@@ -112,6 +104,8 @@
 					<li class="active"><a class="glyphicons cardio" href="#website-traffic-tab" data-toggle="tab">Website Traffic</a></li>
 					<li><a class="glyphicons cardio" href="#website-traffic-tab2" data-toggle="tab">Secondary Tab</a></li>
 				</ul>
+               
+                
 			</div>
 			<br>
 		</div>

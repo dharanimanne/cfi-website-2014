@@ -1,3 +1,23 @@
+<script>
+function membership(str)
+{
+if (str.length==0)
+  { 
+  document.getElementById("txtHint").innerHTML="";
+  return;
+  }
+var xmlhttp=new XMLHttpRequest();
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("content").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","templates/include/membership.php?type="+str,true);
+xmlhttp.send();
+}
+</script>
 <div id="menu" class="hidden-print hidden-sm">
 			<div id="menuInner">
 
@@ -29,9 +49,9 @@
 				</ul>
 				<ul>
 					<li class="heading"><span>Memberships</span></li>
-					<li class="glyphicons notes"><a href="#"><span>Projects</span></a></li>
-					<li class="glyphicons notes"><a href="#"><span>Clubs</span></a></li>
-					<li class="glyphicons notes"><a href="#"><span>Competitions</span></a></li>
+					<li class="glyphicons notes"><a href="javascript:membership('Projects');"><span>Projects</span></a></li>
+					<li class="glyphicons notes"><a href="javascript:membership('Clubs');"><span>Clubs</span></a></li>
+					<li class="glyphicons notes"><a href="javascript:membership('Competitions');"><span>Competitions</span></a></li>
 				</ul>
 				</div>
 				</div>

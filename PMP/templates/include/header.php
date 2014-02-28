@@ -16,7 +16,7 @@
         <script src="<?php echo MEDIA_URL;?>javascript/jquery-1.11.0.min.js"></script>
         <script src="<?php echo MEDIA_URL;?>javascript/jquery.slimscroll.min.js"></script>
         <script src="<?php echo MEDIA_URL;?>javascript/custom.js"></script>
-        <script src="<?php echo MEDIA_URL;?>javascript/bootstrap.js"></script>
+     <!--   <script src="<?php echo MEDIA_URL;?>javascript/bootstrap.js"></script> -->
         <script src="<?php echo MEDIA_URL;?>javascript/bootstrap.min.js"></script>
 	
 	
@@ -41,8 +41,9 @@
 								<a href="#">Contacts</a>
 							  </li>
 							</ul>
+                            
 							<ul class="nav pull-right">
-							  <li class="dropdown">  
+							  <li class="dropdown" >  
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Profile <b class="caret"></b></a>  
 								<?php
 									if( !isset( $_SESSION['username'] ) ) {
