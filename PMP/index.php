@@ -262,6 +262,8 @@
 		$activity = new Activity( $_POST );
 		if( $activity->update() ){
 			$results['successMessage'] = "Added activity successful.";
+			echo "hey dude...";
+			dashboard( $_SESSION['username'] );
 		}			
 	}
 
