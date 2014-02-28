@@ -162,61 +162,45 @@
 	}
 
 	function uploadFile(){
-		if ( ! isset($_FILES["file"]))
-		{
-			echo "Please select a file to upload and try again...";
-			die('file is not set...');
+
+		$results = array();
+
+		if ($_FILES['file']['error'] === UPLOAD_ERR_OK) 
+		{ 
+  			$fileData = array();
+			$fileData['fileName'] = $_FILES["file"]["name"];
+
+	        if( is_dir( FILE_UPLOAD_DIRECTORY ) == false )
+	        {
+            	mkdir( FILE_UPLOAD_DIRECTORY, 0777 );// Create directory if it does not exist
+            }
+            if( is_file( FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] )==false )
+            {
+                move_uploaded_file( $FILES["file"]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] );
+            }
+            else
+            {    //rename the file if another one exist
+                $fileData['fileName'] = $FILES["file"]["name"].time();
+                move_uploaded_file( $FILES["file"]["tmp_name"], FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'] ); 
+            }
+
+            $fileData['fileType'] = $_FILES["file"]["type"];
+			$fileData['fileLocation'] = FILE_UPLOAD_DIRECTORY.'/'.$fileData['fileName'];    //to add later (the location of the file)
+	        $fileData['uploadedBy'] = $_SESSION['username'];
+	        
+	        $file = new File( $fileData );
+
+	        if( $file->insert() )
+			{
+				$results['successMessage'] = "File upload successful. Thank you";
+			} 
 		}
 		else
-		{		    
-		    if ( $_FILES["file"]["size"] < 20000000 )
-		  	{
-		  		if ($_FILES["file"]["error"] > 0)
-		    	{
-		    		echo "Return Code: " . $_FILES["file"]["error"] . "<br>";
-		    	}
-		  		else
-		    	{
-		  			if (file_exists("uploads/" . $_FILES["file"]["name"]))
-		      		{
-				    	echo $_FILES["file"]["name"] . " already exists. Please change the name and try again.";
-				    }
-		    		else
-		      		{
-		      			$fileData = array();
-						$fileData['fileName'] = $_FILES["file"]["name"];
-						$fileData['fileType'] = $_FILES["file"]["type"];
-						$fileData['fileLocation'] = "upload/" . $_FILES["file"]["name"]);    //to add later (the location of the file)
-				        $fileData['uploadedBy'] = User::getByUsername( $_SESSION['username'] );
-
-				        $file = new File( $fileData );
-
-				        if( $file->insert() and move_uploaded_file($_FILES["file"]["tmp_name"], "upload/" . $_FILES["file"]["name"]) )
-						{
-							$results['successMessage'] = "File upload successful. Thank you";
-						}
-				        
-						else
-						{
-							//echo File::errorInfo();
-							if( File::errorCode() == 23000 )
-							{
-								$results['errorMessage'] = "Upload Unsuccessful. Sorry for the inconvenience.";
-							}								
-							else
-							{
-								$results['errorMessage'] = "Upload Unsuccessful. Please try again.";
-							}	
-						}    
-				    }
-				}
-		  	}
-		  	else
-		  	{
-		  		echo "The acceptable size of a file is less than 2MB";
-		  	}
-		}
+		{ 
+			throw new UploadException($_FILES['file']['error']); 
+		}   
 	}
+
 
 	function add_activity(){
 		$results = array();	
@@ -228,6 +212,7 @@
 		}			
 	}
 
+
 	function update_activity(){
 		$results = array();	
 		$results['pageTitle'] = " | CFI Projects Management Portal";
@@ -237,6 +222,7 @@
 			$results['successMessage'] = "Added activity successful.";
 		}			
 	}
+
 
 	function updatePassword(){
 		$results = array();	
@@ -266,6 +252,7 @@
 		}
 		require( TEMPLATE_PATH . "/updateForm.php" );
 	}
+
 
 	function update(){
 		$results = array();	
@@ -319,6 +306,7 @@
 		}
 		$conn = null;
 	}*/
+
 
 	function addMember(){
 //		$results = array();

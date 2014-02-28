@@ -10,5 +10,7 @@ define( "ADMIN_USERNAME", "admin" );
 define( "ADMIN_PASSWORD", "pass" );
 define( "TABLENAME_USERS", "users" );
 define( "TABLENAME_ACTIVITY", "activity" );
+define( "TABLENAME_FILES", "files" );
+define( "FILE_UPLOAD_DIRECTORY", "upload" );
 //require( CLASS_PATH . "/index.php" );
 ?>

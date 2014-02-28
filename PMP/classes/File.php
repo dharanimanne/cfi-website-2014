@@ -1,9 +1,4 @@
 <?php
-	require_once('Password.php');
-	require_once('Activity.php');
-	define("MINIMUM_NAME_LENGTH", 4);
-	define("MINIMUM_ROLLNO_LENGTH", 8);
-	define("MINIMUM_PASSWORD_LENGTH", 6);
 		
 	class File {
 		
@@ -24,7 +19,7 @@
 			if( isset( $data['uploadedOn'] ) ) 			$this->uploadedOn =  $data['uploadedOn'];
 			if( isset( $data['fileType'] ) ) 			$this->fileType = $data['fileType'];
 			if( isset( $data['fileLocation'] ) ) 		$this->fileLocation = $data['fileLocation'];
-			if( isset( $data['uploadedBy'] ) ) 		$this->uploadedBy = $data['uploadedBy'];
+			if( isset( $data['uploadedBy'] ) ) 			$this->uploadedBy = $data['uploadedBy'];
 		}
 		
 		public static function errorInfo(){
@@ -43,7 +38,7 @@
 	
 			if( !is_null( $this->id ) ) trigger_error( "File::insert(): Attempt to insert a file object that already has its ID property set to $this->id.", E_FILE_ERROR );
 			
-			// validation only for malicious files, to be added...
+			// validation for malicious files, to be added...
 
 
 			$this->uploadedOn = date("Y-m-d H:i:s");  
