@@ -154,7 +154,7 @@
 
 			//Update the object
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
-			$sql = "UPDATE ".TABLENAME_USERS." SET name=:name, hostel=:hostel, room=:room, phone=:phone, socialMediaUrl=:socialMediaUrl,avatarLocation=:avatarLocation, expertise=:expertise, aboutMe=:aboutMe WHERE id = :id";
+			$sql = "UPDATE ".TABLENAME_USERS." SET name=:name, hostel=:hostel, room=:room, phone=:phone, socialMediaUrl=:socialMediaUrl, expertise=:expertise, aboutMe=:aboutMe WHERE id = :id";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":name", $this->name, PDO::PARAM_STR );
 			echo $this->name ;
@@ -166,7 +166,7 @@
 			echo $this->phone;
 			$st->bindValue( ":socialMediaUrl", $this->socialMediaUrl, PDO::PARAM_STR );
 			echo $this->socialMediaUrl;
-			$st->bindValue( ":avatarLocation", $this->avatarLocation, PDO::PARAM_STR );
+			
 			
 			$st->bindValue( ":expertise", $this->expertise, PDO::PARAM_STR );
 			echo $this->expertise;

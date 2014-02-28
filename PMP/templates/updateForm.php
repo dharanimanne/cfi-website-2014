@@ -108,7 +108,7 @@
 			</form>
 		</div>
         
-       <form name="updateprofilepic"  class="form-horizontal" action="" method="POST" style="width:500px;">
+       <form name="updateprofilepic"  class="form-horizontal" action="index.php?action=updateProfilePic" method="POST" style="width:500px;">
     <div class="control-group">
     <label class="control-label" for="Icon">ProfilePic</label>  <img style="position:absolute; margin-left:230px; height:50px ;size:auto;" src="../Content/Images/logo.png" /> 
     <div class="controls">

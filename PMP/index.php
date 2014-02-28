@@ -39,6 +39,9 @@
 		case 'create_message';
 		      createMessage();
 			    break;		
+		case 'updateProfilePic';
+              updateProfilePic();
+                break; 			  
 		default:
 			login();
 	}
@@ -284,11 +287,11 @@
 		$results = array();	
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
-
+   
 		if( isset( $_POST['update_form'] ) ){
 			$user = new User( $_POST );
 			$user->id = $results['user']->id;
-			$user->avatarLocation =  uploadFile();
+			
 		//	echo $user->id;
 		//	print_r($user);
 		//	print_r($user);
