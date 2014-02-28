@@ -3,7 +3,7 @@
 	require("../config.php");
 	$action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 	$username ="rajiuser@gmail.com";
-	$user= new User::getByUsername( "rajiuser@gmail.com" );
+	$user= new User::getByUsername( "dharani.manne@gmail.com" );
 	$clubs=$user::getActivityOfUser( "club" );
 	$projects=$user::getActivityOfUser( "project" );
 	$competitions=$user::getActivityOfUser( "competition" );

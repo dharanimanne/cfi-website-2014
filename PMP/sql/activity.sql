@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS activity;
 CREATE TABLE activity
 (
   id                smallint unsigned NOT NULL auto_increment,
-  title             VARCHAR(100) NOT NULL,
+  title             VARCHAR(100) NOT NULL UNIQUE,
   brief_writeup     text NOT NULL,
   detailed_writeup  text NOT NULL,
   status            text NOT NULL,
