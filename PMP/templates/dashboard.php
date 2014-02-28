@@ -13,6 +13,7 @@
 		</div>
 
 		<?php
+		//echo $results['user']->avatarLocation;
 		//echo $results['user']->email; 
 		//$clubs = $results['user']->getActivityOfUser('club');  
 		//$competitions = $results['user']->getActivityOfUser('competition');  
@@ -20,6 +21,9 @@
 		//echo $clubs['0']['activityType'];
 		//print_r( $clubs );
 		?>
+		<div id="user_profile">
+		<img src="../upload/<?php echo $results['user']->avatarLocation; ?>" width="360" height="350">
+		</div>
 		<div id="clubsDiv">
 			<h1>Clubs</h1><br>
 			<?php 
