@@ -54,8 +54,9 @@
 										</li>
 									</ul>
 								<?php } else { ?>
-								<ul class="dropdown-menu">  
-									<li>
+								<ul class="dropdown-menu" style="width:350px">  
+                                    <img style="position:absolute; margin-left:230px; height:100px ;size:auto;" src="../Content/Images/logo.png" /> </center>
+                                   <li>
 										<a href="#"><?php echo $results['user']->name; ?></a>
 									</li> 
 									<li>
@@ -66,8 +67,8 @@
 									</li>  
 									<li>
 										<a href="index.php?action=logout">Logout</a>
-									</li>  
-								</ul> 
+									</li>
+                               </ul> 
 								<?php } ?>
 							  </li>  
 							</ul> 
