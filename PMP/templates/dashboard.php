@@ -1,6 +1,6 @@
 <?php include("templates/include/header.php"); ?>
 <?php include("templates/include/sidebar.php"); ?>
-<!--	<div id="content">
+	<div id="content">
 		dashboard<br>
 
 		<div id="addMemberDiv">
@@ -11,7 +11,16 @@
 			   <input type="submit" name="add_member_form" value="addMember" /> 
 			</form>	
 		</div>
-
+      <div id="createMessageDiv">
+			Message <br>
+			<form name="createMessageForm" action="index.php?action=create_message" method="POST">
+			 <input type="text"  style="display:none;" name="from_username"  value="<?php echo $results['user']->email; ?>" /> <br>
+				To <input type="text" name="to_username" placeholder="Email or Username" /><br>
+				Message <input type="text" name="message" placeholder="message" /><br> 
+				Tags <input type="text" name="tags" placeholder="tags" /><br> 
+			   <input type="submit" name="add_member_form" value="submit" /> 
+			</form>	
+		</div>
 		<?php
 		//echo $results['user']->avatarLocation;
 		//echo $results['user']->email; 
