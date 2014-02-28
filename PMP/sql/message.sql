@@ -8,7 +8,7 @@ CREATE TABLE messages
   messageSentTime      datetime NOT NULL  ,
   isReceived           tinyint(1) NOT NULL DEFAULT '0',
   isRead           tinyint(1) NOT NULL DEFAULT '0',
-  tags                  VARCHAR(50) NOT NULL
+  tags                  VARCHAR(50) NOT NULL,
  
   
  
