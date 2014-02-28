@@ -33,6 +33,64 @@
 		<div id="user_profile">
 		<img src="../upload/<?php echo $results['user']->avatarLocation; ?>" width="360" height="350">
 		</div>
+		<div id="Messages">
+		<h3>Messages received</h3><br>
+        <?php
+		$messages_received=Message::getBytoUsername( $results['user']->email );
+		
+		for($i=0;$i<sizeof($messages_received);$i++)
+		{
+		echo $messages_received[$i]['from_username']."</br>";
+		echo $messages_received[$i]['message']."</br>";
+		echo $messages_received[$i][4]."</br>";
+		}
+		?>
+		<h3>Messages sent</h3><br>
+        <?php
+		$messages_received=Message::getByfromUsername( $results['user']->email );
+		
+		for($i=0;$i<sizeof($messages_received);$i++)
+		{
+		echo $messages_received[$i]['from_username']."</br>";
+		echo $messages_received[$i]['message']."</br>";
+		echo $messages_received[$i][4]."</br>";
+		}
+		?>
+		<h3>Messages received by Activity</h3><br>
+        <?php
+		$tags="asd";
+		$messages_received=Message::getByTagReceived( $tags,$results['user']->email );
+		for($i=0;$i<sizeof($messages_received);$i++)
+		{
+		echo $messages_received[$i]['from_username']."</br>";
+		echo $messages_received[$i]['message']."</br>";
+		echo $messages_received[$i][4]."</br>";
+		}
+		?>
+		<h3>Messages sent by Activity</h3><br>
+        <?php
+		$tags="raftor";
+		$messages_received=Message::getByTagSent( $tags,$results['user']->email );
+		for($i=0;$i<sizeof($messages_received);$i++)
+		{
+		echo $messages_received[$i]['from_username']."</br>";
+		echo $messages_received[$i]['message']."</br>";
+		echo $messages_received[$i][4]."</br>";
+		}
+		?>
+        <h3>Conversation</h3><br>
+        <?php
+		$email="robotxtron2010cd@gmail.com";
+		$messages_received=Message::getByConversation( $results['user']->email,$email );
+		
+		for($i=0;$i<sizeof($messages_received);$i++)
+		{
+		echo $messages_received[$i]['from_username']."</br>";
+		echo $messages_received[$i]['message']."</br>";
+		echo $messages_received[$i][4]."</br>";
+		}
+		?>	
+		</div>
 		<div id="clubsDiv">
 			<h1>Clubs</h1><br>
 			<?php 
