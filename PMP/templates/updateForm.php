@@ -108,24 +108,16 @@
 			</form>
 		</div>
         
-       <form name="updateprofilepic"  class="form-horizontal" action="" method="POST" style="width:500px;">
+       <form name="updateprofilepic"  class="form-horizontal" action="index.php?action=updateProfilePic" method="POST" style="width:500px;"  enctype="multipart/form-data">
     <div class="control-group">
     <label class="control-label" for="Icon">ProfilePic</label>  <img style="position:absolute; margin-left:230px; height:50px ;size:auto;" src="../Content/Images/logo.png" /> 
     <div class="controls">
-    <input type="file" name="profpic" id="profpic">
+    <input type="file" name="file" id="profpic">
     <p class="help-block"></p>
     </div>
   </div>
   
-  
-  <div class="control-group">
-    <label class="control-label" for="Icon">BG-Pic</label> <img style="position:absolute; margin-left:230px; height:50px ;size:auto;" src="../Content/Images/logo.png" /> 
-    <div class="controls">
-    <input type="file" name="bgimgpic" id="bgimgpic">
-    <p class="help-block"></p>
-    </div>
-  </div>
-  
+
   
             <div class="form-actions">  <center>
             <button type="submit" class="btn btn-primary">Save changes</button> </center>  
