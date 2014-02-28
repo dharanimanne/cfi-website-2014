@@ -220,9 +220,9 @@
 		$activity = new Activity( $_POST );
 		if( $activity->update() ){
 			$results['successMessage'] = "Added activity successful.";
-			$user = User::getByUsername( $_SESSION['username'] );
-			dashboard( $user );
-		}			
+		}
+		$user = User::getByUsername( $_SESSION['username'] );
+		dashboard( $user );
 	}
 
 
