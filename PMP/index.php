@@ -39,6 +39,9 @@
 		case 'addMember';
 			addMember();
 				break;
+		case 'create_message';
+		      createMessage();
+			    break;		
 		default:
 			login();
 	}
