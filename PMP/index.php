@@ -96,7 +96,7 @@
 
 	function register(){
 		$results = array();	
-		$results['pageTitle'] = "Login | CFI Projects Management Portal";	
+		$results['pageTitle'] = "Regsiter | CFI Projects Management Portal";	
 		$user = new User( $_POST );
 		if ( ! isset($_FILES["file"]))
 		{
@@ -159,6 +159,63 @@
 			else
 				$results['errorMessage'] = "Registration unsuccessful. Please try again.";
 		}	
+	}
+
+	function uploadFile(){
+		if ( ! isset($_FILES["file"]))
+		{
+			echo "Please select a file to upload and try again...";
+			die('file is not set...');
+		}
+		else
+		{		    
+		    if ( $_FILES["file"]["size"] < 20000000 )
+		  	{
+		  		if ($_FILES["file"]["error"] > 0)
+		    	{
+		    		echo "Return Code: " . $_FILES["file"]["error"] . "<br>";
+		    	}
+		  		else
+		    	{
+		  			if (file_exists("uploads/" . $_FILES["file"]["name"]))
+		      		{
+				    	echo $_FILES["file"]["name"] . " already exists. Please change the name and try again.";
+				    }
+		    		else
+		      		{
+		      			$fileData = array();
+						$fileData['fileName'] = $_FILES["file"]["name"];
+						$fileData['fileType'] = $_FILES["file"]["type"];
+						$fileData['fileLocation'] = "upload/" . $_FILES["file"]["name"]);    //to add later (the location of the file)
+				        $fileData['uploadedBy'] = User::getByUsername( $_SESSION['username'] );
+
+				        $file = new File( $fileData );
+
+				        if( $file->insert() and move_uploaded_file($_FILES["file"]["tmp_name"], "upload/" . $_FILES["file"]["name"]) )
+						{
+							$results['successMessage'] = "File upload successful. Thank you";
+						}
+				        
+						else
+						{
+							//echo File::errorInfo();
+							if( File::errorCode() == 23000 )
+							{
+								$results['errorMessage'] = "Upload Unsuccessful. Sorry for the inconvenience.";
+							}								
+							else
+							{
+								$results['errorMessage'] = "Upload Unsuccessful. Please try again.";
+							}	
+						}    
+				    }
+				}
+		  	}
+		  	else
+		  	{
+		  		echo "The acceptable size of a file is less than 2MB";
+		  	}
+		}
 	}
 
 	function add_activity(){
