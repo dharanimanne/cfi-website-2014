@@ -272,10 +272,10 @@
 		$results = array();	
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
-        $fileName = "bgimgpic";
+    /*    $fileName = "bgimgpic";
 		$fileLocation = FILE_UPLOAD_LOCATION."/ActivityImages"; 
 		 uploadFile( $fileName, $fileLocation );
-			$user = new User( $_POST );
+	*/		$user = new User( $_POST );
 			$user->id = $results['user']->id;
 			$fileName = "file";
 		$fileLocation = FILE_UPLOAD_LOCATION;
