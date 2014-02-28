@@ -68,18 +68,18 @@
 			$sql = "INSERT INTO ".TABLENAME_messages." ( from_username, to_username, message, messageSentTime,tags) VALUES ( :from_username, :to_username, :message, :messageSentTime, :tags)";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":from_username", $this->from_username, PDO::PARAM_STR );
-			echo  $this->from_username;
+		
 			$st->bindValue( ":to_username", $this->to_username, PDO::PARAM_STR );
-				echo  $this->to_username;
+	
 			$st->bindValue( ":message", $this->message, PDO::PARAM_STR );	
-			echo  $this->message;
+			
 			$st->bindValue( ":messageSentTime", $this->messageSentTime, PDO::PARAM_INT);
-			echo $this->messageSentTime;
+			
 				$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
 				
 			$result = $st->execute();
 			$this->id = $conn->lastInsertId();
-			print_r($sql);
+		
 			$conn = null;
 			
 			if( !$result ){
@@ -90,6 +90,7 @@
 			else{		
 				self::$successMessage = "User::insert: message successfully created with id: ".$this->id;			
 				return true;
+				echo "successfully inserted!";
 			}
 		}
 	
