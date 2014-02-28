@@ -262,7 +262,7 @@
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
 			$user = new User( $_POST );
 			$user->id = $results['user']->id;
-			$fileName = "profpic";
+			$fileName = "file";
 		$fileLocation = FILE_UPLOAD_LOCATION;
 			$user->avatarLocation = uploadFile( $fileName, $fileLocation );
 			//echo $user->id;
