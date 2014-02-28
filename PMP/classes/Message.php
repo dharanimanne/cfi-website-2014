@@ -52,29 +52,34 @@
 		}	
 			
 		public function insert(){
-	
 			if( !is_null( $this->id ) ) trigger_error( "User::insert(): Attempt to insert a message object that already has its ID property set to $this->id.", E_USER_ERROR );
 			
 			// Set Values
 		
 			$this->messageSentTime = date("Y-m-d H:i:s");   
-			
+			   
 			// Validation
-            else if( strlen( $this->to_username ) < MINIMUM_NAME_LENGTH || preg_match("/[^a-zA-Z'-]/", $this->to_username) ){
+         /*   else if( strlen( $this->to_username ) < MINIMUM_NAME_LENGTH || preg_match("/[^a-zA-Z'-]/", $this->to_username) ){
 				self::$errorCode ="ERR_INV_NAME";
 				return false;
-			}
+			}*/
 			
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 			$sql = "INSERT INTO ".TABLENAME_messages." ( from_username, to_username, message, messageSentTime,tags) VALUES ( :from_username, :to_username, :message, :messageSentTime, :tags)";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":from_username", $this->from_username, PDO::PARAM_STR );
+			echo  $this->from_username;
 			$st->bindValue( ":to_username", $this->to_username, PDO::PARAM_STR );
+				echo  $this->to_username;
 			$st->bindValue( ":message", $this->message, PDO::PARAM_STR );	
+			echo  $this->message;
 			$st->bindValue( ":messageSentTime", $this->messageSentTime, PDO::PARAM_INT);
+			echo $this->messageSentTime;
 				$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
+				
 			$result = $st->execute();
 			$this->id = $conn->lastInsertId();
+			print_r($sql);
 			$conn = null;
 			
 			if( !$result ){
@@ -137,7 +142,7 @@
 			$st->execute();
 			$row = $st->fetchAll();
 			$conn = null;
-			if( $row ) return new ( $row );
+			if( $row ) return new  $row ;
 		}	
 		
 		public static function getBytoUsername( $username ){  //all messages user received 
@@ -149,7 +154,7 @@
 			$st->execute();
 			$row = $st->fetchAll();
 			$conn = null;
-			if( $row ) return new ( $row );
+			if( $row ) return  $row ;
 		}
 		public static function getByfromUsername( $username ){  //all messages user sent
 				$username = trim( $username );
@@ -160,22 +165,52 @@
 			$st->execute();
 			$row = $st->fetchAll();
 			$conn = null;
-			if( $row ) return new ( $row );
+			if( $row ) return  $row ;
 		}
 		public static function getByConversation( $from_username,$to_username ){  //conversation between two people
 			$from_username = trim( $from_username );
 			$to_username = trim( $to_username );
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "SELECT *, UNIX_TIMESTAMP(messageSentTime) AS messageSentTime FROM ".TABLENAME_messages." WHERE to_username = :username AND from_username = :from_username";
+			//if(isset($from_username)&&!isset(to_username))
+			//$sql = "SELECT *, UNIX_TIMESTAMP(messageSentTime) AS messageSentTime FROM ".TABLENAME_messages." WHERE from_username = :from_username ";
+			//elseif(!isset($from_username) && isset($to_username))
+			//$sql = "SELECT *, UNIX_TIMESTAMP(messageSentTime) AS messageSentTime FROM ".TABLENAME_messages." WHERE to_username = :to_username ";
+			//else
+			$sql = "SELECT *, UNIX_TIMESTAMP(messageSentTime) AS messageSentTime FROM ".TABLENAME_messages." WHERE (to_username = :to_username AND from_username = :from_username)  OR (to_username = :from_username AND from_username = :to_username)";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":from_username", $from_username, PDO::PARAM_STR );
 			$st->bindValue( ":to_username", $to_username, PDO::PARAM_STR );
 			$st->execute();
 			$row = $st->fetchAll();
 			$conn = null;
-			if( $row ) return new ( $row );
+			if( $row ) return  $row ;
 		}
-	
+			public static function getByTagReceived( $tags,$to_username ){  //all messages in that activity received
+				$tags = trim( $tags );
+				$to_username = trim( $to_username );
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = "SELECT *, UNIX_TIMESTAMP(messageSentTime) AS messageSentTime FROM ".TABLENAME_messages." WHERE to_username = :to_username AND tags=:tags ";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":to_username", $to_username, PDO::PARAM_STR );
+			$st->bindValue( ":tags", $tags, PDO::PARAM_STR );
+			$st->execute();
+			$row = $st->fetchAll();
+			$conn = null;
+			if( $row ) return  $row ;
+		}
+	public static function getByTagSent( $tags,$from_username ){  //all messages in that activity Sent
+				$tags = trim( $tags );
+				$from_username = trim( $from_username );
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = "SELECT *, UNIX_TIMESTAMP(messageSentTime) AS messageSentTime FROM ".TABLENAME_messages." WHERE from_username = :from_username AND tags=:tags ";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":from_username", $from_username, PDO::PARAM_STR );
+			$st->bindValue( ":tags", $tags, PDO::PARAM_STR );
+			$st->execute();
+			$row = $st->fetchAll();
+			$conn = null;
+			if( $row ) return  $row ;
+		}
 		
 		public function delete(){
 						
