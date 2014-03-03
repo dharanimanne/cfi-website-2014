@@ -1,13 +1,13 @@
 <?php
 		
-	class Documents {
+	class Document {
 		
 		public $id = null;
-		public $DocName = null;
+		public $docName = null;
 		public $uploadedOn = null;
 		public $tags = null;
 		public $uploadedBy = null;
-		public $DocLocation = null;
+		public $docLocation = null;
 		public $activityId = null;
 		public static $errorMessage;
 		public static $errorCode;
@@ -16,10 +16,10 @@
 		public function __construct( $data = array() ) {
 			
 			if( isset( $data['id'] ) ) 					$this->id = (int) $data['id'];
-		    if( isset( $data['DocName'] ) ) 			$this->DocName = $data['DocName'] ;
+		    if( isset( $data['docName'] ) ) 			$this->docName = $data['docName'] ;
 			if( isset( $data['uploadedOn'] ) ) 			$this->uploadedOn =  $data['uploadedOn'];
 			if( isset( $data['tags'] ) ) 				$this->tags = $data['tags'];
-			if( isset( $data['DocLocation'] ) ) 		$this->DocLocation = $data['DocLocation'];
+			if( isset( $data['docLocation'] ) ) 		$this->docLocation = $data['docLocation'];
 			if( isset( $data['uploadedBy'] ) ) 			$this->uploadedBy = $data['uploadedBy'];
 			if( isset( $data['activityId'] ) )			$this->activityId = $data['activityId'];
 		}
@@ -38,19 +38,19 @@
 	
 		public function insert(){
 	
-			if( !is_null( $this->id ) ) trigger_error( "DOCUMENT::insert(): Attempt to insert a DOCUMENT object that already has its ID property set to $this->id.", E_DOCUMENT_ERROR );
+			if( !is_null( $this->id ) ) trigger_error( "docUMENT::insert(): Attempt to insert a docUMENT object that already has its ID property set to $this->id.", E_docUMENT_ERROR );
 			
-			// validation for malicious Docs, to be added...
+			// validation for malicious docs, to be added...
 
 
 			$this->uploadedOn = date("Y-m-d H:i:s");
 			
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO ".TABLENAME_DOCUMENTS." ( DocName, tags, DocLocation, uploadedOn, uploadedBy) VALUES ( :DocName, :tags, :DocLocation, :uploadedOn, :uploadedBy)";
+			$sql = "INSERT INTO ".TABLENAME_docUMENTS." ( docName, tags, docLocation, uploadedOn, uploadedBy) VALUES ( :docName, :tags, :docLocation, :uploadedOn, :uploadedBy)";
 			$st = $conn->prepare( $sql );
-			$st->bindValue( ":DocName", $this->DocName, PDO::PARAM_STR );
+			$st->bindValue( ":docName", $this->docName, PDO::PARAM_STR );
 			$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
-			$st->bindValue( ":DocLocation", $this->DocLocation, PDO::PARAM_STR );
+			$st->bindValue( ":docLocation", $this->docLocation, PDO::PARAM_STR );
 			$st->bindValue( ":uploadedOn", $this->uploadedOn, PDO::PARAM_INT );
 			$st->bindValue( ":uploadedBy", $this->uploadedBy, PDO::PARAM_STR );
 
@@ -60,12 +60,12 @@
 			$conn = null;
 			
 			if( !$result ){
-				self::$errorMessage = "DOCUMENT::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
+				self::$errorMessage = "docUMENT::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
 				self::$errorCode = $st->errorCode();
 				return false;
 			}
 			else{
-				self::$successMessage = "DOCUMENT::insert: DOCUMENT successfully inserted with id ".$this->id;
+				self::$successMessage = "docUMENT::insert: docUMENT successfully inserted with id ".$this->id;
 				return true;
 			}
 		}
@@ -110,18 +110,18 @@
 		public function delete(){
 						
 			//Does the object have an ID?
-			if( is_null( $this->id ) ) trigger_error( "DOCUMENT::delete(): Attempt to delete a DOCUMENT object that does not have its ID property set.", E_DOCUMENT_ERROR );
+			if( is_null( $this->id ) ) trigger_error( "docUMENT::delete(): Attempt to delete a docUMENT object that does not have its ID property set.", E_docUMENT_ERROR );
 			
-			unlink( $this->DocLocation );
+			unlink( $this->docLocation );
 
 			//Delete the object
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$st = $conn->prepare ( "DELETE FROM ".TABLENAME_DOCUMENTS." WHERE id = :id LIMIT 1" );
+			$st = $conn->prepare ( "DELETE FROM ".TABLENAME_docUMENTS." WHERE id = :id LIMIT 1" );
 			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
 			$st->execute();
 			$conn = null;
 
-			//yet to remove DOCUMENT from database.....
+			//yet to remove docUMENT from database.....
 		}		
 	}
 ?>

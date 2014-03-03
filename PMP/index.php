@@ -194,7 +194,7 @@
 	                break;
 	        }
 	        echo $results['errorMessage'];
-		}   
+		}
 	}
 
 
@@ -374,6 +374,75 @@
 			$results['errorMessage'] = "Member not added. Please retry.";
 		}
 	//	dashboard( User::getByUsername($username) );
+	}
+
+
+	function uploadDoc( $docName, $docLocation ){
+
+		if ( !isset($results) ) {
+			$results = array();
+		}
+		
+		if ($_FILES[$docName]['error'] === UPLOAD_ERR_OK) 
+		{ 
+  			$docData = array();
+			$docData['docName'] = $_FILES[$docName]["name"];
+
+            if( is_doc( $docLocation.'/'.$docData['docName'] ) == false )
+            {
+                move_uploaded_doc( $_FILES[$docName]["tmp_name"], $docLocation.'/'.$docData['docName'] );
+            }
+            else
+            {    //rename the doc if another one exist
+            	$temp = explode(".", $_FILES[$docName]["name"]);
+                $docData['docName'] = $temp[0].time().".".$temp[1];
+                move_uploaded_doc( $_FILES[$docName]["tmp_name"], $docLocation.'/'.$docData['docName'] ); 
+            }
+
+            $docData['tags'] = $_FILES["tags"];
+			$docData['docLocation'] = $docLocation.'/'.$docData['docName'];    //to add later (the location of the doc)
+	        $docData['uploadedBy'] =   "dharani";             //$_FILESION['username']; kept aside for testing
+	        
+	        $doc = new doc( $docData );
+
+	        if( $doc->insert() )
+			{
+				$results['successMessage'] = "doc upload successful. Thank you";
+				require( TEMPLATE_PATH . "/loginForm.php" );
+				return $docData['docName'];
+			}
+		}
+		else
+		{ 
+			switch ( $_FILES[$docName]['error'] ) {
+	            case UPLOAD_ERR_INI_SIZE:
+	                $results['errorMessage'] = "The uploaded doc exceeds the upload_max_docsize directive in php.ini";
+	                break;
+	            case UPLOAD_ERR_FORM_SIZE:
+	                $results['errorMessage'] = "The uploaded doc exceeds the MAX_doc_SIZE directive that was specified in the HTML form";
+	                break;
+	            case UPLOAD_ERR_PARTIAL:
+	                $results['errorMessage'] = "The uploaded doc was only partially uploaded";
+	                break;
+	            case UPLOAD_ERR_NO_doc:
+	                $results['errorMessage'] = "No doc was uploaded";
+	                break;
+	            case UPLOAD_ERR_NO_TMP_DIR:
+	                $results['errorMessage'] = "Missing a temporary folder";
+	                break;
+	            case UPLOAD_ERR_CANT_WRITE:
+	                $results['errorMessage'] = "Failed to write doc to disk";
+	                break;
+	            case UPLOAD_ERR_EXTENSION:
+	                $results['errorMessage'] = "doc upload stopped by extension";
+	                break;
+
+	            default:
+	                $results['errorMessage'] = "Unknown upload error";
+	                break;
+	        }
+	        echo $results['errorMessage'];
+		}
 	}
 	
 ?>
