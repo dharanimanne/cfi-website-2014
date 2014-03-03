@@ -401,7 +401,7 @@
 
             $docData['tags'] = $_FILES["tags"];
 			$docData['docLocation'] = $docLocation.'/'.$docData['docName'];    //to add later (the location of the doc)
-	        $docData['uploadedBy'] =   "dharani";             //$_FILESION['username']; kept aside for testing
+	        $docData['uploadedBy'] =   "dharani";             //$_SESSION['username']; should be the actual code...just kept it aside for testing
 	        
 	        $doc = new doc( $docData );
 
