@@ -1,0 +1,130 @@
+.oswald-bold{
+	font-family:Oswald;
+	font-weight:400!important;
+}
+input[type=text], input[type=password], select{
+	padding: 15px;
+	border-radius: 7px;
+	border-color: rgb(240, 231, 234);
+	font-family: Arial;
+	box-shadow: 0px;
+	color: rgb(124, 117, 117);
+	font-style: italic;
+	width:255px;
+}
+input[type=text]:focus, input[type=password]:focus{
+	box-shadow: 2px 2px 5px 3px #E2E2E2;
+}
+select{
+	padding:4px 10px;
+}
+input[type=submit], input[type=button]{
+	cursor: pointer;
+	margin: 3px;
+	background-color: #EE7701;
+	padding: 4px 32px;
+	border: solid #F6D095 2px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: #fff;
+	font: 12px Oswald;
+	text-align: center;
+}
+td{
+	text-align:center;
+	padding:5px 10px;
+}
+#loginDiv{
+	float:left;
+	margin-left:15%;
+	position: relative;
+	box-shadow: 10px 10px 25px #EEE8E8;
+	padding: 25px;
+	border: solid 1px #E4DDDD;
+}
+#registerDiv{
+	float:right;
+	margin-right:15%;
+	position: relative;
+	box-shadow: 10px 10px 25px #EEE8E8;
+	padding: 25px;
+	border: solid 1px #E4DDDD;
+}
+#bgDiv {
+  background: url('http://cfi-iitm.org/main/wp-content/uploads/2013/12/1005369_656046134427691_885327573_n.jpg');
+  background-size:cover;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+#whiteBgDiv {
+  background: #fff;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+form{
+  margin:0px;
+}
+.container{
+	width:auto!important;
+	margin-left:20px;
+}
+#menu{
+	height:100%;
+}
+.read-tab-content{
+	margin:5px 10px;
+}
+.read-tab-content table{
+	width:100%;
+}
+.read-tab-content td{
+	padding:5px 10px;
+	border:solid 1px #F0E2E2;
+	font-size:12px;
+	text-align:justify;
+}
+.detail-writeup-left{
+	width:75%;
+	float:left;
+}
+.detail-writeup-right{
+	width:25%;
+	min-width:175px;
+	float:left;
+}
+.detail-writeup-right img{
+	border:solid 1px rgb(112, 100, 100);
+	width:175px;
+}
+#edit-activity-btn div{
+	background:url('../../media/images/edit.png');	
+	width: 25px;
+	height: 25px;
+	background-size: cover;
+	cursor:pointer;
+	float:left;
+	margin:-3px 2px auto -3px;	
+}
+#edit-activity-btn{
+	width: 55px;
+	height: 29px;
+	border: solid 1px grey;
+	cursor: pointer;
+	text-align: center;
+	padding: 4px;
+	margin-top: 4px;
+	box-shadow:2px 2px 1px;
+}
+#edit-activity-btn:hover{
+	box-shadow:2px 2px 1px #37a6cd;
+}

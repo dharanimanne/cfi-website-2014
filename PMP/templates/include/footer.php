@@ -1,4 +1,4 @@
-			<div id="footer">Worst footer on this planet</div>
+			<div id="footer"></div>
 		</div> <!-- container -->
 	</body>
 </html>

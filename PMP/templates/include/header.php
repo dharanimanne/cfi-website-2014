@@ -13,11 +13,14 @@
         <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/glyphicons.css">
         <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/style.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/custom.css">
         <script src="<?php echo MEDIA_URL;?>javascript/jquery-1.11.0.min.js"></script>
         <script src="<?php echo MEDIA_URL;?>javascript/jquery.slimscroll.min.js"></script>
+        <script src="<?php echo MEDIA_URL;?>javascript/jquery.cmtextconstrain.js"></script>
         <script src="<?php echo MEDIA_URL;?>javascript/custom.js"></script>
-     <!--   <script src="<?php echo MEDIA_URL;?>javascript/bootstrap.js"></script> -->
+		<!--<script src="<?php echo MEDIA_URL;?>javascript/bootstrap.js"></script> -->
         <script src="<?php echo MEDIA_URL;?>javascript/bootstrap.min.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 	
 	
 	</head>
@@ -29,7 +32,7 @@
 						<div class="container"> 
 							<ul class="nav">
 							  <li class="active">
-								<a class="brand" href="index.php">CFI Projects Management Portal</a>
+								<a class="brand oswald-bold" href="index.php">CFI Projects Management Portal</a>
 							  </li>	
 							  <li>
 								<a href="#">About</a>
@@ -44,7 +47,7 @@
                             
 							<ul class="nav pull-right">
 							  <li class="dropdown" >  
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Profile <b class="caret"></b></a>  
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Profile <b class="caret" style="margin-top:0px;"></b></a>  
 								<?php
 									if( !isset( $_SESSION['username'] ) ) {
 								?>
@@ -109,6 +112,8 @@ xmlhttp.onreadystatechange=function()
   if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
     document.getElementById("content").innerHTML=xmlhttp.responseText;
+	var scripts = document.getElementById("content").getElementsByTagName('script');
+	eval(scripts[0].text);	
     }
   }
 if(str == "Clubs" || str == "Competitions" || str == "Projects") {

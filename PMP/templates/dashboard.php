@@ -1,7 +1,7 @@
 <?php include("templates/include/header.php"); ?>
 <?php include("templates/include/sidebar.php"); ?>
-	<div id="content">
-		dashboard<br>
+	<!--<div id="content">
+		<!--dashboard<br>
 
 		<div id="addMemberDiv">
 			Need to add a member? Please enter details below. <br>
@@ -20,7 +20,7 @@
 				Tags <input type="text" name="tags" placeholder="tags" /><br> 
 			   <input type="submit" name="add_member_form" value="submit" /> 
 			</form>	
-		</div>
+		</div>-->
 		<?php
 		//echo $results['user']->avatarLocation;
 		//echo $results['user']->email; 
@@ -30,7 +30,7 @@
 		//echo $clubs['0']['activityType'];
 		//print_r( $clubs );
 		?>
-		<div id="user_profile">
+		<!--<div id="user_profile">
 		<img src="./upload/<?php echo $results['user']->avatarLocation; ?>" width="360" height="350">
 		</div>
 		<div id="Messages">
@@ -90,8 +90,8 @@
 		echo $messages_received[$i][4]."</br>";
 		}
 		?>	
-		</div>
-		<div id="clubsDiv">
+		</div>-->
+		<!--<div id="clubsDiv">
 			<h1>Clubs</h1><br>
 			<?php 
 				$clubs = $results['user']->getActivityOfUser('club'); 
@@ -145,7 +145,7 @@
 				}
 				
 			?>
-		</div>
+		</div>-->
 	</div>-->
     
     
@@ -171,14 +171,9 @@
 					<li class="active"><a class="glyphicons cardio" href="#website-traffic-tab" data-toggle="tab">Website Traffic</a></li>
 					<li><a class="glyphicons cardio" href="#website-traffic-tab2" data-toggle="tab">Secondary Tab</a></li>
 				</ul>
-               
-                
 			</div>
 			<br>
 		</div>
 	</div>
-
-
-	
 	
 <?php include("templates/include/footer.php"); ?>
