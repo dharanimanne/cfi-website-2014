@@ -15,7 +15,7 @@ CREATE TABLE users
   phone             VARCHAR(20) NOT NULL, 
   email             VARCHAR(50) NOT NULL UNIQUE,
   socialMediaUrl    VARCHAR(50) NULL,
-  avatarLocation    VARCHAR(50) NOT NULL DEFAULT default.jpeg,
+  avatarLocation    VARCHAR(50) NOT NULL,
   expertise         text NULL,
   rating            VARCHAR(40) NULL,
   aboutMe           text NULL,

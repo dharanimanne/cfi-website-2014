@@ -102,9 +102,11 @@
 		$results['pageTitle'] = "Register | CFI Projects Management Portal";	
 		$user = new User( $_POST );
 	
-		$fileName = "file";
-		$fileLocation = "upload";
-		$user->avatarLocation = uploadFile( $fileName, $fileLocation );
+		if (!isset($_FILES['file'])) {
+			$fileName = "file";
+			$fileLocation = "upload";
+			$user->avatarLocation = uploadFile( $fileName, $fileLocation );
+		}
 				
 		if( $user->insert() ){
 			$results['successMessage'] = "Registration successful. Please login.";
