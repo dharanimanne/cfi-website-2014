@@ -46,6 +46,9 @@
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 			$sql = "INSERT INTO ".TABLENAME_FILE." ( fileName, fileType, fileLocation, uploadedOn, uploadedBy) VALUES ( :fileName, :fileType, :fileLocation, :uploadedOn, :uploadedBy)";
 			$st = $conn->prepare( $sql );
+			if ($this->fileName == "######") {
+				$this->fileName = $conn->lastInsertId();
+			}
 			$st->bindValue( ":fileName", $this->fileName, PDO::PARAM_STR );
 			$st->bindValue( ":fileType", $this->fileType, PDO::PARAM_STR );
 			$st->bindValue( ":fileLocation", $this->fileLocation, PDO::PARAM_STR );	
@@ -54,7 +57,9 @@
 
 		
 			$result = $st->execute();
-			$this->id = $conn->lastInsertId();
+			if ($this->fileName != $this->id) {
+				$this->id = $conn->lastInsertId();
+			}
 			$conn = null;
 			
 			if( !$result ){

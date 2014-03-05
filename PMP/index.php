@@ -151,6 +151,11 @@
                 move_uploaded_file( $_FILES[$fileName]["tmp_name"], $fileLocation.'/'.$fileData['fileName'] ); 
             }
 
+            if ($fileName == "icon" or $fileName == "bgimages")
+            {
+            	$fileData['fileName'] = "######";
+            }
+
             $fileData['fileType'] = $_FILES[$fileName]["type"];
 			$fileData['fileLocation'] = $fileLocation.'/'.$fileData['fileName'];    //to add later (the location of the file)
 	        $fileData['uploadedBy'] =   "dharani";             //$_SESSION['username']; kept aside for testing
@@ -161,7 +166,7 @@
 			{
 				$results['successMessage'] = "File upload successful. Thank you";
 				require( TEMPLATE_PATH . "/loginForm.php" );
-				return $fileData['fileName'];
+				return $file->fileName;
 			}
 		}
 		else
