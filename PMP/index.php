@@ -224,14 +224,14 @@
 
 		if (isset($_FILES['icon'])) {
 			$fileName1 = "icon";
-			$fileLocation1 = "upload/ActivityImages/icons/";
+			$fileLocation1 = "upload/ActivityImages/icons";
 			$activity->icon_link = uploadFile( $fileName1, $fileLocation1 );
 		}
 
 		if (isset($_FILES['bgImg']))
 		{
 			$fileName2 = "bgImg";
-			$fileLocation2 = "upload/ActivityImages/bgimages/";
+			$fileLocation2 = "upload/ActivityImages/bgimages";
 			$activity->bg_image_link = uploadFile( $fileName2, $fileLocation2 );	
 		}
 			
@@ -283,7 +283,7 @@
 */		$user = new User( $_POST );
 		$user->id = $results['user']->id;
 		$fileName = "file";
-		$fileLocation = "update/";		
+		$fileLocation = "update";		
 		$user->avatarLocation = uploadFile( $fileName, $fileLocation );
 		//echo $user->id;
 
