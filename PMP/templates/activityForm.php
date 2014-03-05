@@ -16,7 +16,7 @@
 				<center>
 					<img src="upload/ActivityImages/<?php echo $activity->bg_image_link; ?>" />
 				</center>
-			<div>
+			</div>
 		</td>
 		</tr>
 		<tr>
@@ -28,8 +28,52 @@
 			<td><strong>Utilized Budget: </strong><?php echo $activity->utilized_budget; ?></td>
 		</tr>
 	</table>
+	<div class="edit-activity-btn"><div></div>Edit</div>
+</div>
+
+
+<div class="editAcivityFormDiv">
+	<form name="update_activity" class="form-horizontal" action="index.php?action=update_activity" method="POST" enctype="multipart/form-data">
+	<input type="hidden" class="input-xlarge" name = "id" value="<?php echo $activity->id;?>" > 
+	<table>
+		<tr>
+			<td>UID <?php echo $activity->id; ?></td>
+			<td><input type="text" class="input-xlarge" name = "title" value="<?php echo $activity->title;?>"></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="brief-writeup"><textarea class="input-xlarge" id="textarea" rows="2" name = "brief_writeup"><?php echo $activity->brief_writeup;?></textarea></div>
+			</td>
+		</tr>
+		<tr>
+		<td colspan="2">
+			<div class="detail-writeup-left"><textarea class="input-xlarge" id="textarea" rows="6" name = "detailed_writeup"><?php echo $activity->detailed_writeup;?></textarea></div>
+			<div class="detail-writeup-right">
+				<center>
+					<img src="upload/ActivityImages/<?php echo $activity->bg_image_link; ?>" />
+				</center>
+			</div>
+		</td>
+		</tr>
+		<tr>
+			<td><strong>Status: </strong><?php echo $activity->status; ?></td>
+			<td><strong>Tags: </strong><input type="text" class="input-xlarge" name = "tags" value="<?php echo $activity->tags;?>" id="input01"></td>
+		</tr>
+		<tr>
+			<td><strong>Overall Budget: </strong><input type="text" class="input-xlarge" name = "overall_budget" value="<?php echo $activity->overall_budget;?>"></td>
+			<td><strong>Utilized Budget: </strong><input type="text" class="input-xlarge" name = "utilized_budget" value="<?php echo $activity->utilized_budget;?>"></td>
+		</tr>
+		<tr>
+			<td><strong>Icon: </strong><input type="file" name="icon" id="exampleInputFile"></td>
+			<td><strong>BG Image: </strong><input type="file" name="bgImg" id="exampleInputFile"></td>
+		</tr>
+	</table>
+	<button type="submit" class="btn btn-primary">Save</button>
+	<button type="button" class="btn btn-primary close-edit-activity-btn">Back</button>
+	</form>
 </div>
 <script>
+	$('.editAcivityFormDiv').fadeOut(0);
 	$('.detail-writeup-left>.text').cmtextconstrain({
 		event: 'click', 
 		onExpose: function(){}, 
@@ -48,99 +92,12 @@
 		hideControl: {string: '[ Less ]', title: 'Show Less', addclass: ''}, 
 		trailingString: '....'
     });
-	$('#edit-activity-btn').click(function(){
+	$('.edit-activity-btn').click(function(){
 		$('.read-tab-content').fadeOut(0);
 		$('.editAcivityFormDiv').fadeIn(100);
 	});
+	$('.close-edit-activity-btn').click(function(){
+		$('.read-tab-content').fadeIn(100);
+		$('.editAcivityFormDiv').fadeOut(0);
+	});
 </script>
-<div id="edit-activity-btn"><div></div>Edit</div>
-<div class="editAcivityFormDiv">
-	<form name="update_activity" class="form-horizontal" action="index.php?action=update_activity" method="POST" style="width:500px;" enctype="multipart/form-data">
-		<fieldset>	
-			<div class="control-group">  
-				<label class="control-label" for="input01">Activity Id</label>  
-				<div class="controls">  
-				  <input type="hidden" class="input-xlarge" name = "id" value="<?php echo $activity->id;?>" id="input01">  
-				</div>  
-			 </div> 	
-			 
-			<div class="control-group">  
-				<label class="control-label" for="input01">Title</label>  
-				<div class="controls">  
-				  <input type="text" class="input-xlarge" name = "title" value="<?php echo $activity->title;?>" id="input01">  
-				  <p class="help-block"></p>  
-				</div>  
-			</div> 		 		
-			  
-			<div class="control-group">  
-				<label class="control-label" for="textarea">About</label>  
-				<div class="controls">  
-					<textarea class="input-xlarge" id="textarea" rows="3" name = "brief_writeup"><?php echo $activity->brief_writeup;?></textarea>  
-				</div>  
-			</div>  
-		  
-			<div class="control-group">  
-				<label class="control-label" for="textarea">Details</label>  
-				<div class="controls">  
-					<textarea class="input-xlarge" id="textarea" rows="3" name = "detailed_writeup"><?php echo $activity->detailed_writeup;?></textarea>  
-				</div>  
-			</div>  	 	
-			  
-			  
-			<div class="control-group">  
-				<label class="control-label" for="input01">Status</label>
-				<div class="controls">  
-					<input type="text" class="input-xlarge" name = "status" value="<?php echo $activity->status;?>" id="input01">  
-				<p class="help-block"></p>  
-				</div>  
-			</div> 	
-			  
-			<div class="control-group">  
-				<label class="control-label" for="input01">Tags</label>  
-				<div class="controls">  
-				  <input type="text" class="input-xlarge" name = "tags" value="<?php echo $activity->tags;?>" id="input01">  
-				  <p class="help-block"></p>  
-				</div>  
-			</div> 	
-							
-			<div class="control-group">  
-				<label class="control-label" for="input01">Overall Budget</label>  
-				<div class="controls">  
-				  <input type="text" class="input-xlarge" name = "overall_budget" value="<?php echo $activity->overall_budget;?>" id="input01">  
-				  <p class="help-block"></p>  
-				</div>  
-			</div> 	
-						
-			<div class="control-group">  
-				<label class="control-label" for="input01">Utilized Budget</label>  
-				<div class="controls">  
-				  <input type="text" class="input-xlarge" name = "utilized_budget" value="<?php echo $activity->utilized_budget;?>" id="input01">  
-				  <p class="help-block"></p>  
-				</div>  
-			</div> 	
-			  
-			<div class="control-group">
-				<label class="control-label" for="Icon">Icon</label>
-				<div class="controls">
-					<input type="file" name="icon" id="exampleInputFile">
-					<p class="help-block"><?php echo $activity->icon_link;?> - To be fixed later</p>
-				</div>
-			</div>   
-			
-			<div class="control-group">
-				<label class="control-label" for="Icon">BG - Image</label>
-				<div class="controls">
-					<input type="file" name="bgImg" id="exampleInputFile">
-					<p class="help-block"><?php echo $activity->bg_image_link;?> - To be fixed later</p>
-				</div>
-			</div>
-			
-			<div class="form-actions">  
-				<center>
-					<button type="submit" class="btn btn-primary">Save changes</button>
-				</center>  
-			</div>  
-			
-		</fieldset>
-	</form>
-</div>

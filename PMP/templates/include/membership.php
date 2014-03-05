@@ -46,7 +46,7 @@
 		</div>
 			 
 		<div class="tab-content">
-			<div class="tab-pane in active" id="default">
+			<div class="tab-pane in active" id="default" style="padding:40px;">
 				Click On Any Of the Tabs Above for Your Membership Details.
 			</div>		
 			<?php foreach( $types as $type ) {
@@ -58,9 +58,15 @@
 			<?php } ?>
 		</div>
 			<?php }
-			else{
-				echo " No enrolled clubs to display<br>";
-			} ?>			
+			else{ 
+			?>
+			<div class="tab-content">
+				<div class="tab-pane in active" id="default" style="padding:40px;">
+				<?php
+					echo " No enrolled activities to display<br>";
+				} ?>	
+				</div>
+			</div>
 	</div>
 </div>
         
