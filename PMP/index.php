@@ -223,14 +223,14 @@
 
 		if (isset($_FILES['icon'])) {
 			$fileName1 = "icon";
-			$fileLocation1 = "update/ActivityImages/icons";
+			$fileLocation1 = "upload/ActivityImages/icons/";
 			$activity->icon_link = uploadFile( $fileName1, $fileLocation1 );
 		}
 
 		if (isset($_FILES['bgImg']))
 		{
 			$fileName2 = "bgImg";
-			$fileLocation2 = "update/ActivityImages/bgimages";
+			$fileLocation2 = "upload/ActivityImages/bgimages/";
 			$activity->bg_image_link = uploadFile( $fileName2, $fileLocation2 );	
 		}
 			
