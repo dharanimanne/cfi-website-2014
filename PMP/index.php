@@ -212,6 +212,7 @@
 	$message= new Message($_POST);
 	if( $message->insert() ){
 			$results['successMessage'] = "creating message successful.";
+			dashboard( $user );
 		}
     }
 
