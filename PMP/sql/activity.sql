@@ -10,8 +10,8 @@ CREATE TABLE activity
   overall_budget    int unsigned NOT NULL, 
   utilized_budget   int unsigned NOT NULL, 
   activity_type     VARCHAR(100) NOT NULL,
-  icon_link         VARCHAR(100) NOT NULL,
-  bg_image_link     VARCHAR(100) NOT NULL,
+  icon_link         VARCHAR(100) NOT NULL DEFAULT "/cfi-website-2014/PMP/upload/default.jpeg",
+  bg_image_link     VARCHAR(100) NOT NULL DEFAULT "/cfi-website-2014/PMP/upload/default.jpeg",
   
   PRIMARY KEY     (id)
 );
