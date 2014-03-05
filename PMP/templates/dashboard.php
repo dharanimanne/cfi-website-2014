@@ -1,7 +1,7 @@
 <?php include("templates/include/header.php"); ?>
 <?php include("templates/include/sidebar.php"); ?>
-	<!--<div id="content">
-		<!--dashboard<br>
+	<div id="content">
+		<dashboard<br>
 
 		<div id="addMemberDiv">
 			Need to add a member? Please enter details below. <br>
@@ -30,7 +30,7 @@
 		//echo $clubs['0']['activityType'];
 		//print_r( $clubs );
 		?>
-		<!--<div id="user_profile">
+		<div id="user_profile">
 		<img src="./upload/<?php echo $results['user']->avatarLocation; ?>" width="360" height="350">
 		</div>
 		<div id="Messages">
@@ -168,8 +168,8 @@
 		echo "no projects registered"; 
 		?>
     
-		</div>-->
-		<!--<div id="clubsDiv">
+		</div>
+		<div id="clubsDiv">
 			<h1>Clubs</h1><br>
 			<?php 
 				$clubs = $results['user']->getActivityOfUser('club'); 
@@ -223,8 +223,8 @@
 				}
 				
 			?>
-		</div>-->
-	</div>-->
+		</div>
+	</div>
     
     
     

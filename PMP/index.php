@@ -221,13 +221,19 @@
 		$results['activity'] = Activity::getById( $_POST['id'] );
 		$activity = new Activity( $_POST );
 
-		$fileName1 = "icon";
-		$fileLocation1 = "update/ActivityImages";
-		$activity->icon_link = uploadFile( $fileName1, $fileLocation1 );
+		if (isset($_FILES['icon'])) {
+			$fileName1 = "icon";
+			$fileLocation1 = "update/ActivityImages/icons";
+			$activity->icon_link = uploadFile( $fileName1, $fileLocation1 );
+		}
 
-		$fileName2 = "bgImg";
-		$fileLocation2 = "update/ActivityImages";
-		$activity->bg_image_link = uploadFile( $fileName2, $fileLocation2 );	
+		if (isset($_FILES['bgImg']))
+		{
+			$fileName2 = "bgImg";
+			$fileLocation2 = "update/ActivityImages/bgimages";
+			$activity->bg_image_link = uploadFile( $fileName2, $fileLocation2 );	
+		}
+			
 
 		if( $activity->update() ){
 			$results['successMessage'] = "Added activity successful.";
