@@ -103,7 +103,7 @@
 		$user = new User( $_POST );
 	
 		$fileName = "file";
-		$fileLocation = FILE_UPLOAD_LOCATION;
+		$fileLocation = "upload";
 		$user->avatarLocation = uploadFile( $fileName, $fileLocation );
 				
 		if( $user->insert() ){
@@ -212,6 +212,7 @@
 	$message= new Message($_POST);
 	if( $message->insert() ){
 			$results['successMessage'] = "creating message successful.";
+			dashboard( $user );
 		}
     }
 
@@ -222,11 +223,11 @@
 		$activity = new Activity( $_POST );
 
 		$fileName1 = "icon";
-		$fileLocation1 = FILE_UPLOAD_LOCATION."/ActivityImages";
+		$fileLocation1 = "update/ActivityImages";
 		$activity->icon_link = uploadFile( $fileName1, $fileLocation1 );
 
 		$fileName2 = "bgImg";
-		$fileLocation2 = FILE_UPLOAD_LOCATION."/ActivityImages";
+		$fileLocation2 = "update/ActivityImages";
 		$activity->bg_image_link = uploadFile( $fileName2, $fileLocation2 );	
 
 		if( $activity->update() ){
@@ -271,18 +272,18 @@
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
     /*    $fileName = "bgimgpic";
-		$fileLocation = FILE_UPLOAD_LOCATION."/ActivityImages"; 
+		$fileLocation = "update/ActivityImages"; 
 		 uploadFile( $fileName, $fileLocation );
 */		$user = new User( $_POST );
 		$user->id = $results['user']->id;
 		$fileName = "file";
-		$fileLocation = FILE_UPLOAD_LOCATION;
+		$fileLocation = "update/";		
 		$user->avatarLocation = uploadFile( $fileName, $fileLocation );
 		//echo $user->id;
 
 		if( $user->updateProfilePic() )
 		{
-			$results['successMessage'] = "Update successful.";
+			$results['successMessage'] = "Update successful";
 			$results['user'] = $user;
 		}
 		else{
