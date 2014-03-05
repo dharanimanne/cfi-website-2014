@@ -87,6 +87,7 @@
 			$sql = "UPDATE ".TABLENAME_MEMBERSHIP." SET membershipType=:membershipType WHERE id = :id";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":membershipType", $this->membershipType, PDO::PARAM_STR );
+			$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
 			$st->execute();
 			$conn = null;	
 			
