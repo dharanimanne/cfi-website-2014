@@ -1,3 +1,60 @@
+<div class="">
+<div class="dropdown" style="">
+<?php
+$tags=$activity->title;
+//echo $tags;//echo $results['user']->email;
+$messages_received=Message::getByTagSent( $tags,$results['user']->email );
+?>
+
+<button type="button" class="btn btn-primary " id="dropdownMenu1" data-toggle="dropdown" style="margin-top:2%;margin-left:2%;">Messages sent <span class="badge "><?php echo sizeof($messages_received)?></span></button>
+<ul id="messages_sent" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+<?php
+
+		for($i=0;$i<sizeof($messages_received);$i++)
+		{
+		?>
+		<li style="padding:10px;">
+		<?php
+		echo $messages_received[$i]['to_username']."</br>";
+		echo $messages_received[$i]['message']."</br>";
+		echo $messages_received[$i][4]."</br>";
+		?>
+		</li>
+		<?php
+		
+		}
+?>
+</ul>
+</div>
+<div class="dropdown" style="">
+<?php
+$tags=$activity->title;
+//echo $tags;//echo $results['user']->email;
+$messages_received=Message::getByTagReceived( $tags,$results['user']->email );
+?>
+
+<button type="button" class="btn btn-primary " id="dropdownMenu1" data-toggle="dropdown" style="margin-top:2%;margin-left:2%;">Messages Received <span class="badge "><?php echo sizeof($messages_received)?></span></button>
+<ul id="messages_sent" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+<?php
+
+		for($i=0;$i<sizeof($messages_received);$i++)
+		{
+		?>
+		<li style="padding:10px;">
+		<?php
+		echo $messages_received[$i]['from_username']."</br>";
+		echo $messages_received[$i]['message']."</br>";
+		echo $messages_received[$i][4]."</br>";
+		?>
+		</li>
+		<?php
+		
+		}
+?>
+</ul>
+</div>
+</div>
+
 <div class="read-tab-content">
 	<table>
 		<tr>
