@@ -1,23 +1,23 @@
-<div class="">
-<div class="dropdown" style="">
+<div class="messages">
+<div class="messages-sent" style="">
 <?php
 $tags=$activity->title;
 //echo $tags;//echo $results['user']->email;
-$messages_received=Message::getByTagSent( $tags,$results['user']->email );
+$messages_sent=Message::getByTagSent( $tags,$results['user']->email );
 ?>
 
-<button type="button" class="btn btn-primary " id="dropdownMenu1" data-toggle="dropdown" style="margin-top:2%;margin-left:2%;">Messages sent <span class="badge "><?php echo sizeof($messages_received)?></span></button>
+<button type="button" class="btn btn-primary " id="dropdownMenu1" data-toggle="dropdown" style="margin-top:2%;margin-left:2%;">Messages sent <span class="badge "><?php echo sizeof($messages_sent)?></span></button>
 <ul id="messages_sent" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 <?php
 
-		for($i=0;$i<sizeof($messages_received);$i++)
+		for($i=0;$i<sizeof($messages_sent);$i++)
 		{
 		?>
 		<li style="padding:10px;">
 		<?php
-		echo $messages_received[$i]['to_username']."</br>";
-		echo $messages_received[$i]['message']."</br>";
-		echo $messages_received[$i][4]."</br>";
+		echo $messages_sent[$i]['to_username']."</br>";
+		echo $messages_sent[$i]['message']."</br>";
+		echo $messages_sent[$i][4]."</br>";
 		?>
 		</li>
 		<?php
@@ -26,7 +26,7 @@ $messages_received=Message::getByTagSent( $tags,$results['user']->email );
 ?>
 </ul>
 </div>
-<div class="dropdown" style="">
+<div class="messages-received" style="">
 <?php
 $tags=$activity->title;
 //echo $tags;//echo $results['user']->email;
@@ -90,6 +90,7 @@ $messages_received=Message::getByTagReceived( $tags,$results['user']->email );
 
 
 <div class="editAcivityFormDiv">
+
 	<form name="update_activity" class="form-horizontal" action="index.php?action=update_activity" method="POST" enctype="multipart/form-data">
 	<input type="hidden" class="input-xlarge" name = "id" value="<?php echo $activity->id;?>" > 
 	<table>
@@ -129,6 +130,45 @@ $messages_received=Message::getByTagReceived( $tags,$results['user']->email );
 	<button type="button" class="btn btn-primary close-edit-activity-btn">Back</button>
 	</form>
 </div>
+
+<?php
+$id=$activity->id;
+	$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+	    $sql = 'SELECT docName, docLocation, uploadedBy, uploadedOn FROM '. TABLENAME_DOCUMENT .' WHERE activityId ='. $id ;
+	//	$st = $conn->prepare( $sql );
+	//  $st->bindValue( ":id", $id, PDO::PARAM_INT );
+			$st=$conn->prepare($sql);
+			$st->execute();
+			$row = $st->fetchAll();
+			$conn = null;
+			print_r($row);
+			?>
+	 	<table class="document-list">
+			<tr>
+				<td>S No.</td>
+				<td>Document Name</td>
+				<td>Document Link</td>
+				<td>Uploaded By</td>
+				<td>Uploaded On</td>
+			</tr>
+		
+			<?php
+			//echo $row[0]['docName'];
+	  for($i=0;$i<sizeof($row);$i++)
+	  {
+	  $a=$i+1;
+			?>
+			<tr>
+	        <td><?php echo $a; ?></td>
+			<td><?php echo $row[$i]['docName']; ?></td>
+			<td><?php echo $row[$i]['docLocation']; ?></td>
+			<td><?php echo $row[$i]['uploadedBy']; ?></td>
+			<td><?php echo $row[$i]['uploadedOn']; ?></td>
+			</tr>
+			<?php
+	    }
+		?>
+		</table>
 <script>
 	$('.editAcivityFormDiv').fadeOut(0);
 	$('.detail-writeup-left>.text').cmtextconstrain({
