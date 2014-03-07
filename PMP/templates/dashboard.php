@@ -47,126 +47,19 @@
 		?>
 		<h3>Messages sent</h3><br>
         <?php
-		$messages_received=Message::getByfromUsername( $results['user']->email );
+		$messages_sent=Message::getByfromUsername( $results['user']->email );
 		
-		for($i=0;$i<sizeof($messages_received);$i++)
+		for($i=0;$i<sizeof($messages_sent);$i++)
 		{
-		echo $messages_received[$i]['from_username']."</br>";
-		echo $messages_received[$i]['message']."</br>";
-		echo $messages_received[$i][4]."</br>";
+		echo $messages_sent[$i]['to_username']."</br>";
+		echo $messages_sent[$i]['message']."</br>";
+		echo $messages_sent[$i][4]."</br>";
 		}
 		?>
 		<h3>Messages received by Activity</h3><br>
         
 		
-		<?php
-		//clubs
-			$clubs = $results['user']->getActivityOfUser('club'); 
-				if( count( $clubs ) ){
-					foreach( $clubs as $club ) {
-						Utility::parseActivityToForm( $club );
-		$tags=$club;
-		$messages_received=Message::getByTagReceived( $tags,$results['user']->email );
-		for($i=0;$i<sizeof($messages_received);$i++)
-		{
-		echo $messages_received[$i]['from_username']."</br>";
-		echo $messages_received[$i]['message']."</br>";
-		echo $messages_received[$i][4]."</br>";
-		}
-		}
-		}
-		else
-		echo "no clubs registered"; 
-		//competitions
-				$competitions = $results['user']->getActivityOfUser('competition'); 
-				if( count( $competitions ) ){
-					foreach( $competitions as $competition ) {
-						Utility::parseActivityToForm( $competition );
-		$tags=$competition;
-		$messages_received=Message::getByTagReceived( $tags,$results['user']->email );
-		for($i=0;$i<sizeof($messages_received);$i++)
-		{
-		echo $messages_received[$i]['from_username']."</br>";
-		echo $messages_received[$i]['message']."</br>";
-		echo $messages_received[$i][4]."</br>";
-		}
-		}
-		}
-		else
-		echo "no competitions registered"; 
-		//projects
-		$projects = $results['user']->getActivityOfUser('project'); 
-				if( count( $projects ) ){
-					foreach( $projects as $project ) {
-						Utility::parseActivityToForm( $project );
-		$tags=$project;
-		$messages_received=Message::getByTagReceived( $tags,$results['user']->email );
-		for($i=0;$i<sizeof($messages_received);$i++)
-		{
-		echo $messages_received[$i]['from_username']."</br>";
-		echo $messages_received[$i]['message']."</br>";
-		echo $messages_received[$i][4]."</br>";
-		}
-		}
-		}
-		else
-		echo "no projects registered"; 
-		?>
-		<h3>Messages sent by Activity</h3><br>
 		
-        <?php
-		//clubs
-		$clubs = $results['user']->getActivityOfUser('club'); 
-				if( count( $clubs ) ){
-					foreach( $clubs as $club ) {
-						Utility::parseActivityToForm( $club );
-		$tags=$club;
-		$messages_received=Message::getByTagSent( $tags,$results['user']->email );
-		for($i=0;$i<sizeof($messages_received);$i++)
-		{
-		echo $messages_received[$i]['from_username']."</br>";
-		echo $messages_received[$i]['message']."</br>";
-		echo $messages_received[$i][4]."</br>";
-		}
-			}
-		}
-		else
-		echo "no clubs registered"; 
-		//competitions
-		$competitions = $results['user']->getActivityOfUser('competition'); 
-				if( count( $competitions ) ){
-					foreach( $competitions as $competition ) {
-						Utility::parseActivityToForm( $competition );
-		$tags=$competition;
-		$messages_received=Message::getByTagSent( $tags,$results['user']->email );
-		for($i=0;$i<sizeof($messages_received);$i++)
-		{
-		echo $messages_received[$i]['from_username']."</br>";
-		echo $messages_received[$i]['message']."</br>";
-		echo $messages_received[$i][4]."</br>";
-		}
-			}
-		}
-		else
-		echo "no competitions registered"; 
-		//projects
-		$projects = $results['user']->getActivityOfUser('project'); 
-				if( count( $projects ) ){
-					foreach( $projects as $project ) {
-						Utility::parseActivityToForm( $project );
-		$tags=$project;
-		$messages_received=Message::getByTagSent( $tags,$results['user']->email );
-		for($i=0;$i<sizeof($messages_received);$i++)
-		{
-		echo $messages_received[$i]['from_username']."</br>";
-		echo $messages_received[$i]['message']."</br>";
-		echo $messages_received[$i][4]."</br>";
-		}
-			}
-		}
-		else
-		echo "no projects registered"; 
-		?>
     
 		</div>-->
 		<!--<div id="clubsDiv">
