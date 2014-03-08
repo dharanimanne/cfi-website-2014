@@ -7,7 +7,7 @@ CREATE TABLE documents
   uploadedBy        VARCHAR(50) NULL,
   tags              VARCHAR(50) NOT NULL,
   activityId        smallint NOT NULL, 
-  docLocation       VARCHAR(30) NOT NULL, 
+  docLocation       VARCHAR(100) NOT NULL, 
   
   PRIMARY KEY     (id)
 );

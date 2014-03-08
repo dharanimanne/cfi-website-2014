@@ -109,11 +109,18 @@
 		$results = array();	
 		$results['pageTitle'] = "Register | CFI Projects Management Portal";	
 		$user = new User( $_POST );
-	
-		if (!isset($_FILES['file'])) {
+		
+		var_dump($_POST);
+		var_dump($_FILES);
+
+		if ( isset($_FILES["file"]) ) {
+			echo "this is insane!!!! it should not be displayed!!!";
 			$fileName = "file";
-			$fileLocation = "upload";
-			$user->avatarLocation = uploadFile( $fileName, $fileLocation );
+			$fileLocation = FILE_UPLOAD_LOCATION;
+			$user->avatarLocation = uploadFile( $fileName, $fileLocation, $_POST['email'] );
+		}
+		else {
+			$user->avatarLocation = DEFAULT_AVATAR_LOCATION;
 		}
 				
 		if( $user->insert() ){
@@ -135,7 +142,7 @@
 		}	
 	}
 
-	function uploadFile( $fileName, $fileLocation ){
+	function uploadFile( $fileName, $fileLocation, $uploadedBy ){
 
 		if ( !isset($results) ) {
 			$results = array();
@@ -161,14 +168,9 @@
                 move_uploaded_file( $_FILES[$fileName]["tmp_name"], $fileLocation.'/'.$fileData['fileName'] ); 
             }
 
-            if ($fileName == "icon" or $fileName == "bgimages")
-            {
-            	$fileData['fileName'] = "######";
-            }
-
             $fileData['fileType'] = $_FILES[$fileName]["type"];
 			$fileData['fileLocation'] = $fileLocation.'/'.$fileData['fileName'];    //to add later (the location of the file)
-	        $fileData['uploadedBy'] =   "dharani";             //$_SESSION['username']; kept aside for testing
+	        $fileData['uploadedBy'] =   $uploadedBy;             //$_SESSION['username']; kept aside for testing
 	        
 	        $file = new File( $fileData );
 
@@ -212,9 +214,82 @@
 		}
 	}
 
+
+	function uploadImage( $imageName, $imageLocation ){
+
+		if ( !isset($results) ) {
+			$results = array();
+		}
+		
+		if ($_FILES[$imageName]['error'] === UPLOAD_ERR_OK) 
+		{ 
+  			$imageData = array();
+			$imageData['imageName'] = $_FILES[$imageName]["name"];
+
+	        if( is_dir( $imageLocation ) == false )
+	        {
+            	mkdir( $imageLocation, 0777 );		// Create directory if it does not exist
+            }
+            if( is_file( $imageLocation.'/'.$imageData['imageName'] ) == false )
+            {
+                move_uploaded_file( $_FILES[$imageName]["tmp_name"], $imageLocation.'/'.$imageData['imageName'] );
+            }
+            else
+            {    //rename the image if another one exist
+            	$temp = explode(".", $_FILES[$imageName]["name"]);
+                $imageData['imageName'] = $temp[0].time().".".$temp[1];
+                move_uploaded_file( $_FILES[$imageName]["tmp_name"], $imageLocation.'/'.$imageData['imageName'] ); 
+            }
+
+            $imageData['imageType'] = $_FILES[$imageName]["type"];
+			$imageData['imageLocation'] = $imageLocation.'/'.$imageData['imageName'];    //to add later (the location of the image)
+	        $imageData['uploadedBy'] = $_SESSION['username']; 
+	        
+	        $image = new Image( $imageData );
+
+	        if( $image->insert() )
+			{
+				$results['successMessage'] = "image upload successful. Thank you";
+				return $image->imageName;
+				header('Location: ' . $_SERVER['HTTP_REFERER']);
+			}
+		}
+		else
+		{ 
+			switch ( $_FILES[$imageName]['error'] ) {
+	            case UPLOAD_ERR_INI_SIZE:
+	                $results['errorMessage'] = "The uploaded image exceeds the upload_max_imagesize directive in php.ini";
+	                break;
+	            case UPLOAD_ERR_FORM_SIZE:
+	                $results['errorMessage'] = "The uploaded image exceeds the MAX_image_SIZE directive that was specified in the HTML form";
+	                break;
+	            case UPLOAD_ERR_PARTIAL:
+	                $results['errorMessage'] = "The uploaded image was only partially uploaded";
+	                break;
+	            case UPLOAD_ERR_NO_image:
+	                $results['errorMessage'] = "No image was uploaded";
+	                break;
+	            case UPLOAD_ERR_NO_TMP_DIR:
+	                $results['errorMessage'] = "Missing a temporary folder";
+	                break;
+	            case UPLOAD_ERR_CANT_WRITE:
+	                $results['errorMessage'] = "Failed to write image to disk";
+	                break;
+	            case UPLOAD_ERR_EXTENSION:
+	                $results['errorMessage'] = "image upload stopped by extension";
+	                break;
+
+	            default:
+	                $results['errorMessage'] = "Unknown upload error";
+	                break;
+	        }
+	        echo $results['errorMessage'];
+		}
+	}
+
 	function add_activity(){
 		$results = array();	
-		$results['pageTitle'] = " | CFI Projects Management Portal";
+		$results['pageTitle'] = " Add an activity | CFI Projects Management Portal";
 		$activity = new Activity( $_POST );
 		
 		if( $activity->insert() ){
@@ -295,16 +370,16 @@
 		$activity = new Activity( $_POST );
 
 		if (isset($_FILES['icon'])) {
-			$fileName1 = "icon";
-			$fileLocation1 = "upload/ActivityImages/icons";
-			$activity->icon_link = uploadFile( $fileName1, $fileLocation1 );
+			$imageName1 = "icon";
+			$imageLocation1 = ICON_UPLOAD_LOCATION;
+			$activity->icon_link = uploadImage( $imageName1, $imageLocation1 );
 		}
 
 		if (isset($_FILES['bgImg']))
 		{
-			$fileName2 = "bgImg";
-			$fileLocation2 = "upload/ActivityImages/bgimages";
-			$activity->bg_image_link = uploadFile( $fileName2, $fileLocation2 );	
+			$imageName2 = "bgImg";
+			$imageLocation2 = BGIMG_UPLOAD_LOCATION;
+			$activity->bg_image_link = uploadImage( $imageName2, $imageLocation2 );	
 		}
 			
 
@@ -355,8 +430,9 @@
 */		$user = new User( $_POST );
 		$user->id = $results['user']->id;
 		$fileName = "file";
-		$fileLocation = "update";		
-		$user->avatarLocation = uploadFile( $fileName, $fileLocation );
+		$fileLocation = FILE_UPLOAD_LOCATION;
+		$uploadedBy = $_SESSION['username'];		
+		$user->avatarLocation = uploadFile( $fileName, $fileLocation, $uploadedBy );
 		//echo $user->id;
 
 		if( $user->updateProfilePic() )
@@ -458,18 +534,18 @@
 
 	function uploadDoc( $docName, $activityId ){
 
-		$docLocation = FILE_UPLOAD_LOCATION."/Documents";
+		$docLocation = DOC_UPLOAD_LOCATION;
 		if( is_dir( $docLocation ) == false ){
 			mkdir( $docLocation, 0777 );		
 		}
-		$docLocation = FILE_UPLOAD_LOCATION."/Documents/".$activityId;
+/*		$docLocation = DOC_UPLOAD_LOCATION."/".$activityId;
 		if( is_dir( $docLocation ) == false ){
-			mkdir( $docLocation, 0777 );		
+			mkdir( $docLocation, 0777 );
 		}
-		
+*/		
 		if( !isset($results) ) {
 			$results = array();
-		}		
+		}
 		
 		if ($_FILES[$docName]['error'] === UPLOAD_ERR_OK) 
 		{ 

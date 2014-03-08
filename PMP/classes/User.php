@@ -80,8 +80,8 @@
 			$this->password = Password::hash($this->password);
 			$this->joinDateTime = date("Y-m-d H:i:s");   
 			$this->userType = "0";
-			echo "oh boy";
-/*			// Validation
+/*			echo "oh boy";
+			// Validation
 			if( !filter_var( $this->email, FILTER_VALIDATE_EMAIL ) ){
 				self::$errorCode ="ERR_INV_EMAIL";
 				return false;
@@ -98,8 +98,8 @@
 				self::$errorCode ="ERR_INV_ROLL";
 				return false;
 			}
-*/			echo "yo man";	
-			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			echo "yo man";	
+*/			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 			$sql = "INSERT INTO ".TABLENAME_USERS." ( username, password, name, lastLoginFrom, membership, rollNo, hostel, room, phone, email, joinDateTime, lastLoginDateTime, expertise, rating, userType, socialMediaUrl, avatarLocation, aboutMe, coreRemark) VALUES ( :username, :password, :name, :lastLoginFrom, :membership, :rollNo, :hostel, :room, :phone, :email, :joinDateTime, :lastLoginDateTime, :expertise, :rating, :userType, :socialMediaUrl, :avatarLocation, :aboutMe, :coreRemark)";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":username", $this->username, PDO::PARAM_STR );
@@ -121,6 +121,7 @@
 			$st->bindValue( ":membership", $this->membership, PDO::PARAM_STR );
 			$st->bindValue( ":coreRemark", $this->coreRemark, PDO::PARAM_STR );
 			$st->bindValue( ":phone", $this->phone, PDO::PARAM_STR );
+		//	print_r( $st );
 			$result = $st->execute();
 			$this->id = $conn->lastInsertId();
 			$conn = null;
@@ -128,7 +129,7 @@
 			if( !$result ){
 				self::$errorMessage = "User::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
 				self::$errorCode = $st->errorCode();
-//				echo $errorMessage;
+				echo $errorMessage;
 				return false;
 			}
 			else{		
