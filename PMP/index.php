@@ -178,7 +178,7 @@
 			{
 				$results['successMessage'] = "File upload successful. Thank you";
 				require( TEMPLATE_PATH . "/loginForm.php" );
-				return $file->fileName;
+				return $file->fileLocation;
 			}
 		}
 		else

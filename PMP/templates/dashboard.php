@@ -1,7 +1,26 @@
 <?php include("templates/include/header.php"); ?>
 <?php include("templates/include/sidebar.php"); ?>
-   
+   	
+   	<style>
+   		.messageDisplay{
+   			margin-left: 460px;
+   			width: 500px;
+   			height: 30px;
+   			position: absolute;
+   			z-index: 100;
+   			background-color: rgb(200,200,200);
+   		}
+   	</style>
+   	
 	<div id="content">
+		<div class="messageDisplay">
+   			<?php 	
+   				if( isset($results['successMessage']) ) 
+   					echo $results['successMessage']; 
+   				elseif ( isset($results['errorMessage']) ) {
+   					echo $results['errorMessage'];
+   				?>
+   		</div>
 		<ul class="breadcrumb">
 			<li><a href="index.php" class="glyphicons home">CFI PMP</a></li>
 			<li class="divider"></li>
@@ -26,4 +45,11 @@
 		</div>	
 	</div>
 
+<script>
+	$(document).ready(function()  {
+    setTimeout(function() {
+        $(".messageDisplay").fadeOut(1500);
+    },5000);
+        });
+</script>
 <?php include("templates/include/footer.php"); ?>

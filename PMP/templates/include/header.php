@@ -59,8 +59,11 @@
 								<?php } else { ?>
 								<ul class="dropdown-menu" style="width:350px">  
                                   	<!--<img style="position:absolute; margin-left:230px; height:100px ;size:auto;" src="../Content/Images/logo.png" /> </center>-->
-                                    <img src="./upload/<?php echo $results['user']->avatarLocation; ?>" width="100" height="100"></center>
-                                   <li>
+                                    <img src="<?php echo $results['user']->avatarLocation; ?>" width="100" height="100"></center>
+                            <!--       <li>
+                                   		<?php print_r( $results['user']->avatarLocation ); ?>
+                                   </li>
+                            -->       <li>
 										<a href="#"><?php echo $results['user']->name; ?></a>
 									</li> 
 									<li>
@@ -80,6 +83,7 @@
 					</div>
 				</div>
 			</div>
+
 <!--
 				<div id="navbar">
 					Navbar<br>
@@ -95,8 +99,6 @@
 					<br>Navbar ends<br><br>
 				</div>
 -->
-
-
 
 
 <script>
