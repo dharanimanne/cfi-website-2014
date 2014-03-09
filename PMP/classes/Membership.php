@@ -124,11 +124,12 @@
 		
 		public function getMembersById( $activityId ){
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$st = $conn->prepare ( "SELECT userId FROM ".TABLENAME_MEMBERSHIP." activityId = :activityId AND membershipType LIKE 'member' " );
+			$st = $conn->prepare ( "SELECT userId FROM ".TABLENAME_MEMBERSHIP." WHERE activityId = :activityId AND membershipType LIKE 'member' " );
 			$st->bindValue( ":activityId", $activityId, PDO::PARAM_INT );
 			$st->execute();
 			$conn = null;	
 			$row = $st->fetchAll();
+			//print_r($st->errorInfo());
 			return $row;
 		}
 	}

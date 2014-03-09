@@ -231,6 +231,17 @@
 			$conn = null;
 			if( $row ) return new User( $row );
 		}
+		
+		public static function getUsernameById( $id ){
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = "SELECT username FROM ".TABLENAME_USERS." WHERE id = :id ";
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":id", $id, PDO::PARAM_INT );
+			$st->execute();
+			$row = $st->fetch();
+			$conn = null;
+			if( $row ) return $row['username'];
+		}
 			
 		
 		public static function getByUsername( $username ){

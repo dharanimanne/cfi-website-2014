@@ -11,6 +11,7 @@
 		public $isReceived = null;
 		public $isRead = null;
 		public $tags = null;
+		public $activityId = null;
 		
 		public static $errorMessage;
 		public static $errorCode;
@@ -25,6 +26,7 @@
 			if( isset( $data['isReceived'] ) ) $this->isReceived = $data['isReceived'];
 			if( isset( $data['isRead'] ) ) $this->isRead = $data['isRead'];
 	        if( isset( $data['tags'] ) ) $this->tags = $data['tags'];
+	        if( isset( $data['activityId'] ) ) $this->activityId = $data['activityId'];
 					
 		}
 		
@@ -55,7 +57,7 @@
 			*/
 			
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO ".TABLENAME_MESSAGES." ( from_username, to_username, message, messageSentTime, tags) VALUES ( :from_username, :to_username, :message, :messageSentTime, :tags)";
+			$sql = "INSERT INTO ".TABLENAME_MESSAGES." ( from_username, to_username, message, messageSentTime, tags, activityId) VALUES ( :from_username, :to_username, :message, :messageSentTime, :tags, :activityId)";
 			
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":from_username", $this->from_username, PDO::PARAM_STR );		
@@ -63,6 +65,7 @@
 			$st->bindValue( ":message", $this->message, PDO::PARAM_STR );				
 			$st->bindValue( ":messageSentTime", $this->messageSentTime, PDO::PARAM_INT);			
 			$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );				
+			$st->bindValue( ":activityId", $this->activityId, PDO::PARAM_INT );				
 			$result = $st->execute();			
 			$this->id = $conn->lastInsertId();		
 			$conn = null;
@@ -181,6 +184,20 @@
 			$st->execute();
 			$conn = null;		
 		}
+		
+		public function getAllMessages($username, $activityId){
+			
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = "SELECT *, UNIX_TIMESTAMP(messageSentTime) AS messageSentTime FROM ".TABLENAME_MESSAGES." WHERE (( (to_username = :to_username AND activityId = $activityId) OR to_username = 'globalMessage' OR to_username = 'activity.".$activityId."') OR (from_username = :from_username AND to_username = 'activity.".$activityId."')) ORDER BY messageSentTime DESC"; 
+			$st = $conn->prepare( $sql );
+			$st->bindValue( ":from_username", $username, PDO::PARAM_STR );
+			$st->bindValue( ":to_username", $username, PDO::PARAM_STR );
+			$st->execute();
+			$conn = null;		
+			$result = $st->fetchAll();
+			//print_r($result);
+			return $result;
+		}	
 
 	
 	}

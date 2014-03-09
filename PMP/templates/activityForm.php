@@ -118,7 +118,7 @@
 	});
 </script>
 
-<div class="messages">
+<!--<div class="messages">
 	<div class="messages-sent" style="">
 		<?php
 		$tags=$activity->title;
@@ -176,4 +176,4 @@
 		?>
 		</ul>
 	</div>
-</div>
+</div>-->

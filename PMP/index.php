@@ -225,6 +225,7 @@
 	function createMessage() {
         if( isset( $_POST['createMessage'] ) ){ 
 		
+			// Message to user
 			if( $_POST["to"] == "4" ){
 				$message= new Message($_POST);
 				if( $message->insert() ){
@@ -234,7 +235,9 @@
 					$results['errorMessage' ] = "Error sending message.";
 				}
 			}
-			if( $_POST["to"] == "1" ){
+			// Message global
+			else if( $_POST["to"] == "3" ){
+				$_POST['to_username'] = 'globalMessage';
 				$message= new Message($_POST);
 				if( $message->insert() ){
 					$results['successMessage'] = "Message successfully sent.";
@@ -243,9 +246,43 @@
 					$results['errorMessage' ] = "Error sending message.";
 				}
 			}
-			print_r($results);
-			exit(0);
-
+			// Message to core team
+			else if( $_POST["to"] == "3" ){
+				
+			}
+			
+			// Message to all users of the respective activity
+			else if( $_POST["to"] == "1" ){
+			
+				$_POST['to_username'] = 'activity.'.$_POST['activityId'];
+				$message= new Message($_POST);
+				if( $message->insert() ){
+					$results['successMessage'] = "Message successfully sent.";
+				}	
+				else{
+					$results['errorMessage' ] = "Error sending message.";
+				}
+				
+				// DONT DELETE: Message to all user of the respective activity
+				/*$userIds = Membership::getMembersById( $_POST['activityId'] );
+				if( count($userIds) == 0)
+					$results['errorMessage'] = "Error sending message, no recipients!";
+					
+				for( $i=0; $i<count($userIds); $i++ ){
+					$to_username = User::getUsernameById( $userIds[$i]['userId'] );			
+					if( $to_username != $_SESSION['username'] ){
+						$_POST['to_username'] = $to_username;
+						$message= new Message($_POST);
+						
+						if( $message->insert() ){
+							$results['successMessage'] = "Message successfully sent.";
+						}	
+						else{
+							$results['errorMessage' ] = "Error sending message.";
+						}
+					}
+				}*/				
+			}
 		}
 		$user = User::getByUsername( $_SESSION['username'] );
 		dashboard( $user );
