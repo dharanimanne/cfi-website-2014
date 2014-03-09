@@ -87,13 +87,13 @@ form{
 #menu{
 	height:100%;
 }
-.read-tab-content, .editAcivityFormDiv{
+.read-tab-content, .editAcivityFormDiv, .documentsDiv{
 	margin:5px 10px;
 }
-.read-tab-content table, .editAcivityFormDiv table{
+.read-tab-content table, .editAcivityFormDiv table, .documentsDiv table{
 	width:100%;
 }
-.read-tab-content td, .editAcivityFormDiv td{
+.read-tab-content td, .editAcivityFormDiv td, .documentsDiv td{
 	padding:5px 10px;
 	border:solid 1px #F0E2E2;
 	font-size:12px;
@@ -143,4 +143,30 @@ form{
 }
 .edit-activity-btn:hover{
 	box-shadow:2px 2px 1px #37a6cd;
+}
+.divHeading1 {
+	font-family: oswald;
+	font-size: 14px;
+	width: 100%;
+	padding: 4px;
+	background: #2085A8;
+	color:#fff;
+	margin: 15px 0px 5px 0px;
+}
+.divHeading2 {
+	font-family: oswald;
+	font-size: 14px;
+	width: 100%;
+	padding: 4px;
+	background: #E9E9E9;
+	margin: 15px 0px 5px 0px;
+}
+.delete-doc-link{
+	color: #fff;
+	background: rgb(224, 55, 55);
+	padding: 2px 8px;
+	box-shadow: 2px 2px 2px rgb(128, 42, 45);
+}
+.delete-doc-link:hover{
+	text-decoration:none;
 }

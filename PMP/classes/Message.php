@@ -18,25 +18,14 @@
 
 		public function __construct( $data = array() ) {
 			
-			if( isset( $data['id'] ) ) 					$this->id = (int) $data['id'];
-		    if( isset( $data['from_username'] ) ) 	$this->from_username = $data['from_username'];
-			if( isset( $data['to_username'] ) ) 		$this->to_username = preg_replace ( "/[^\.\@\_ a-zA-Z0-9]/", "", $data['to_username'] );
-			//if( isset( $data['password'] ) ) 			$this->password = $data['password'];
-		   // if( isset( $data['name'] ) ) 				$this->name = preg_replace( "/[^a-zA-Z0-9]/", "", $data['name'] );
-			/* Email as username */
-			//if( isset( $data['email'] ) ){ 				
-				//$this->email = trim( preg_replace( "/[^\.\@\_ a-zA-Z0-9]/", "", $data['email'] ) );
-				//$this->username = $this->email;
-			//}
-		
-	
-			if( isset( $data['message'] ) ) 			$this->message = $data['message'];
-			if( isset( $data['messageSentTime'] ) ) 			$this->messageSentTime = $data['messageSentTime'];
-			if( isset( $data['isReceived'] ) ) 		$this->isReceived = $data['isReceived'];
-			if( isset( $data['isRead'] ) ) 		$this->isRead = $data['isRead'];
-	        if( isset( $data['tags'] ) ) 		$this->tags = $data['tags'];
-		
-			
+		    if( isset( $data['from_username'] ) ) $this->from_username = $data['from_username'];
+			if( isset( $data['to_username'] ) ) $this->to_username = preg_replace ( "/[^\.\@\_ a-zA-Z0-9]/", "", $data['to_username'] );	
+			if( isset( $data['message'] ) ) $this->message = $data['message'];
+			if( isset( $data['messageSentTime'] ) ) $this->messageSentTime = $data['messageSentTime'];
+			if( isset( $data['isReceived'] ) ) $this->isReceived = $data['isReceived'];
+			if( isset( $data['isRead'] ) ) $this->isRead = $data['isRead'];
+	        if( isset( $data['tags'] ) ) $this->tags = $data['tags'];
+					
 		}
 		
 		public static function errorInfo(){
@@ -54,32 +43,28 @@
 		public function insert(){
 			if( !is_null( $this->id ) ) trigger_error( "User::insert(): Attempt to insert a message object that already has its ID property set to $this->id.", E_USER_ERROR );
 			
-			// Set Values
-		
+			// Set Values		
 			$this->messageSentTime = date("Y-m-d H:i:s");   
 			   
 			// Validation
-         /*   else if( strlen( $this->to_username ) < MINIMUM_NAME_LENGTH || preg_match("/[^a-zA-Z'-]/", $this->to_username) ){
+			/*   
+			else if( strlen( $this->to_username ) < MINIMUM_NAME_LENGTH || preg_match("/[^a-zA-Z'-]/", $this->to_username) ){
 				self::$errorCode ="ERR_INV_NAME";
 				return false;
-			}*/
+			}
+			*/
 			
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO ".TABLENAME_MESSAGES." ( from_username, to_username, message, messageSentTime,tags) VALUES ( :from_username, :to_username, :message, :messageSentTime, :tags)";
+			$sql = "INSERT INTO ".TABLENAME_MESSAGES." ( from_username, to_username, message, messageSentTime, tags) VALUES ( :from_username, :to_username, :message, :messageSentTime, :tags)";
+			
 			$st = $conn->prepare( $sql );
-			$st->bindValue( ":from_username", $this->from_username, PDO::PARAM_STR );
-		
-			$st->bindValue( ":to_username", $this->to_username, PDO::PARAM_STR );
-	
-			$st->bindValue( ":message", $this->message, PDO::PARAM_STR );	
-			
-			$st->bindValue( ":messageSentTime", $this->messageSentTime, PDO::PARAM_INT);
-			
-				$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
-				
-			$result = $st->execute();
-			$this->id = $conn->lastInsertId();
-		
+			$st->bindValue( ":from_username", $this->from_username, PDO::PARAM_STR );		
+			$st->bindValue( ":to_username", $this->to_username, PDO::PARAM_STR );	
+			$st->bindValue( ":message", $this->message, PDO::PARAM_STR );				
+			$st->bindValue( ":messageSentTime", $this->messageSentTime, PDO::PARAM_INT);			
+			$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );				
+			$result = $st->execute();			
+			$this->id = $conn->lastInsertId();		
 			$conn = null;
 			
 			if( !$result ){
@@ -94,36 +79,6 @@
 			}
 		}
 	
-
-	/*	public function update(){
-				
-			//Does the object have an ID?
-			if( is_null( $this->id ) ) trigger_error( "User::update(): Attempt to update a message object that does not have its ID property set.", E_USER_ERROR );
-			
-			else if( strlen( $this->to_username ) < MINIMUM_NAME_LENGTH || preg_match("/[^a-zA-Z'-]/", $this->to_username) ){
-				self::$errorCode ="ERR_INV_NAME";
-				return false;
-			}
-
-
-			//Update the object
-			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );		
-			$sql = "UPDATE ".TABLENAME_messages." ( from_username, to_username, message, messageSentTime,tags) VALUES ( :from_username, :to_username, :message, :messageSentTime, :tags)";
-			$st = $conn->prepare( $sql );
-			$st->bindValue( ":from_username", $this->from_username, PDO::PARAM_STR );
-			$st->bindValue( ":to_username", $this->to_username, PDO::PARAM_STR );
-			$st->bindValue( ":message", $this->message, PDO::PARAM_STR );	
-			$st->bindValue( ":messageSentTime", $this->messageSentTime, PDO::PARAM_INT);
-			$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
-			$result = $st->execute();
-			$this->id = $conn->lastInsertId();
-			$conn = null;
-			
-			return true;
-		}*/
-
-	
-		
 		
 		public static function getById( $id ){
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
@@ -135,7 +90,8 @@
 			$conn = null;
 			if( $row ) return new Message( $row );
 		}
-			public static function getBytags( $tags ){
+		
+		public static function getBytags( $tags ){
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
 			$sql = "SELECT *, UNIX_TIMESTAMP(messageSentTime) AS messageSentTime FROM ".TABLENAME_MESSAGES." WHERE tags = :tags ";
 			$st = $conn->prepare( $sql );

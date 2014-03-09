@@ -38,7 +38,7 @@
 	
 		public function insert(){
 	
-			if( !is_null( $this->id ) ) trigger_error( "docUMENT::insert(): Attempt to insert a docUMENT object that already has its ID property set to $this->id.", E_DOCUMENT_ERROR );
+			if( !is_null( $this->id ) ) trigger_error( "DOCUMENT::insert(): Attempt to insert a document object that already has its ID property set to $this->id.", E_DOCUMENT_ERROR );
 			
 			// validation for malicious docs, to be added...
 
@@ -46,13 +46,14 @@
 			$this->uploadedOn = date("Y-m-d H:i:s");
 			
 			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-			$sql = "INSERT INTO ".TABLENAME_DOCUMENT." ( docName, tags, docLocation, uploadedOn, uploadedBy) VALUES ( :docName, :tags, :docLocation, :uploadedOn, :uploadedBy)";
+			$sql = "INSERT INTO ".TABLENAME_DOCUMENT." ( docName, tags, docLocation, uploadedOn, uploadedBy, activityId) VALUES ( :docName, :tags, :docLocation, :uploadedOn, :uploadedBy, :activityId)";
 			$st = $conn->prepare( $sql );
 			$st->bindValue( ":docName", $this->docName, PDO::PARAM_STR );
 			$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
 			$st->bindValue( ":docLocation", $this->docLocation, PDO::PARAM_STR );
 			$st->bindValue( ":uploadedOn", $this->uploadedOn, PDO::PARAM_INT );
 			$st->bindValue( ":uploadedBy", $this->uploadedBy, PDO::PARAM_STR );
+			$st->bindValue( ":activityId", $this->activityId, PDO::PARAM_INT );
 
 
 			$result = $st->execute();
@@ -60,14 +61,26 @@
 			$conn = null;
 			
 			if( !$result ){
-				self::$errorMessage = "docUMENT::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
+				self::$errorMessage = "DOCUMENT::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
 				self::$errorCode = $st->errorCode();
 				return false;
 			}
 			else{
-				self::$successMessage = "docUMENT::insert: docUMENT successfully inserted with id ".$this->id;
+				self::$successMessage = "DOCUMENT::insert: document successfully inserted with id ".$this->id;
 				return true;
 			}
+		}
+		
+		public function getDocumentByActivityId($activityId){		
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$sql = 'SELECT id, docName, docLocation, tags, uploadedBy, uploadedOn FROM '. TABLENAME_DOCUMENT .' WHERE activityId ='. $activityId ;
+	
+			$st=$conn->prepare($sql);
+			$st->execute();
+			$row = $st->fetchAll();
+			$conn = null;	
+			
+			return $row;
 		}
 
 /*
@@ -122,6 +135,33 @@
 			$conn = null;
 
 			//yet to remove docUMENT from database.....
-		}		
+		}
+
+		public function deleteById( $docId, $activityId ){
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			
+			$st = $conn->prepare ( "SELECT * FROM ".TABLENAME_DOCUMENT." WHERE id = :docId AND activityId = :activityId" );
+			$st->bindValue( ":docId", $docId, PDO::PARAM_INT );
+			$st->bindValue( ":activityId", $activityId, PDO::PARAM_INT );
+			$st->execute();
+			if( $st->rowCount() > 0){
+				$row = $st->fetch();
+				$docLocation = FILE_UPLOAD_LOCATION."/Documents/".$activityId."/".$row["DocName"];
+				unlink( $docLocation );
+			}
+			else
+				return false;
+			
+			$st = $conn->prepare ( "DELETE FROM ".TABLENAME_DOCUMENT." WHERE id = :docId AND activityId = :activityId" );
+			$st->bindValue( ":docId", $docId, PDO::PARAM_INT );
+			$st->bindValue( ":activityId", $activityId, PDO::PARAM_INT );
+			$st->execute();
+			$conn=null;
+			
+			if( $st->rowCount() > 0)
+				return true;
+			else 
+				return false;
+		}
 	}
 ?>

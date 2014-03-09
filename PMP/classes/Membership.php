@@ -106,6 +106,31 @@
 			$st->execute();
 			$conn = null;		
 		}
+		
+		//Function to check membership for an activity given the activityId
+		public function check($userId, $activityId){
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$st = $conn->prepare ( "SELECT * FROM ".TABLENAME_MEMBERSHIP." WHERE userId = :userId AND activityId = :activityId AND membershipType LIKE 'member' " );
+			$st->bindValue( ":userId", $userId, PDO::PARAM_INT );
+			$st->bindValue( ":activityId", $activityId, PDO::PARAM_INT );
+			$st->execute();
+			$conn = null;	
+			
+			if( $st->rowCount() > 0 )
+				return true;
+			else
+				return false;
+		}
+		
+		public function getMembersById( $activityId ){
+			$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+			$st = $conn->prepare ( "SELECT userId FROM ".TABLENAME_MEMBERSHIP." activityId = :activityId AND membershipType LIKE 'member' " );
+			$st->bindValue( ":activityId", $activityId, PDO::PARAM_INT );
+			$st->execute();
+			$conn = null;	
+			$row = $st->fetchAll();
+			return $row;
+		}
 	}
 
 ?>

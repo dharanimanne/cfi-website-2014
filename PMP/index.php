@@ -29,19 +29,26 @@
 			break;	
 		case 'add_activity';
             add_activity();		
-				break;
+			break;
 		case 'update_activity';
             update_activity();		
-				break;
+			break;
 		case 'addMember';
 			addMember();
-				break;
-		case 'create_message';
-		      createMessage();
-			    break;		
+			break;
+		case 'createMessage';
+		    createMessage();
+			break;		
 		case 'updateProfilePic';
-              updateProfilePic();
-                break; 			  
+            updateProfilePic();
+            break; 		
+		case 'uploadDocument';
+            uploadDoc('docName',$_POST['activityId']);
+            break; 		
+		case 'deleteDocument';
+			if( isset( $_GET['docId'] ) && isset( $_GET['activityId'] ) )
+				deleteDoc($_GET['docId'], $_SESSION['userId'], $_GET['activityId'] );
+			break;
 		default:
 			login();
 	}
@@ -64,6 +71,7 @@
 				if( $user = User::getByUsername( $username ) ){
 					if( $passwordHash == $user->password ){
 						$_SESSION['username'] = $username;
+						$_SESSION['userId'] = $user->id;
 						dashboard( $user );
 					}
 					else {
@@ -204,7 +212,6 @@
 		}
 	}
 
-
 	function add_activity(){
 		$results = array();	
 		$results['pageTitle'] = " | CFI Projects Management Portal";
@@ -214,13 +221,34 @@
 			$results['successMessage'] = "Added activity successful.";
 		}			
 	}
+	
 	function createMessage() {
-        	
-	$message= new Message($_POST);
-	if( $message->insert() ){
-			$results['successMessage'] = "creating message successful.";
-			dashboard( $user );
+        if( isset( $_POST['createMessage'] ) ){ 
+		
+			if( $_POST["to"] == "4" ){
+				$message= new Message($_POST);
+				if( $message->insert() ){
+					$results['successMessage'] = "Message successfully sent.";
+				}	
+				else{
+					$results['errorMessage' ] = "Error sending message.";
+				}
+			}
+			if( $_POST["to"] == "1" ){
+				$message= new Message($_POST);
+				if( $message->insert() ){
+					$results['successMessage'] = "Message successfully sent.";
+				}	
+				else{
+					$results['errorMessage' ] = "Error sending message.";
+				}
+			}
+			print_r($results);
+			exit(0);
+
 		}
+		$user = User::getByUsername( $_SESSION['username'] );
+		dashboard( $user );
     }
 
 	function update_activity(){
@@ -391,39 +419,54 @@
 	}
 
 
-	function uploadDoc( $docName, $docLocation ){
+	function uploadDoc( $docName, $activityId ){
 
-		if ( !isset($results) ) {
-			$results = array();
+		$docLocation = FILE_UPLOAD_LOCATION."/Documents";
+		if( is_dir( $docLocation ) == false ){
+			mkdir( $docLocation, 0777 );		
 		}
+		$docLocation = FILE_UPLOAD_LOCATION."/Documents/".$activityId;
+		if( is_dir( $docLocation ) == false ){
+			mkdir( $docLocation, 0777 );		
+		}
+		
+		if( !isset($results) ) {
+			$results = array();
+		}		
 		
 		if ($_FILES[$docName]['error'] === UPLOAD_ERR_OK) 
 		{ 
   			$docData = array();
 			$docData['docName'] = $_FILES[$docName]["name"];
 
-            if( is_doc( $docLocation.'/'.$docData['docName'] ) == false )
+            if( file_exists( $docLocation.'/'.$docData['docName'] ) == false )
             {
-                move_uploaded_doc( $_FILES[$docName]["tmp_name"], $docLocation.'/'.$docData['docName'] );
+                move_uploaded_file( $_FILES[$docName]["tmp_name"], $docLocation.'/'.$docData['docName'] );
             }
             else
-            {    //rename the doc if another one exist
+            {    
+				// Rename the file if another one exists
             	$temp = explode(".", $_FILES[$docName]["name"]);
-                $docData['docName'] = $temp[0].time().".".$temp[1];
-                move_uploaded_doc( $_FILES[$docName]["tmp_name"], $docLocation.'/'.$docData['docName'] ); 
+				$len = count($temp); $pre = "";
+				for( $i=0; $i<$len-1; $i++ ) $pre .= $temp[$i];
+                $docData['docName'] = $pre."-".time().".".$temp[$len-1];
+				
+                move_uploaded_file( $_FILES[$docName]["tmp_name"], $docLocation.'/'.$docData['docName'] ); 
             }
 
-            $docData['tags'] = $_FILES["tags"];
-			$docData['docLocation'] = $docLocation.'/'.$docData['docName'];    //to add later (the location of the doc)
-	        $docData['uploadedBy'] =   "dharani";             //$_SESSION['username']; should be the actual code...just kept it aside for testing
-	        
-	        $doc = new doc( $docData );
-
+			$docData['tags'] = $_POST	["tags"];
+			$docData['docLocation'] = $docLocation;   
+	        $docData['uploadedBy'] = $_SESSION['username'];
+			$docData['activityId'] = $activityId;
+					
+	        $doc = new Document( $docData );	
+						
 	        if( $doc->insert() )
 			{
-				$results['successMessage'] = "doc upload successful. Thank you";
-				require( TEMPLATE_PATH . "/loginForm.php" );
-				return $docData['docName'];
+				$results['successMessage'] = "Document upload successful. Thank you.";
+			}
+			else{
+				echo Document::errorInfo()."<br>";
 			}
 		}
 		else
@@ -438,8 +481,8 @@
 	            case UPLOAD_ERR_PARTIAL:
 	                $results['errorMessage'] = "The uploaded doc was only partially uploaded";
 	                break;
-	            case UPLOAD_ERR_NO_doc:
-	                $results['errorMessage'] = "No doc was uploaded";
+	            case UPLOAD_ERR_NO_FILE:
+	                $results['errorMessage'] = "No file was uploaded";
 	                break;
 	            case UPLOAD_ERR_NO_TMP_DIR:
 	                $results['errorMessage'] = "Missing a temporary folder";
@@ -450,13 +493,34 @@
 	            case UPLOAD_ERR_EXTENSION:
 	                $results['errorMessage'] = "doc upload stopped by extension";
 	                break;
-
 	            default:
 	                $results['errorMessage'] = "Unknown upload error";
 	                break;
 	        }
-	        echo $results['errorMessage'];
+	        //echo $results['errorMessage'];
 		}
+		
+		$user = User::getByUsername( $_SESSION['username'] );
+		dashboard( $user );
 	}
 	
+	function deleteDoc( $docId, $userId, $activityId ){
+		if( !isset($results) ) {
+			$results = array();
+		}			
+		// Check membership for activity
+		if( Membership::check( $userId, $activityId ) ){
+			// Check document id and activity id
+			if( Document::deleteById( $docId, $activityId ) )
+				$results['successMessage'] = "File Successfully Deleted.";
+			else
+				$results['errorMessage'] = "Error deleting file.";			
+		}
+		else{
+			$results['errorMessage'] = "Delete File: Permission Denied.";
+		}
+		
+		$user = User::getByUsername( $_SESSION['username'] );
+		dashboard( $user );
+	}
 ?>
