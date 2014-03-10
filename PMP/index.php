@@ -113,7 +113,7 @@
 		var_dump($_POST);
 		var_dump($_FILES);
 
-		if ( isset($_FILES["file"]) ) {
+		if ( empty($_FILES["file"]) ) {
 			echo "this is insane!!!! it should not be displayed!!!";
 			$fileName = "file";
 			$fileLocation = FILE_UPLOAD_LOCATION;
@@ -177,7 +177,7 @@
 	        if( $file->insert() )
 			{
 				$results['successMessage'] = "File upload successful. Thank you";
-				require( TEMPLATE_PATH . "/loginForm.php" );
+		//		require( TEMPLATE_PATH . "/loginForm.php" );
 				return $file->fileLocation;
 			}
 		}
