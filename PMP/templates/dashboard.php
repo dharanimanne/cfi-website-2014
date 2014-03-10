@@ -17,8 +17,9 @@
    			<?php 	
    				if( isset($results['successMessage']) ) 
    					echo $results['successMessage']; 
-   				elseif ( isset($results['errorMessage']) ) {
+   				elseif ( isset($results['errorMessage']) )
    					echo $results['errorMessage'];
+   				else echo "Welcome!";
    				?>
    		</div>
 		<ul class="breadcrumb">

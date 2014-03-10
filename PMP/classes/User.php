@@ -129,7 +129,7 @@
 			if( !$result ){
 				self::$errorMessage = "User::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
 				self::$errorCode = $st->errorCode();
-				echo $errorMessage;
+		//		echo $errorMessage;
 				return false;
 			}
 			else{		
