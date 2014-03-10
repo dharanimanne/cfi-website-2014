@@ -60,7 +60,7 @@ td{
 	border: solid 1px #E4DDDD;
 }
 #bgDiv {
-  background: url('http://cfi-iitm.org/main/wp-content/uploads/2013/12/1005369_656046134427691_885327573_n.jpg');
+  background: url('../images/bg1.jpg');
   background-size:cover;
   opacity: 0.5;
   top: 0;
