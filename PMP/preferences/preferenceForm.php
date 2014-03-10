@@ -53,7 +53,7 @@ input[type=text], input[type=password], select{
 							Username
 						</td>
 						<td>
-							<input type="text" name="username" placeholder="Username" />
+							<input type="text" name="name" placeholder="Username" />
 						</td>
 					</tr>
 						<tr>
@@ -85,7 +85,7 @@ input[type=text], input[type=password], select{
 							Phone number
 						</td>
 						<td>
-							<input type="text" name="phoneNumber" placeholder="Phone number" />
+							<input type="text" name="phone" placeholder="Phone number" />
 						</td>
 					</tr>
 						<tr>
@@ -129,7 +129,7 @@ input[type=text], input[type=password], select{
 							for ($a=0;$a<sizeof($i);$a++)
 							{
 							?>
-								<option value="<?PHP echo $RESULTS[$a]; ?>" selected><?PHP echo $RESULTS[$a]; ?></option>
+								<option value="<?PHP echo $RESULTS[$a]; ?>"><?PHP echo $RESULTS[$a]; ?></option>
 							
 							<?php } ?>
 							</select>
