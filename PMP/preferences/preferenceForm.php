@@ -55,7 +55,7 @@ input[type=text], input[type=password], select{
      <div id="content" style="margin-left:0px;background:none;"><br><br><br>
 		<div id="preferenceDiv">
 			<div id="whiteBgDiv"></div>
-			<form name="preferenceForm" action="projectPreference.php" method="POST">
+			<form name="preferenceForm" action="preferences.php" method="POST">
 				<table>
 				    <tr>
 						<td>
@@ -102,10 +102,10 @@ input[type=text], input[type=password], select{
 					</tr>
 							     <tr>
 						<td>
-							Preference-1 
+							Preference-2
 						</td>
 						<td>
-							<select name="preference1" id="drop"  >
+							<select name="preference2" id="drop"  >
 							</select>
 						</td>
 					</tr>					
