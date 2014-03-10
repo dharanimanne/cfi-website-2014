@@ -1,4 +1,6 @@
-<?php include("header.php"); ?>
+<?php include("header.php"); 
+$RESULTS = array();
+?>
 
 <style>
 #preferenceDiv{
@@ -33,7 +35,7 @@ input[type=text], input[type=password], select{
 			else {
 				$category = ;																	//category can be obtained from the value in the form field
 				$sql = "SELECT title FROM summerprojects WHERE category='".$category."'";
-				$result = mysqli_query($con,$sql);
+				$RESULTS = mysqli_query($con,$sql);
 
 			mysqli_close($con);
 			}
@@ -59,7 +61,7 @@ input[type=text], input[type=password], select{
 							Roll no
 						</td>
 						<td>
-							<input type="text" name="username" placeholder="Username" />
+							<input type="text" name="rollNo" placeholder="Roll no" />
 						</td>
 					</tr>
 						<tr>
@@ -67,7 +69,7 @@ input[type=text], input[type=password], select{
 							Hostel
 						</td>
 						<td>
-							<input type="text" name="username" placeholder="Username" />
+							<input type="text" name="hostel" placeholder="Hostel" />
 						</td>
 					</tr>
 						<tr>
@@ -75,7 +77,7 @@ input[type=text], input[type=password], select{
 							Room
 						</td>
 						<td>
-							<input type="text" name="username" placeholder="Username" />
+							<input type="text" name="room" placeholder="Room" />
 						</td>
 					</tr>
 						<tr>
@@ -83,7 +85,7 @@ input[type=text], input[type=password], select{
 							Phone number
 						</td>
 						<td>
-							<input type="text" name="username" placeholder="Username" />
+							<input type="text" name="phoneNumber" placeholder="Phone number" />
 						</td>
 					</tr>
 						<tr>
@@ -91,66 +93,45 @@ input[type=text], input[type=password], select{
 						   E-mail 
 						</td>
 						<td>
-							<input type="text" name="username" placeholder="Username" />
+							<input type="text" name="email" placeholder="E-mail" />
 						</td>
 					</tr>
 				    <tr>
 						<td>
-							Preference-1
+							Preference-1 Category
 						</td>
 						<td>
-							<select name="hostel" onClick="$('#registerDiv').fadeIn(250);" >
+							<select name="category"  class="preferences" >
 								<option value="Select" selected>Select</option>
-								<option value="Alakananda">Alakananda</option>
-								<option value="Brahmaputra">Brahmaputra</option>
-								<option value="Cauvery">Cauvery</option>
-								<option value="Ganga">Ganga</option>
-								<option value="Godavari">Godavari</option>
-								<option value="Jamuna">Jamuna</option>
-								<option value="Krishna">Krishna</option>
-								<option value="Mahanadi">Mahanadi</option>
-								<option value="Mandakini">Mandakini</option>
-								<option value="Narmada">Narmada</option>
-								<option value="Pampa">Pampa</option>
-								<option value="Saraswathi">Saraswathi</option>
-								<option value="Sarayu">Sarayu</option>
-								<option value="Sarayu Ext.">Sarayu Ext.</option>
-								<option value="Sharavathi">Sharavathi</option>
-								<option value="Sindhu">Sindhu</option>
-								<option value="Tamiraparani">Tamiraparani</option>
-								<option value="Tapti">Tapti</option>
+								<option value="creative Ideas">Creative Ideas</option>
+								<option value="Socially Relevant Projects">Socially Relevant Projects</option>
+								<option value="Electronics/Android Application">Electronics/Android Application</option>
+								<option value="Projects by CFI">Projects by CFI</option>
+								<option value="Robotics/Automotive">Robotics/Automotive</option>
+				                <option value="Computer Vision/Image Processing">Computer Vision/Image Processing</option>
+								
 							</select>
 						</td>
 					</tr>
 					<?php 
-					if(isset($results))
+					if(!empty($RESULTS))
 					{
 					?>
 					<tr>
 						<td>
-							Preference-2
+							Preference-1
 						</td>
 						<td>
-							<select name="hostel" onClick="$('#registerDiv').fadeIn(250);" >
-								<option value="Select" selected>Select</option>
-								<option value="Alakananda">Alakananda</option>
-								<option value="Brahmaputra">Brahmaputra</option>
-								<option value="Cauvery">Cauvery</option>
-								<option value="Ganga">Ganga</option>
-								<option value="Godavari">Godavari</option>
-								<option value="Jamuna">Jamuna</option>
-								<option value="Krishna">Krishna</option>
-								<option value="Mahanadi">Mahanadi</option>
-								<option value="Mandakini">Mandakini</option>
-								<option value="Narmada">Narmada</option>
-								<option value="Pampa">Pampa</option>
-								<option value="Saraswathi">Saraswathi</option>
-								<option value="Sarayu">Sarayu</option>
-								<option value="Sarayu Ext.">Sarayu Ext.</option>
-								<option value="Sharavathi">Sharavathi</option>
-								<option value="Sindhu">Sindhu</option>
-								<option value="Tamiraparani">Tamiraparani</option>
-								<option value="Tapti">Tapti</option>
+							<select name="preference_1">
+							
+							<option value="Select" selected>Select</option>
+							<?php
+							for ($a=0;$a<sizeof($i);$a++)
+							{
+							?>
+								<option value="<?PHP echo $RESULTS[$a]; ?>" selected><?PHP echo $RESULTS[$a]; ?></option>
+							
+							<?php } ?>
 							</select>
 						</td>
 					</tr>
