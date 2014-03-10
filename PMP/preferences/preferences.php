@@ -13,7 +13,7 @@
 
 			$name = $_POST['name'];
 			$preference1 = $_POST['preference1'];
-			$preference2 = $_POST['preference2'];
+			$preference2 = 'this is second preference'//$_POST['preference2'];
 			$uploadedOn = date("Y-m-d H:i:s");
 		
 			$sql = "INSERT INTO preferences (name, preference1, preference2, uploadedOn)
