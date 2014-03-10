@@ -71,25 +71,37 @@ echo "insertion successful!";
 
 public function update(){
 
-//Does the object have an ID?
-if( is_null( $this->id ) ) trigger_error( "Activity::update(): Attempt to update an Activity object that does not have its ID property set.", E_ACTIVITY_ERROR );
+	//Does the object have an ID?
+	if( is_null( $this->id ) ) trigger_error( "Activity::update(): Attempt to update an Activity object that does not have its ID property set.", E_ACTIVITY_ERROR );
 
-//Update the object
-$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );	
-$sql = "UPDATE ".TABLENAME_ACTIVITY." SET icon_link =:icon_link , bg_image_link = :bg_image_link, title = :title, brief_writeup = :brief_writeup, detailed_writeup = :detailed_writeup, status = :status, tags = :tags, overall_budget = :overall_budget, utilized_budget = :utilized_budget WHERE id = :id";
-$st = $conn->prepare( $sql );
-$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
-$st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
-$st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
-$st->bindValue( ":status", $this->status, PDO::PARAM_STR );
-$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
-$st->bindValue( ":overall_budget", $this->overall_budget, PDO::PARAM_INT );
-$st->bindValue( ":utilized_budget", $this->utilized_budget, PDO::PARAM_INT );
-$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
-$st->bindValue( ":icon_link", $this->icon_link, PDO::PARAM_STR );
-$st->bindValue( ":bg_image_link", $this->bg_image_link, PDO::PARAM_STR );
-$st->execute();
-$conn = null;
+	//Update the object
+	$conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );	
+	
+	//Check if bg_image and icon_image are not null
+	$subQuery = $this->bg_image_link == null ? "" : " bg_image_link = :bg_image_link,";
+	$subQuery .= $this->icon_link == null ? "" : " icon_link =:icon_link ,";
+	
+	$sql = "UPDATE ".TABLENAME_ACTIVITY." SET ".$subQuery." title = :title, brief_writeup = :brief_writeup, detailed_writeup = :detailed_writeup, status = :status, tags = :tags, overall_budget = :overall_budget, utilized_budget = :utilized_budget WHERE id = :id"; 
+	$st = $conn->prepare( $sql );
+	$st->bindValue( ":title", $this->title, PDO::PARAM_STR );
+	$st->bindValue( ":brief_writeup", $this->brief_writeup, PDO::PARAM_STR );
+	$st->bindValue( ":detailed_writeup", $this->detailed_writeup, PDO::PARAM_STR );
+	$st->bindValue( ":status", $this->status, PDO::PARAM_STR );
+	$st->bindValue( ":tags", $this->tags, PDO::PARAM_STR );
+	$st->bindValue( ":overall_budget", $this->overall_budget, PDO::PARAM_INT );
+	$st->bindValue( ":utilized_budget", $this->utilized_budget, PDO::PARAM_INT );
+	$st->bindValue( ":id", $this->id, PDO::PARAM_INT );
+	if( !$this->icon_link == null ) $st->bindValue( ":icon_link", $this->icon_link, PDO::PARAM_STR );
+	if( !$this->bg_image_link == null ) $st->bindValue( ":bg_image_link", $this->bg_image_link, PDO::PARAM_STR );
+	if( $st->execute() ){
+		//print_r( $st->errorInfo() );
+		$conn = null; 
+		return true;
+	}
+	else {
+		$conn = null; 
+		return false;
+	}
 }
 
 public static function getById( $id ){

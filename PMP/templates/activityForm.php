@@ -50,7 +50,7 @@
 			<div class="detail-writeup-left"><textarea class="input-xlarge" id="textarea" rows="6" name = "detailed_writeup"><?php echo $activity->detailed_writeup;?></textarea></div>
 			<div class="detail-writeup-right">
 				<center>
-					<img src="upload/ActivityImages/<?php echo $activity->bg_image_link; ?>" />
+					<img src="upload/ActivityImages/bgimages/<?php echo $activity->bg_image_link; ?>" />
 				</center>
 			</div>
 		</td>

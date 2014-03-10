@@ -24,6 +24,13 @@
 			</div>
 			<br>
 		</div>	
+		<div id="returnMessage">
+			<?php if( isset( $results['errorMessage'] ) && strlen( $results['errorMessage'] ) > 0 ) { ?>
+				<div class="alert alert-error"><?php echo $results['errorMessage']; ?></div>
+			<?php } if( isset( $results['successMessage'] ) && strlen( $results['successMessage'] ) > 0 ) { ?>
+				<div class="alert alert-success"><?php echo $results['successMessage']; ?></div>
+			<?php } ?>
+		</div>
 	</div>
 
 <?php include("templates/include/footer.php"); ?>

@@ -205,3 +205,35 @@ form{
 	height:200px;
 	overflow:scroll;
 }
+.alert{
+	margin:10px;
+}
+#UpdateDiv, #UpdatePasswordDiv, #updateProfilePic{
+	margin: 5px 10px;
+	padding: 10px;
+	border: solid 1px #F0E2E2;
+}
+#UpdateDiv table, #UpdatePasswordDiv table, #updateProfilePic table{
+	width: 100%;
+}
+#UpdateDiv td, #UpdatePasswordDiv td, #updateProfilePic td{
+	border: solid 1px rgb(248, 237, 237)
+}
+.form-horizontal .controls{
+	margin-left:0px;
+}
+.form-horizontal .control-group{
+	margin-bottom: 0px;
+}
+.form-horizontal .control-label{
+	float: inherit;
+	width:auto;
+}
+.headerPPic{	
+	position: absolute;
+	margin-left: 210px;
+	height: 100px;
+	width: auto;
+	max-width: 135px;
+	border: solid 1px rgb(110, 109, 109);
+}

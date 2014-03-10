@@ -1,6 +1,8 @@
 <?php
 	session_start();
 
+	$results = array();
+	
 	require("config.php");
 	$action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 	$username = isset( $_SESSION['username'] ) ? $_SESSION['username']: "";
@@ -54,7 +56,9 @@
 	}
 
 	function login(){
-		$results = array();
+		global $results;
+		if( !$results ) $results = array();
+			
 		$results['pageTitle'] = "Login | CFI Projects Management Portal";
 		
 		/* Just to test */
@@ -75,7 +79,7 @@
 						dashboard( $user );
 					}
 					else {
-						$result['errorMessage'] = "Username and password do not match.";
+						$results['errorMessage'] = "Username and password do not match.";
 						require( TEMPLATE_PATH . "/loginForm.php" );
 					}
 				}
@@ -99,88 +103,84 @@
 	}
 
 	function dashboard( $user ){
-		$results = array();
+		global $results;
+		if( !$results )	$results = array();
+		//print_r($results);
+		
 		$results['pageTitle'] = "Home | ".$user->name." | CFI Projects Management Portal";
 		$results['user'] = $user;
 		require( TEMPLATE_PATH . "/dashboard.php" );
 	}
 
 	function register(){
-		$results = array();	
+		global $results;
+		if( !$results )	$results = array();
 		$results['pageTitle'] = "Register | CFI Projects Management Portal";	
 		$user = new User( $_POST );
 	
-		if (!isset($_FILES['file'])) {
+		/*if (!isset($_FILES['file'])) {
 			$fileName = "file";
 			$fileLocation = "upload";
 			$user->avatarLocation = uploadFile( $fileName, $fileLocation );
-		}
-				
+		}*/
+		$user->avatarLocation = "default.png";
+		
 		if( $user->insert() ){
 			$results['successMessage'] = "Registration successful. Please login.";
 			require( TEMPLATE_PATH . "/loginForm.php" );
 		}		
 		else{
 			//echo User::errorInfo();
-			if( User::errorCode() == 23000 )
-				$results['errorMessage'] = "Registration unsuccessful, user already exists. <a href=\"#\">Forgot Password?</a>";
-			else if( User::errorCode() == "ERR_INV_EMAIL" )
-				$results['errorMessage'] = "Registration unsuccessful, invalid email address provided.";
-			else if( User::errorCode() == "ERR_INV_NAME" )
-				$results['errorMessage'] = "Registration unsuccessful, invalid name provided.";
-			else if( User::errorCode() == "ERR_INV_ROLL" )
-				$results['errorMessage'] = "Registration unsuccessful, invalid roll no provided.";
-			else
-				$results['errorMessage'] = "Registration unsuccessful. Please try again.";
-		}	
+			if( User::$errorCode == 23000 )			
+				$results['regErrorMessage'] = "Registration unsuccessful, user already exists. <a href=\"#\">Forgot Password?</a>";
+			else 
+				$results['regErrorMessage'] = "Registration unsuccessful. ".User::$errorMessage;
+		}			
+		require( TEMPLATE_PATH . "/loginForm.php" );
 	}
 
-	function uploadFile( $fileName, $fileLocation ){
+	function uploadFile( $fileName, $fileLocation, $rename = true ){
 
-		if ( !isset($results) ) {
-			$results = array();
-		}
+		global $results;
+		if( !$results )	$results = array();
 		
-		if ($_FILES[$fileName]['error'] === UPLOAD_ERR_OK) 
-		{ 
+		if( $_FILES[$fileName]['error'] === UPLOAD_ERR_OK ){ 
   			$fileData = array();
 			$fileData['fileName'] = $_FILES[$fileName]["name"];
 
-	        if( is_dir( $fileLocation ) == false )
-	        {
-            	mkdir( $fileLocation, 0777 );		// Create directory if it does not exist
+			// Create directory if it does not exist
+	        if( is_dir( $fileLocation ) == false ){
+            	mkdir( $fileLocation, 0777 );		
             }
-            if( is_file( $fileLocation.'/'.$fileData['fileName'] ) == false )
-            {
+			
+            if( is_file( $fileLocation.'/'.$fileData['fileName'] ) == false || $rename == false ){
                 move_uploaded_file( $_FILES[$fileName]["tmp_name"], $fileLocation.'/'.$fileData['fileName'] );
-            }
-            else
-            {    //rename the file if another one exist
+            }			
+			// Rename the file if another one exists
+            else if( $rename ){    				
             	$temp = explode(".", $_FILES[$fileName]["name"]);
-                $fileData['fileName'] = $temp[0].time().".".$temp[1];
+				$len = count($temp); $pre = "";
+				for( $i=0; $i<$len-1; $i++ ) $pre .= $temp[$i];
+                $fileData['fileName'] = $pre."-".time().".".$temp[$len-1];
+				
                 move_uploaded_file( $_FILES[$fileName]["tmp_name"], $fileLocation.'/'.$fileData['fileName'] ); 
             }
 
-            if ($fileName == "icon" or $fileName == "bgimages")
-            {
-            	$fileData['fileName'] = "######";
-            }
-
             $fileData['fileType'] = $_FILES[$fileName]["type"];
-			$fileData['fileLocation'] = $fileLocation.'/'.$fileData['fileName'];    //to add later (the location of the file)
-	        $fileData['uploadedBy'] =   "dharani";             //$_SESSION['username']; kept aside for testing
+			$fileData['fileLocation'] = $fileLocation.'/'.$fileData['fileName'];    
+	        $fileData['uploadedBy'] = $_SESSION['username']; 
 	        
 	        $file = new File( $fileData );
 
-	        if( $file->insert() )
-			{
+	        if( $file->insert() ){
 				$results['successMessage'] = "File upload successful. Thank you";
-				require( TEMPLATE_PATH . "/loginForm.php" );
-				return $file->fileName;
+				$results['uploadedFilename'] = $file->fileName;
+			}
+			else {
+				$results['uploadedFilename'] = null;
 			}
 		}
-		else
-		{ 
+		else { 
 			switch ( $_FILES[$fileName]['error'] ) {
 	            case UPLOAD_ERR_INI_SIZE:
 	                $results['errorMessage'] = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
@@ -192,7 +192,7 @@
 	                $results['errorMessage'] = "The uploaded file was only partially uploaded";
 	                break;
 	            case UPLOAD_ERR_NO_FILE:
-	                $results['errorMessage'] = "No file was uploaded";
+	                $results['errorMessage'] = null;
 	                break;
 	            case UPLOAD_ERR_NO_TMP_DIR:
 	                $results['errorMessage'] = "Missing a temporary folder";
@@ -203,17 +203,19 @@
 	            case UPLOAD_ERR_EXTENSION:
 	                $results['errorMessage'] = "File upload stopped by extension";
 	                break;
-
 	            default:
 	                $results['errorMessage'] = "Unknown upload error";
 	                break;
 	        }
-	        echo $results['errorMessage'];
+			$results['uploadedFilename'] = null;
 		}
+		
+		return $results;
 	}
 
 	function add_activity(){
-		$results = array();	
+		global $results;
+		if( !$results )	$results = array();
 		$results['pageTitle'] = " | CFI Projects Management Portal";
 		$activity = new Activity( $_POST );
 		
@@ -223,6 +225,9 @@
 	}
 	
 	function createMessage() {
+		global $results;
+		if( !$results )	$results = array();
+		
         if( isset( $_POST['createMessage'] ) ){ 
 		
 			// Message to user
@@ -289,111 +294,106 @@
     }
 
 	function update_activity(){
-		$results = array();	
+		global $results;
+		if( !$results )	$results = array();
 		$results['pageTitle'] = " | CFI Projects Management Portal";
 		$results['activity'] = Activity::getById( $_POST['id'] );
+		$results['errorMessage'] = '';
+		$results['successMessage'] = '';
 		$activity = new Activity( $_POST );
-
-		if (isset($_FILES['icon'])) {
-			$fileName1 = "icon";
-			$fileLocation1 = "upload/ActivityImages/icons";
-			$activity->icon_link = uploadFile( $fileName1, $fileLocation1 );
+		
+		$uploadResult = array();
+		$uploadResult = uploadFile( "icon", ICON_UPLOAD_LOCATION ); 
+		$activity->icon_link = $uploadResult['uploadedFilename'];
+		if( $uploadResult['uploadedFilename'] == null ){
+			$results['errorMessage'] .= "<br>".$uploadResult['errorMessage'];
 		}
-
-		if (isset($_FILES['bgImg']))
-		{
-			$fileName2 = "bgImg";
-			$fileLocation2 = "upload/ActivityImages/bgimages";
-			$activity->bg_image_link = uploadFile( $fileName2, $fileLocation2 );	
-		}
-			
-
+		
+		$uploadResult = uploadFile( "bgImg", BGIMG_UPLOAD_LOCATION );
+		$activity->bg_image_link = $uploadResult['uploadedFilename'];		
+		if( $uploadResult['uploadedFilename'] == null ){
+			$results['errorMessage'] .= "<br>".$uploadResult['errorMessage'];
+		}	
+		
 		if( $activity->update() ){
-			$results['successMessage'] = "Added activity successful.";
+			$results['successMessage'] = "Update successful.";
 		}
-
+		
 		$user = User::getByUsername( $_SESSION['username'] );
 		dashboard( $user );
 	}
 
 
 	function updatePassword(){
-		$results = array();	
+		global $results;
+		if( !$results )	$results = array();
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
 
-		if( isset( $_POST['update_password_form'] ) && ( $_POST['password'] == $_POST['password_confirmation'] ) ){
-			$user = new User( $_POST );
-			$user->id = $results['user']->id;
-			//echo $user->id;
+		if( isset( $_POST['update_password_form'] ) ) {
+			if ( $_POST['password'] == $_POST['password_confirmation'] ){
+				$user = new User( $_POST );
+				$user->id = $results['user']->id;
 
-			if( $user->updatePassword() )
-			{
-				$results['successMessage'] = "Update successful.";
-				$results['user'] = $user;
+				if( $user->updatePassword() ){
+					$results['successMessage'] = "Update successful.";
+					$results['user'] = $user;
+				}
+				else{
+					//echo User::errorInfo();
+					if( User::errorCode() == "ERR_INV_PASS" )
+						$results['errorMessage'] = "Update unsuccessful, password should atleast be 6 characters long.";
+					else
+						$results['errorMessage'] = "Update unsuccessful. Please try again.";
+				}
 			}
 			else{
-				//echo User::errorInfo();
-				if( User::errorCode() == "ERR_INV_PASS" )
-					$results['errorMessage'] = "Update unsuccessful, password should atleast be 6 characters long.";
-				else
-					$results['errorMessage'] = "Update unsuccessful. Please try again.";
+				$results['errorMessage'] = "Update unsuccessful. Passwords do not match.";
 			}
 		}
 		else{
-			$results['errorMessage'] = "Update unsuccessful. Passwords do not match.";
+			$results['errorMessage'] = "Invalid method.";
 		}
 		require( TEMPLATE_PATH . "/updateForm.php" );
 	}
+	
 	function updateProfilePic(){
-		$results = array();	
+		global $results;
+		if( !$results )	$results = array();
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
-    /*    $fileName = "bgimgpic";
-		$fileLocation = "update/ActivityImages"; 
-		 uploadFile( $fileName, $fileLocation );
-*/		$user = new User( $_POST );
-		$user->id = $results['user']->id;
-		$fileName = "file";
-		$fileLocation = "update";		
-		$user->avatarLocation = uploadFile( $fileName, $fileLocation );
-		//echo $user->id;
 
-		if( $user->updateProfilePic() )
-		{
-			$results['successMessage'] = "Update successful";
+		$user = new User( $_POST );
+		$user->id = $results['user']->id;
+
+		$ext = pathinfo( $_FILES['file']['name'], PATHINFO_EXTENSION);
+		$_FILES['file']['name'] = $user->id.".".$ext;
+		$user->avatarLocation = uploadFile( 'file', PROFILEPIC_UPLOAD_LOCATION, false );
+
+		if( $user->updateProfilePic( $_FILES['file']['name'] ) ) {
+			$results['successMessage'] = "Update successful.";
 			$results['user'] = $user;
 		}
 		else{
 			//echo User::errorInfo();
 			if( User::errorCode() == "ERR_INV_PASS" )	$results['errorMessage'] = "Update unsuccessful, password should atleast be 6 characters long.";
 			else    $results['errorMessage'] = "Update unsuccessful. Please try again.";
-			require( TEMPLATE_PATH . "/updateForm.php" );
 		}
+		
+		require( TEMPLATE_PATH . "/updateForm.php" );
 	}
 
 	function update(){
-		$results = array();	
+		global $results;
+		if( !$results )	$results = array();
 		$results['pageTitle'] = "Profile Update | CFI Projects Management Portal";	
 		$results['user'] = User::getByUsername( $_SESSION['username'] );
    
-		if( isset( $_POST['update_form'] ) ){
-			$user = new User( $_POST );
+		if( isset( $_POST['updateFormSubmit'] ) ){
+			$user = new User( $_POST ); 
 			$user->id = $results['user']->id;
 			
-		//	echo $user->id;
-		//	print_r($user);
-		//	print_r($user);
-		//	print_r($results['user']);
-/*			$vars = get_object_vars($user);
-	        foreach($vars as $name => $value) {
-	      		if ( !$value ) {
-	      			$results['user']->$name = $value;
-	      		}
-	        }
-*/
-			if( $user->update() )
-			{
+			if( $user->update() ){
 				$results['successMessage'] = "Update successful.";
 				$results['user'] = $user;
 			}
@@ -407,8 +407,8 @@
 					$results['errorMessage'] = "Update unsuccessful. Please try again.";
 			}
 		}
-		require( TEMPLATE_PATH . "/updateForm.php" );
-		
+
+		require( TEMPLATE_PATH . "/updateForm.php" );		
 	}
 	
 	/*
@@ -429,9 +429,9 @@
 
 
 	function addMember(){
-//		$results = array();
-//		echo "yayy! this came until addMember function in index.php";
+		global $results;
 		global $username;
+		if( !$results )	$results = array();
 		$data = array();
 		$user = User::getByUsername( $_POST['add_username'] );
 		$activity = Activity::getById( (int) $_POST['activityId'] );
@@ -467,9 +467,8 @@
 			mkdir( $docLocation, 0777 );		
 		}
 		
-		if( !isset($results) ) {
-			$results = array();
-		}		
+		global $results;
+		if( !$results )	$results = array();
 		
 		if ($_FILES[$docName]['error'] === UPLOAD_ERR_OK) 
 		{ 
@@ -519,7 +518,7 @@
 	                $results['errorMessage'] = "The uploaded doc was only partially uploaded";
 	                break;
 	            case UPLOAD_ERR_NO_FILE:
-	                $results['errorMessage'] = "No file was uploaded";
+	                $results['errorMessage'] = null;
 	                break;
 	            case UPLOAD_ERR_NO_TMP_DIR:
 	                $results['errorMessage'] = "Missing a temporary folder";
@@ -542,6 +541,9 @@
 	}
 	
 	function deleteDoc( $docId, $userId, $activityId ){
+		global $results;
+		if( !$results )	$results = array();
+		
 		if( !isset($results) ) {
 			$results = array();
 		}			

@@ -58,13 +58,12 @@
 									</ul>
 								<?php } else { ?>
 								<ul class="dropdown-menu" style="width:350px">  
-                                  	<!--<img style="position:absolute; margin-left:230px; height:100px ;size:auto;" src="../Content/Images/logo.png" /> </center>-->
-                                    <img src="./upload/<?php echo $results['user']->avatarLocation; ?>" width="100" height="100"></center>
-                                   <li>
+                                    <img class="headerPPic" src="<?php echo PROFILEPIC_UPLOAD_LOCATION."/".$results['user']->avatarLocation; ?>">
+                                    <li>
 										<a href="#"><?php echo $results['user']->name; ?></a>
 									</li> 
 									<li>
-										<a href="#"><?php echo $results['user']->email; ?></a>
+										<a href="#" style="padding-left: 30px; font-size: 12px;"><?php echo $results['user']->email; ?></a>
 									</li>  
 									<li>
 										<a href="javascript:update_content('updateform');">Settings</a>
@@ -96,33 +95,26 @@
 				</div>
 -->
 
-
-
-
-<script>
-function update_content(str)
-{
-if (str.length==0)
-  { 
-  document.getElementById("content").innerHTML="";
-  return;
-  }
-var xmlhttp=new XMLHttpRequest();
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("content").innerHTML=xmlhttp.responseText;
-	var scripts = document.getElementById("content").getElementsByTagName('script');
-	eval(scripts[0].text);	
-    }
-  }
-if(str == "Clubs" || str == "Competitions" || str == "Projects") {
-xmlhttp.open("GET","templates/include/membership.php?type="+str,true); }
-else
-{
-xmlhttp.open("GET","templates/"+str+".php",true);
-}
-xmlhttp.send();
-}
+<script type="text/javascript">
+	function update_content(str){
+		if (str.length==0){ 
+			document.getElementById("content").innerHTML="";
+			return;
+		}
+		var xmlhttp=new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				document.getElementById("content").innerHTML=xmlhttp.responseText;
+				var scripts = document.getElementById("content").getElementsByTagName('script');
+				eval(scripts[0].text);	
+			}
+		}
+		if (str == "Clubs" || str == "Competitions" || str == "Projects") {
+			xmlhttp.open("GET","templates/include/membership.php?type="+str,true); 
+		}
+		else {
+			xmlhttp.open("GET","templates/"+str+".php?ajax=true",true);
+		}
+		xmlhttp.send();
+	}
 </script>

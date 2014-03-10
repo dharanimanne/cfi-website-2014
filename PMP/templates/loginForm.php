@@ -35,6 +35,13 @@ if(isset($_POST['Submit']))
 					</tr>				 
 				</table>
 			</form>
+			<div id="returnMessage">
+				<?php if( isset( $results['errorMessage'] ) && strlen( $results['errorMessage'] ) > 0 ) { ?>
+					<div class="alert alert-error"><?php echo $results['errorMessage']; ?></div>
+				<?php } if( isset( $results['successMessage'] ) && strlen( $results['successMessage'] ) > 0 ) { ?>
+					<div class="alert alert-success"><?php echo $results['successMessage']; ?></div>
+				<?php } ?>
+			</div>
 		</div>
 		<div id="registerDiv">
 			<div id="whiteBgDiv"></div>
@@ -50,7 +57,7 @@ if(isset($_POST['Submit']))
 							Email
 						</td>
 						<td>
-							<input type="text" name="email" placeholder="Email as Username" />
+							<input type="text" name="email" placeholder="Email as Username" value="<?php if( isset( $_POST['email'] ) ) echo $_POST['email']; ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -58,7 +65,7 @@ if(isset($_POST['Submit']))
 							Name
 						</td>
 						<td>
-							<input type="text" name="name" placeholder="Name" />
+							<input type="text" name="name" placeholder="Name" value="<?php if( isset( $_POST['name'] ) ) echo $_POST['name']; ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -66,7 +73,7 @@ if(isset($_POST['Submit']))
 							Roll No.
 						</td>
 						<td>
-							<input type="text" name="rollNo" placeholder="Roll No." />
+							<input type="text" name="rollNo" placeholder="Roll No." value="<?php if( isset( $_POST['rollNo'] ) ) echo $_POST['rollNo']; ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -74,7 +81,7 @@ if(isset($_POST['Submit']))
 							Room
 						</td>
 						<td>
-							<input type="text" name="room" placeholder="Room No." />
+							<input type="text" name="room" placeholder="Room No." value="<?php if( isset( $_POST['room'] ) ) echo $_POST['room']; ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -83,25 +90,25 @@ if(isset($_POST['Submit']))
 						</td>
 						<td>
 							<select name="hostel">
-								<option value="Select" selected>Select</option>
-								<option value="Alakananda">Alakananda</option>
-								<option value="Brahmaputra">Brahmaputra</option>
-								<option value="Cauvery">Cauvery</option>
-								<option value="Ganga">Ganga</option>
-								<option value="Godavari">Godavari</option>
-								<option value="Jamuna">Jamuna</option>
-								<option value="Krishna">Krishna</option>
-								<option value="Mahanadi">Mahanadi</option>
-								<option value="Mandakini">Mandakini</option>
-								<option value="Narmada">Narmada</option>
-								<option value="Pampa">Pampa</option>
-								<option value="Saraswathi">Saraswathi</option>
-								<option value="Sarayu">Sarayu</option>
-								<option value="Sarayu Ext.">Sarayu Ext.</option>
-								<option value="Sharavathi">Sharavathi</option>
-								<option value="Sindhu">Sindhu</option>
-								<option value="Tamiraparani">Tamiraparani</option>
-								<option value="Tapti">Tapti</option>
+								<option value="-1" <?php if( !isset( $_POST['hostel'] ) ) echo "selected"; else if( $_POST['hostel'] == '-1' ) echo "selected";  ?>>Select</option>
+								<option value="Alakananda" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Alakananda' ) echo "selected"; } ?> >Alakananda</option>
+								<option value="Brahmaputra" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Brahmaputra' ) echo "selected"; } ?> >Brahmaputra</option>
+								<option value="Cauvery" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Cauvery' ) echo "selected"; } ?> >Cauvery</option>
+								<option value="Ganga" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Ganga' ) echo "selected"; } ?> >Ganga</option>
+								<option value="Godavari" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Godavari' ) echo "selected"; } ?> >Godavari</option>
+								<option value="Jamuna" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Jamuna' ) echo "selected"; } ?> >Jamuna</option>
+								<option value="Krishna" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Krishna' ) echo "selected"; } ?> >Krishna</option>
+								<option value="Mahanadi" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Mahanadi' ) echo "selected"; } ?> >Mahanadi</option>
+								<option value="Mandakini" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Mandakini' ) echo "selected"; } ?> >Mandakini</option>
+								<option value="Narmada" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Narmada' ) echo "selected"; } ?> >Narmada</option>
+								<option value="Pampa" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Pampa' ) echo "selected"; } ?> >Pampa</option>
+								<option value="Saraswathi" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Saraswathi' ) echo "selected"; } ?> >Saraswathi</option>
+								<option value="Sarayu" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Sarayu' ) echo "selected"; } ?> >Sarayu</option>
+								<option value="Sarayu Ext." <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Sarayu Ext.' ) echo "selected"; } ?> >Sarayu Ext.</option>
+								<option value="Sharavathi" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Sharavathi' ) echo "selected"; } ?> >Sharavathi</option>
+								<option value="Sindhu" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Sindhu' ) echo "selected"; } ?> >Sindhu</option>
+								<option value="Tamiraparani" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Tamiraparani' ) echo "selected"; } ?> >Tamiraparani</option>
+								<option value="Tapti" <?php if( isset( $_POST['hostel'] ) ){ if( $_POST['hostel'] == 'Tapti' ) echo "selected"; } ?> >Tapti</option>
 							</select>
 						</td>
 					</tr>
@@ -110,7 +117,7 @@ if(isset($_POST['Submit']))
 							Phone
 						</td>
 						<td>
-							<input type="text" name="phone" placeholder="Contact No." />
+							<input type="text" name="phone" placeholder="Contact No." value="<?php if( isset( $_POST['phone'] ) ) echo $_POST['phone']; ?>" />
 						</td>
 					</tr>
 					<tr>
@@ -121,24 +128,30 @@ if(isset($_POST['Submit']))
 							<input type="password" name="password" placeholder="Choose Password" />
 						</td>
 					</tr>
-					<tr>
+					<!--<tr>
 						<td>
 							Profile Picture
 						</td>
 						<td>
 							<input type="file" name="file" />
 						</td>
-					</tr>
+					</tr>-->
 					<tr>
 						<td colspan="2">
 							<input type="submit" name="register_form" value="Register" />
 						</td>
 					</tr>
-				</table>
-				 
+				</table>				 
 			</form>
+			<div id="returnMessage">
+				<?php if( isset( $results['regErrorMessage'] ) && strlen( $results['regErrorMessage'] ) > 0 ) { ?>
+					<center><div class="alert alert-error" style="width:300px;" ><?php echo $results['regErrorMessage']; ?></div></center>
+				<?php } ?>
+			</div>
 		</div>
-		<script>$('#registerDiv').fadeOut(0);</script>
+		<?php if( !isset( $results['regErrorMessage'] ) ) { ?>
+			<script>$('#registerDiv').fadeOut(0);</script>
+		<?php } ?>
 		<!--<div id="fileUploadDiv">
 			Want to upload file? Please do so below. <br>
 	    	<form name="fileUploadForm" action="index.php?action=uploadFile" method="POST" enctype="multipart/form-data">
@@ -146,18 +159,6 @@ if(isset($_POST['Submit']))
 				<input type="submit" name="uploadFile" value="submit" /> 
 			</form>
 		</div>-->
-		<div id="messageDiv">
-			<?php if( isset( $results['successMessage'] ) ) { ?>
-			<div class="message success">
-				<?php echo $results['successMessage']; ?> 
-			</div>
-			<?php } 
-				if( isset( $results['errorMessage'] ) ) { ?>
-				<div class="message error">
-					<?php echo $results['errorMessage']; ?> 
-				</div>
-			<?php } ?>			
-		</div>
 	</div>
 <?php include("include/footer.php"); ?>
 
