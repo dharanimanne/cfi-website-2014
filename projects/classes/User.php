@@ -140,9 +140,9 @@
 			$conn = null;
 			
 			if( !$result ){
-				self::$errorMessage = "User::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
+				$err = $st->errorInfo();
+				self::$errorMessage = "User::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$err[2];
 				self::$errorCode = $st->errorCode();
-//				echo $errorMessage;
 				return false;
 			}
 			else{		

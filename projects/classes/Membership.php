@@ -68,7 +68,8 @@
 			echo $this->memberSince;
 	*/
 			if( !$result ){
-				self::$errorMessage = "Membership::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$st->errorInfo()[2];
+				$err = $st->errorInfo();
+				self::$errorMessage = "Membership::insert: Insertion Failed, PDO::errorInfo(): ".$st->errorCode().": ".$err[2];
 				self::$errorCode = $st->errorCode();
 				return false;
 			}
