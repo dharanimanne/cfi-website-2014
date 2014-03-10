@@ -148,5 +148,7 @@ input[type=text], input[type=password], select{
 		</div>
 		</div>
 
-<?php include("footer.php"); ?>		
+<?php include("footer.php");
+print_r($RESULTS);
+ ?>		
 		
