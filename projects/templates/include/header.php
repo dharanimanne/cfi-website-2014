@@ -66,7 +66,7 @@
 										<a href="#" style="padding-left: 30px; font-size: 12px;"><?php echo $results['user']->email; ?></a>
 									</li>  
 									<li>
-										<a href="javascript:update_content('updateform');">Settings</a>
+										<a href="javascript:update_content('updateForm');">Settings</a>
 									</li>  
 									<li>
 										<a href="index.php?action=logout">Logout</a>
