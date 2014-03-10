@@ -12,7 +12,7 @@ $RESULTS = array();
 	border: solid 1px #E4DDDD;
 }
 input[type=text], input[type=password], select{
-	padding: 15px;
+	
 	border-radius: 7px;
 	border-color: rgb(240, 231, 234);
 	font-family: Arial;
@@ -25,7 +25,7 @@ input[type=text], input[type=password], select{
 
 <script>
 	$(document).ready(function(){
-		$('').on('change',function(){                                         					// Add the id of the div here...
+		$('.preferences').on('change',function(){                                         					// Add the id of the div here...
 			$con=mysqli_connect(DB_USERNAME, DB_PASSWORD, DB_DSN); 
 			// Check connection
 			if (mysqli_connect_errno())
@@ -33,7 +33,7 @@ input[type=text], input[type=password], select{
 			  echo "Failed to connect to MySQL: " . mysqli_connect_error();
 			  }
 			else {
-				$category = ;																	//category can be obtained from the value in the form field
+				$category = document.getElementById('cat1').value;																	//category can be obtained from the value in the form field
 				$sql = "SELECT title FROM summerprojects WHERE category='".$category."'";
 				$RESULTS = mysqli_query($con,$sql);
 
@@ -101,7 +101,7 @@ input[type=text], input[type=password], select{
 							Preference-1 Category
 						</td>
 						<td>
-							<select name="category"  class="preferences" >
+							<select name="category"  class="preferences" id="cat1"  >
 								<option value="Select" selected>Select</option>
 								<option value="creative Ideas">Creative Ideas</option>
 								<option value="Socially Relevant Projects">Socially Relevant Projects</option>
