@@ -125,7 +125,10 @@
 				
 		if( $user->insert() ){
 			$results['successMessage'] = "Registration successful. Please login.";
-			require( TEMPLATE_PATH . "/loginForm.php" );
+			//require( TEMPLATE_PATH . "/loginForm.php" );
+			$_SESSION['username'] = $username;
+			$_SESSION['userId'] = $user->id;
+			dashboard( $user );
 		}		
 		else{
 			//echo User::errorInfo();
