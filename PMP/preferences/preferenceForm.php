@@ -55,7 +55,7 @@ input[type=text], input[type=password], select{
      <div id="content" style="margin-left:0px;background:none;"><br><br><br>
 		<div id="preferenceDiv">
 			<div id="whiteBgDiv"></div>
-			<form name="preferenceForm" action="action=projectPreference" method="POST">
+			<form name="preferenceForm" action="projectPreference.php" method="POST">
 				<table>
 				    <tr>
 						<td>
@@ -83,18 +83,18 @@ input[type=text], input[type=password], select{
 							</select>
 						</td>
 					</tr>	
-                   <tr>
+                 	  	 <tr>
 						<td>
-							Preference-2 Category
+							Preference-1 Category
 						</td>
 						<td>
 							<select name="category"  class="preferences" id="cat1" onchange="showProjects(this.value)">
 								<option value="Select" selected>Select</option>
 								<option value="Creative Ideas">Creative Ideas</option>
 								<option value="Socially Relevant Projects">Socially Relevant Projects</option>
-								<option value="Electronics Android">Electronics & Android Application</option>
+								<option value="Electronics & Android">Electronics & Android Application</option>
 								<option value="Projects from CFI">Projects by CFI</option>
-								<option value="Robotics Automotive">Robotics/Automotive</option>
+								<option value="Robotics & Automotive">Robotics/Automotive</option>
 				                <option value="Image Processing">Computer Vision/Image Processing</option>
 								
 							</select>
@@ -102,13 +102,18 @@ input[type=text], input[type=password], select{
 					</tr>
 							     <tr>
 						<td>
-							Preference-2 
+							Preference-1 
 						</td>
 						<td>
-							<select name="preference2" id="drop"  >
+							<select name="preference1" id="drop"  >
 							</select>
 						</td>
-					</tr>	  					
+					</tr>					
+					<tr>
+						<td colspan="2">
+							<input type="submit" name="preferance_form" value="submit" />
+						</td>
+					</tr>
 				</table>
 			</form>
 		</div>
