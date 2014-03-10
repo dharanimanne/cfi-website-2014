@@ -13,7 +13,7 @@
 					<li class="hasSubmenu">
 						<a data-toggle="collapse" class="glyphicons group" href="#menu_account"><span>My Account</span></a>
 						<ul class="menuCollapse" id="menu_account">
-							<li class=""><a href="javascript:update_content('updateform');"><span>Edit account</span></a></li>
+							<li class=""><a href="javascript:update_content('updateForm');"><span>Edit account</span></a></li>
 							<li class=""><a href="index.php?action=logout"><span>Logout</span></a></li>
 						</ul>
 					</li>
