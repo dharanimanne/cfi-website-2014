@@ -50,6 +50,7 @@ td{
 	box-shadow: 10px 10px 25px #EEE8E8;
 	padding: 25px;
 	border: solid 1px #E4DDDD;
+	z-index:1;
 }
 #registerDiv{
 	float:right;
@@ -58,6 +59,7 @@ td{
 	box-shadow: 10px 10px 25px #EEE8E8;
 	padding: 25px;
 	border: solid 1px #E4DDDD;
+	z-index:1;
 }
 #bgDiv {
   background: url('../images/bg1.jpg');
