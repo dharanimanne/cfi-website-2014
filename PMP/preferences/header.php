@@ -1,4 +1,4 @@
-<?php define( "MEDIA_URL", "/cfi_exchange/PMP/media/" ); ?>
+<?php define( "MEDIA_URL", "/cfi-website-2014/PMP/media/" ); ?>
 <!DOCTYPE html>
 <!--[if IE 8]>
 <html xmlns="http://www.w3.org/1999/xhtml" class=""  lang="en-US">
