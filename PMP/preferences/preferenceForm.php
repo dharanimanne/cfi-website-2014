@@ -20,6 +20,26 @@ input[type=text], input[type=password], select{
 	width:255px;
 }
 </style>
+
+<script>
+	$(document).ready(function(){
+		$('').on('change',function(){                                         					// Add the id of the div here...
+			$con=mysqli_connect(DB_USERNAME, DB_PASSWORD, DB_DSN); 
+			// Check connection
+			if (mysqli_connect_errno())
+			  {
+			  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+			  }
+			else {
+				$category = ;																	//category can be obtained from the value in the form field
+				$sql = "SELECT title FROM summerprojects WHERE category='".$category."'";
+				$result = mysqli_query($con,$sql);
+
+			mysqli_close($con);
+			}
+		});
+	});
+</script>
 	<div id="bgDiv"></div>
      <div id="content" style="margin-left:0px;background:none;"><br><br><br>
 		<div id="preferenceDiv">
