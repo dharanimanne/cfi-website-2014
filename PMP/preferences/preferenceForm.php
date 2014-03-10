@@ -1,5 +1,5 @@
 <?php include("header.php"); 
-$results = array();
+
 ?>
 
 <style>
@@ -54,9 +54,8 @@ input[type=text], input[type=password], select{
 	<div id="bgDiv"></div>
      <div id="content" style="margin-left:0px;background:none;"><br><br><br>
 		<div id="preferenceDiv">
-			<div id="test">akshay</div>
 			<div id="whiteBgDiv"></div>
-			<form name="preferenceForm" action="/cfi_exchange/PMP/index.php?action=projectPreference" method="POST">
+			<form name="preferenceForm" action="action=projectPreference" method="POST">
 				<table>
 				    <tr>
 						<td>
@@ -65,31 +64,56 @@ input[type=text], input[type=password], select{
 						<td>
 							<select name="category"  class="preferences" id="cat1" onchange="showProjects(this.value)">
 								<option value="Select" selected>Select</option>
-								<option value="creative Ideas">Creative Ideas</option>
+								<option value="Creative Ideas">Creative Ideas</option>
 								<option value="Socially Relevant Projects">Socially Relevant Projects</option>
-								<option value="Electronics/Android Application">Electronics/Android Application</option>
-								<option value="Projects by CFI">Projects by CFI</option>
-								<option value="Robotics/Automotive">Robotics/Automotive</option>
-				                <option value="Computer Vision/Image Processing">Computer Vision/Image Processing</option>
+								<option value="Electronics & Android">Electronics & Android Application</option>
+								<option value="Projects from CFI">Projects by CFI</option>
+								<option value="Robotics & Automotive">Robotics/Automotive</option>
+				                <option value="Image Processing">Computer Vision/Image Processing</option>
 								
 							</select>
 						</td>
 					</tr>
 							     <tr>
 						<td>
-							Preference-1 Category
+							Preference-1 
 						</td>
 						<td>
-							<select name="dropdown" id="drop"  >
+							<select name="preference1" id="drop"  >
 							</select>
 						</td>
-					</tr>		 
+					</tr>	
+                   <tr>
+						<td>
+							Preference-2 Category
+						</td>
+						<td>
+							<select name="category"  class="preferences" id="cat1" onchange="showProjects(this.value)">
+								<option value="Select" selected>Select</option>
+								<option value="Creative Ideas">Creative Ideas</option>
+								<option value="Socially Relevant Projects">Socially Relevant Projects</option>
+								<option value="Electronics Android">Electronics & Android Application</option>
+								<option value="Projects from CFI">Projects by CFI</option>
+								<option value="Robotics Automotive">Robotics/Automotive</option>
+				                <option value="Image Processing">Computer Vision/Image Processing</option>
+								
+							</select>
+						</td>
+					</tr>
+							     <tr>
+						<td>
+							Preference-2 
+						</td>
+						<td>
+							<select name="preference2" id="drop"  >
+							</select>
+						</td>
+					</tr>	  					
 				</table>
 			</form>
 		</div>
 		</div>
 
 <?php include("footer.php");
-print_r($results);
  ?>		
 		
