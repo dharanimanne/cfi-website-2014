@@ -24,11 +24,11 @@ input[type=text], input[type=password], select{
 </style>
 
 <script>
-	function showProjects(str)
+	function showProjects(str,$drop)
 		{
 		if (str=="")
 		  {
-		  document.getElementById("drop").innerHTML="";
+		  document.getElementById($drop).innerHTML="";
 		  return;
 		  } 
 		if (window.XMLHttpRequest)
@@ -43,7 +43,7 @@ input[type=text], input[type=password], select{
 		  {
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		    {
-		    document.getElementById("drop").innerHTML=xmlhttp.responseText;
+		    document.getElementById($drop).innerHTML=xmlhttp.responseText;
 		    }
 		  }
 		xmlhttp.open("GET","getProjects.php?category="+str,true);
@@ -54,6 +54,8 @@ input[type=text], input[type=password], select{
 	<div id="bgDiv"></div>
      <div id="content" style="margin-left:0px;background:none;"><br><br><br>
 		<div id="preferenceDiv">
+		<div id="test"><?php
+	echo date("Y-m-d H:i:s");?></div>
 			<div id="whiteBgDiv"></div>
 			<form name="preferenceForm" action="preferences.php" method="POST">
 				<table>
@@ -62,13 +64,13 @@ input[type=text], input[type=password], select{
 							Preference-1 Category
 						</td>
 						<td>
-							<select name="category"  class="preferences" id="cat1" onchange="showProjects(this.value)">
+							<select name="category"  class="preferences" id="cat1" onchange="showProjects(this.value,'drop1')">
 								<option value="Select" selected>Select</option>
 								<option value="Creative Ideas">Creative Ideas</option>
 								<option value="Socially Relevant Projects">Socially Relevant Projects</option>
-								<option value="Electronics & Android">Electronics & Android Application</option>
+								<option value="Electronics Android">Electronics & Android Application</option>
 								<option value="Projects from CFI">Projects by CFI</option>
-								<option value="Robotics & Automotive">Robotics/Automotive</option>
+								<option value="Robotics Automotive">Robotics/Automotive</option>
 				                <option value="Image Processing">Computer Vision/Image Processing</option>
 								
 							</select>
@@ -79,7 +81,7 @@ input[type=text], input[type=password], select{
 							Preference-1 
 						</td>
 						<td>
-							<select name="preference1" id="drop"  >
+							<select name="preference1" id="drop1"  >
 							</select>
 						</td>
 					</tr>	
@@ -88,13 +90,13 @@ input[type=text], input[type=password], select{
 							Preference-1 Category
 						</td>
 						<td>
-							<select name="category"  class="preferences" id="cat1" onchange="showProjects(this.value)">
+							<select name="category"  class="preferences" id="cat1" onchange="showProjects(this.value,'drop2')">
 								<option value="Select" selected>Select</option>
 								<option value="Creative Ideas">Creative Ideas</option>
 								<option value="Socially Relevant Projects">Socially Relevant Projects</option>
-								<option value="Electronics & Android">Electronics & Android Application</option>
+								<option value="Electronics Android">Electronics & Android Application</option>
 								<option value="Projects from CFI">Projects by CFI</option>
-								<option value="Robotics & Automotive">Robotics/Automotive</option>
+								<option value="Robotics Automotive">Robotics/Automotive</option>
 				                <option value="Image Processing">Computer Vision/Image Processing</option>
 								
 							</select>
@@ -105,7 +107,7 @@ input[type=text], input[type=password], select{
 							Preference-2
 						</td>
 						<td>
-							<select name="preference2" id="drop"  >
+							<select name="preference2" id="drop2"  >
 							</select>
 						</td>
 					</tr>					
