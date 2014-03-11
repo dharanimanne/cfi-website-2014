@@ -24,11 +24,12 @@ input[type=text], input[type=password], select{
 </style>
 
 <script>
-	function showProjects(str,$drop)
+	function showProjects(str,divId)
 		{
+	//	document.getElementById('test').innerHTML=divId;
 		if (str=="")
 		  {
-		  document.getElementById($drop).innerHTML="";
+		  document.getElementById(divId).innerHTML="";
 		  return;
 		  } 
 		if (window.XMLHttpRequest)
@@ -43,7 +44,7 @@ input[type=text], input[type=password], select{
 		  {
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		    {
-		    document.getElementById($drop).innerHTML=xmlhttp.responseText;
+		    document.getElementById(divId).innerHTML=xmlhttp.responseText;
 		    }
 		  }
 		xmlhttp.open("GET","getProjects.php?category="+str,true);
@@ -52,7 +53,6 @@ input[type=text], input[type=password], select{
 	
 </script>
 	<div id="bgDiv"></div>
-	
      <div id="content" style="margin-left:0px;background:none;"><br><br><br>
 		<div id="preferenceDiv">
 		<div>
@@ -67,9 +67,10 @@ input[type=text], input[type=password], select{
 	?>
 	</div>
 			<div id="whiteBgDiv"></div>
-			<form name="preferenceForm" action="preferences.php" method="POST">
+	<!--		<div id="test">akshay</div>
+	-->		<form name="preferenceForm" action="preferences.php" method="POST">
 				<table>
-				<tr>
+		<!--		<tr>
 						<td>
 							Username
 						</td>
@@ -125,7 +126,7 @@ input[type=text], input[type=password], select{
 							<input type="text" name="aboutMe" placeholder="...." />
 						</td>
 					</tr>
-				    <tr>
+			-->	    <tr>
 						<td>
 							Preference-1 Category
 						</td>
@@ -156,7 +157,7 @@ input[type=text], input[type=password], select{
 							Preference-2 Category
 						</td>
 						<td>
-							<select name="category"  class="preferences" id="cat1" onchange="showProjects(this.value,'drop2')">
+							<select name="category"  class="preferences" id="cat2" onchange="showProjects(this.value,'drop2')">
 								<option value="Select" selected>Select</option>
 								<option value="Creative Ideas">Creative Ideas</option>
 								<option value="Socially Relevant Projects">Socially Relevant Projects</option>

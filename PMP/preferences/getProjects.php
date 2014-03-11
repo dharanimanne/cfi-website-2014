@@ -12,7 +12,7 @@ $sql="SELECT * FROM summerprojects WHERE category = '".$category."'";
 
 $result = mysqli_query($con,$sql);
 
-echo $sql;
+//echo $sql;
 
 while($row = mysqli_fetch_array($result))
   {
