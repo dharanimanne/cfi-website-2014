@@ -47,38 +47,7 @@
 							</ul>
                             
 							<ul class="nav pull-right">
-							  <li class="dropdown" >  
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Profile <b class="caret" style="margin-top:0px;"></b></a>  
-								<?php
-									if( !isset( $_SESSION['username'] ) ) {
-								?>
-									<ul class="dropdown-menu">  
-										<li>
-											<a href="#">Please Login</a>
-										</li>
-									</ul>
-								<?php } else { ?>
-								<ul class="dropdown-menu" style="width:350px">  
-                                  	<!--<img style="position:absolute; margin-left:230px; height:100px ;size:auto;" src="../Content/Images/logo.png" /> </center>-->
-                                    <img src="<?php echo $results['user']->avatarLocation; ?>" width="100" height="100"></center>
-                            <!--       <li>
-                                   		<?php print_r( $results['user']->avatarLocation ); ?>
-                                   </li>
-                            -->       <li>
-										<a href="#"><?php echo $results['user']->name; ?></a>
-									</li> 
-									<li>
-										<a href="#"><?php echo $results['user']->email; ?></a>
-									</li>  
-									<li>
-										<a href="javascript:update_content('updateform');">Settings</a>
-									</li>  
-									<li>
-										<a href="index.php?action=logout">Logout</a>
-									</li>
-                               </ul> 
-								<?php } ?>
-							  </li>  
+							   
 							</ul> 
 						</div>
 					</div>

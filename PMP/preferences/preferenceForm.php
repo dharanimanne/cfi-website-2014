@@ -1,5 +1,5 @@
 <?php include("header.php"); 
-
+session_start();
 ?>
 
 <style>
@@ -52,13 +52,79 @@ input[type=text], input[type=password], select{
 	
 </script>
 	<div id="bgDiv"></div>
+	
      <div id="content" style="margin-left:0px;background:none;"><br><br><br>
 		<div id="preferenceDiv">
-		<div id="test"><?php
-	echo date("Y-m-d H:i:s");?></div>
+		<div>
+
+	<?php
+		
+	if(isset($_SESSION['status']))
+	{
+	echo $_SESSION['status'];
+	
+	}
+	?>
+	</div>
 			<div id="whiteBgDiv"></div>
 			<form name="preferenceForm" action="preferences.php" method="POST">
 				<table>
+				<tr>
+						<td>
+							Username
+						</td>
+						<td>
+							<input type="text" name="name" placeholder="Username" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Roll No
+						</td>
+						<td>
+							<input type="text" name="rollNo" placeholder="Roll No" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Hostel
+						</td>
+						<td>
+							<input type="text" name="hostel" placeholder="Hostel" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+					        Room
+						</td>
+						<td>
+							<input type="text" name="room" placeholder="Room no" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Phone Number
+						</td>
+						<td>
+							<input type="text" name="phone" placeholder="Phone Number" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							E-mail
+						</td>
+						<td>
+							<input type="text" name="email" placeholder="Username" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Tell about yourself
+						</td>
+						<td>
+							<input type="text" name="aboutMe" placeholder="...." />
+						</td>
+					</tr>
 				    <tr>
 						<td>
 							Preference-1 Category
@@ -87,7 +153,7 @@ input[type=text], input[type=password], select{
 					</tr>	
                  	  	 <tr>
 						<td>
-							Preference-1 Category
+							Preference-2 Category
 						</td>
 						<td>
 							<select name="category"  class="preferences" id="cat1" onchange="showProjects(this.value,'drop2')">
@@ -113,7 +179,14 @@ input[type=text], input[type=password], select{
 					</tr>					
 					<tr>
 						<td colspan="2">
-							<input type="submit" name="preferance_form" value="submit" />
+							<input type="submit" name="preferance_form" value="<?php if(!isset($_SESSION['status']))
+                                  {
+                                    echo "submit";
+									}
+                                  else
+                                   {
+                                    echo "update";                                       
+									   }								   ?>" />
 						</td>
 					</tr>
 				</table>
