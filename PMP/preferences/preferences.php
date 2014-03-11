@@ -58,7 +58,7 @@ session_start();
 
 		mysqli_select_db($con,"cfi-2014");
 
-		$uploadedBy = "dharani";								// set aside for testing later.... $_SESSION['username'];
+		$uploadedBy = "dharani";								// set aside for testing... @Vineet : replace with  $_SESSION['username'];
 		$preference1 = $_POST['preference1'];
 		$preference2 = $_POST['preference2'];
 		$uploadedOn = date("Y-m-d H:i:s");
@@ -80,26 +80,9 @@ session_start();
 			echo "Sorry, either the preferences were not properly filled or you have already filled your preferences.";
 		}
     	mysqli_close($con);
-//    	header('location:preferenceForm.php');
+	   	header('location:preferenceForm.php');
 
     }
 	
 
-?>
-
-
-	
-	<?php /*	$con=mysqli_connect(DB_USERNAME, DB_PASSWORD, DB_DSN); 
-		// Check connection
-		if (mysqli_connect_errno())
-		  {
-		  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-		  }
-		else {
-		
-			$sql = "SELECT title FROM summerprojects WHERE category='".$category."'";
-			$result = mysqli_query($con,$sql);
-
-		mysqli_close($con);
-		}*/
 ?>
