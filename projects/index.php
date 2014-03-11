@@ -126,8 +126,12 @@
 		$user->avatarLocation = "default.png";
 		
 		if( $user->insert() ){
-			$results['successMessage'] = "Registration successful. Please login.";
-			require( TEMPLATE_PATH . "/loginForm.php" );
+			$results['successMessage'] = "Registration successful. Please your preferences.";
+			$_SESSION['username'] = $_POST['email'];
+			$user = User::getByUsername( trim( $_SESSION['username'] ) );
+			dashboard( $user );
+		
+			//require( TEMPLATE_PATH . "/loginForm.php" );
 		}		
 		else{
 			//echo User::errorInfo();

@@ -18,7 +18,7 @@
 		<div class="widget widget-2 widget-tabs widget-tabs-2">
 			<div class="widget-head">
 				<ul>
-					<li class="active"><a class="glyphicons cardio" href="#welcome-tab" data-toggle="tab">Welcome</a></li>
+					<li class="active"><a class="glyphicons cardio" href="#welcome-tab" data-toggle="tab">Register Preferences</a></li>
 					<li><a class="glyphicons cardio" href="#activity-tab" data-toggle="tab">Your Activity</a></li>
 				</ul>
 			</div>
