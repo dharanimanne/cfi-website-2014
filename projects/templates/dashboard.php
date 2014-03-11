@@ -18,11 +18,18 @@
 		<div class="widget widget-2 widget-tabs widget-tabs-2">
 			<div class="widget-head">
 				<ul>
-					<li class="active"><a class="glyphicons cardio" href="#welcome-tab" data-toggle="tab">Register Preferences</a></li>
+					<li class="active"><a class="glyphicons cardio" href="#preferences-tab" data-toggle="tab">Register Preferences</a></li>
 					<li><a class="glyphicons cardio" href="#activity-tab" data-toggle="tab">Your Activity</a></li>
 				</ul>
 			</div>
-			<br>
+			<div class="tab-content">
+				<div class="tab-pane in active" id="preferences-tab">
+					<?php require("temp/preferenceForm.php"); ?>
+				</div>
+				<div class="tab-pane fade" id="activity-tab" style="margin:5px; padding:10px; text-align:center;" >
+					No activity to display!
+				</div>
+			</div>
 		</div>	
 		<div id="returnMessage">
 			<?php if( isset( $results['errorMessage'] ) && strlen( $results['errorMessage'] ) > 0 ) { ?>

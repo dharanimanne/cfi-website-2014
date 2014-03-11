@@ -51,6 +51,9 @@
 			if( isset( $_GET['docId'] ) && isset( $_GET['activityId'] ) )
 				deleteDoc($_GET['docId'], $_SESSION['userId'], $_GET['activityId'] );
 			break;
+		case 'addPreferences';
+			addPreferences();
+			break;
 		default:
 			login();
 	}
@@ -547,10 +550,7 @@
 	function deleteDoc( $docId, $userId, $activityId ){
 		global $results;
 		if( !$results )	$results = array();
-		
-		if( !isset($results) ) {
-			$results = array();
-		}			
+	
 		// Check membership for activity
 		if( Membership::check( $userId, $activityId ) ){
 			// Check document id and activity id
@@ -563,6 +563,43 @@
 			$results['errorMessage'] = "Delete File: Permission Denied.";
 		}
 		
+		$user = User::getByUsername( $_SESSION['username'] );
+		dashboard( $user );
+	}
+	
+	function addPreferences(){
+		global $results;
+		if( !$results )	$results = array();
+		
+		$con = mysqli_connect('localhost','root','','cfi-2014');
+		if( !$con ){
+		  $results['errorMessage'] = "Add/Update preferences failed, unable to connect to database.";
+		}
+		mysqli_select_db($con,"cfi-2014");
+
+		$uploadedBy = $_SESSION['username'];
+		$cat_pref_1 = $_POST['cat_pref_1'];
+		$preference1 = $_POST['preference1'];
+		$cat_pref_2 = $_POST['cat_pref_2'];
+		$preference2 = $_POST['preference2'];
+		$uploadedOn = date("Y-m-d H:i:s");
+
+		$sql = '';
+		if( !isset( $_POST['update_pref'] ) ) {
+			$sql = "INSERT INTO preferences (uploadedBy, cat_pref_1, preference1, cat_pref_2, preference2, uploadedOn) VALUES ( '".$uploadedBy."', '".$cat_pref_1."', '".$preference1."', '".$cat_pref_2."', '".$preference2."', '".$uploadedOn."')";
+		}
+		else {
+			$sql = "UPDATE preferences SET cat_pref_1 ='".$cat_pref_1."', preference1 = '".$preference1."', cat_pref_2 = '".$cat_pref_2."', preference2 = '".$preference2."' WHERE uploadedBy = '".$_SESSION['username']."' ";
+		}
+		//echo $sql;
+		if ( mysqli_query($con, $sql) ){
+			$results['successMessage'] = "Successfully registered your preferences.";
+		}
+		else {
+			$results['errorMessage'] = "Add/Update preferences failed, query execution failed.";
+		}
+    	mysqli_close($con);
+				
 		$user = User::getByUsername( $_SESSION['username'] );
 		dashboard( $user );
 	}
