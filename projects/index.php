@@ -571,11 +571,11 @@
 		global $results;
 		if( !$results )	$results = array();
 		
-		$con = mysqli_connect('localhost','root','','cfi-2014');
+		$con = mysqli_connect('localhost','cfi','cfi13iitmdb','cfi');
 		if( !$con ){
 		  $results['errorMessage'] = "Add/Update preferences failed, unable to connect to database.";
 		}
-		mysqli_select_db($con,"cfi-2014");
+		mysqli_select_db($con,"cfi");
 
 		$uploadedBy = $_SESSION['username'];
 		$cat_pref_1 = $_POST['cat_pref_1'];
@@ -589,14 +589,22 @@
 			$sql = "INSERT INTO preferences (uploadedBy, cat_pref_1, preference1, cat_pref_2, preference2, uploadedOn) VALUES ( '".$uploadedBy."', '".$cat_pref_1."', '".$preference1."', '".$cat_pref_2."', '".$preference2."', '".$uploadedOn."')";
 		}
 		else {
-			$sql = "UPDATE preferences SET cat_pref_1 ='".$cat_pref_1."', preference1 = '".$preference1."', cat_pref_2 = '".$cat_pref_2."', preference2 = '".$preference2."' WHERE uploadedBy = '".$_SESSION['username']."' ";
+			$t = '';
+			if( $preference1 != "-1" && $preference2 != "-1")
+				$sql = "UPDATE preferences SET cat_pref_1 ='".$cat_pref_1."', preference1 = '".$preference1."', cat_pref_2 = '".$cat_pref_2."', preference2 = '".$preference2."' WHERE uploadedBy = '".$_SESSION['username']."' ";
+			else if( $preference1 == "-1" && $preference2 != "-1")
+				$sql = "UPDATE preferences SET cat_pref_2 = '".$cat_pref_2."', preference2 = '".$preference2."' WHERE uploadedBy = '".$_SESSION['username']."' ";
+			else if( $preference1 != "-1" && $preference2 == "-1")
+				$sql = "UPDATE preferences SET cat_pref_1 ='".$cat_pref_1."', preference1 = '".$preference1."' WHERE uploadedBy = '".$_SESSION['username']."' ";
+			if( $preference1 == "-1" && $preference2 == "-1")
+				$sql = "SELECT * FROM preferences";
 		}
 		//echo $sql;
 		if ( mysqli_query($con, $sql) ){
 			$results['successMessage'] = "Successfully registered your preferences.";
 		}
 		else {
-			$results['errorMessage'] = "Add/Update preferences failed, query execution failed.";
+			$results['errorMessage'] = "Add/Update preferences failed, query execution failed.<br>".mysqli_error($con);
 		}
     	mysqli_close($con);
 				

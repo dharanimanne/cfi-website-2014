@@ -1,5 +1,7 @@
 <script type="text/javascript">
 	function showProjects(str,divId) {
+		document.getElementById('loadImg').style.display = 'inline';
+		
 		if (str==""){
 			document.getElementById(divId).innerHTML="";
 			return;
@@ -14,6 +16,7 @@
 			if (xmlhttp.readyState==4 && xmlhttp.status==200){
 				//alert( xmlhttp.responseText );
 				document.getElementById(divId).innerHTML = xmlhttp.responseText;
+				document.getElementById('loadImg').style.display = 'none';
 		    }
 		}
 		xmlhttp.open("GET","temp/getProjects.php?category="+str,true);
@@ -41,6 +44,25 @@
 	}
 </style>
 <div id="preferenceDiv">
+	<img id="loadImg" style="display:none; position: absolute;left: 48%;top: 82%;margin-left: -5px;" src="media/images/loading1.gif" />
+	
+	<div class="alert alert-warning">
+		<center>
+		To view the list of approved projects use any of the links below: <br>
+		<a target="_blank" style="font-style:normal;" href="http://cfi-iitm.org/main/approved-projects-2014/projects-cfi/">http://cfi-iitm.org/main/approved-projects-2014/projects-cfi/</a> &emsp;&emsp;&emsp;&emsp;
+		<a target="_blank" style="font-style:normal;" href="http://students.iitm.ac.in/portal/cfi/approvedprojects/">http://students.iitm.ac.in/portal/cfi/approvedprojects/</a>
+		</center>
+	</div>
+	<div class="alert alert-info">
+		<center>
+		 Please select project category and the project name for each of your preferences.
+		</center>
+	</div>
+	<div class="alert alert-info">
+		<center>
+		 People whose projects have been approved need not add/update any preference.
+		</center>
+	</div>
 	<form name="preferenceForm" action="index.php?action=addPreferences" method="POST">
 		<center>
 		<table>
@@ -67,15 +89,6 @@
 					</select>
 				</td>
 				<td>
-					Select Project 
-				
-					<select name="preference1" id="drop1"  >
-						<option value="-1">Select a category first </option>
-					</select>
-				</td>
-			</tr>	
-			<tr>
-				<td>
 					Select Category
 			
 					<select name="cat_pref_2"  class="preferences" id="cat2" onchange="showProjects(this.value,'drop2')">
@@ -89,8 +102,17 @@
 						
 					</select>
 				</td>
+			</tr>	
+			<tr>
 				<td>
-					Select Project
+					Select Project&nbsp;&nbsp;
+				
+					<select name="preference1" id="drop1"  >
+						<option value="-1">Select a category first </option>
+					</select>
+				</td>
+				<td>
+					Select Project&nbsp;&nbsp;
 				
 					<select name="preference2" id="drop2"  >
 						<option value="-1">Select a category first </option>
@@ -103,7 +125,7 @@
 				</td>
 			</tr>
 			<?php
-				if ( !$con = mysqli_connect('localhost','root','','cfi-2014') ){
+				if ( !$con = mysqli_connect('localhost','cfi','cfi13iitmdb','cfi') ){
 				  die('Could not connect: ' . mysqli_error($con));
 				}
 				mysqli_select_db($con,"cfi-2014");

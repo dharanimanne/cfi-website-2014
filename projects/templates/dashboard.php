@@ -19,7 +19,7 @@
 			<div class="widget-head">
 				<ul>
 					<li class="active"><a class="glyphicons cardio" href="#preferences-tab" data-toggle="tab">Register Preferences</a></li>
-					<li><a class="glyphicons cardio" href="#activity-tab" data-toggle="tab">Your Activity</a></li>
+					<!--<li><a class="glyphicons cardio" href="#activity-tab" data-toggle="tab">Your Activity</a></li>-->
 				</ul>
 			</div>
 			<div class="tab-content">

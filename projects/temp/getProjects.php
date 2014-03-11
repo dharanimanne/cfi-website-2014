@@ -1,6 +1,6 @@
 <?php
 $category = $_GET['category'];
-$con = mysqli_connect('localhost','root','','cfi-2014');
+$con = mysqli_connect('localhost','cfi','cfi13iitmdb','cfi');
 
 if (!$con){
   die('Could not connect: ' . mysqli_error($con));
