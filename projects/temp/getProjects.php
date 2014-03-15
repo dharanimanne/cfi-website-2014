@@ -6,7 +6,7 @@ if (!$con){
   die('Could not connect: ' . mysqli_error($con));
 }
 
-mysqli_select_db($con,"cfi-2014");
+mysqli_select_db($con,"cfi");
 $sql="SELECT * FROM summerprojects WHERE category = '".$category."'"; //echo $sql;
 $result = mysqli_query($con, $sql);
 echo "<option value=\"-1\">Select a project</option>";
