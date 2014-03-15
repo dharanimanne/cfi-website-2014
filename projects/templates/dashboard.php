@@ -24,7 +24,8 @@
 			</div>
 			<div class="tab-content">
 				<div class="tab-pane in active" id="preferences-tab">
-					<?php require("temp/preferenceForm.php"); ?>
+					<div class="alert alert-warning">Registration Closed</div>
+					<?php /*require("temp/preferenceForm.php");*/ ?>
 				</div>
 				<div class="tab-pane fade" id="activity-tab" style="margin:5px; padding:10px; text-align:center;" >
 					No activity to display!
