@@ -51,6 +51,14 @@ td{
 	padding: 25px;
 	border: solid 1px #E4DDDD;
 }
+#forgotDiv{
+	float:right;
+	margin-right:15%;
+	position: relative;
+	box-shadow: 10px 10px 25px #EEE8E8;
+	padding: 25px;
+	border: solid 1px #E4DDDD;
+}
 #registerDiv{
 	float:right;
 	margin-right:15%;
