@@ -5,6 +5,16 @@ if(isset($_POST['Submit']))
     echo $_FILES['file']['error'];
 }
 ?>
+<style>
+	#forgotDiv{
+	float:right;
+	margin-right:15%;
+	position: relative;
+	box-shadow: 10px 10px 25px #EEE8E8;
+	padding: 25px;
+	border: solid 1px #E4DDDD;
+}
+</style>
 	<div id="bgDiv"></div>
 	<div id="content" style="margin-left:0px;background:none;"><br><br><br>
 		<div id="loginDiv">
