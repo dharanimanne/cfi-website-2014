@@ -31,6 +31,36 @@ if(isset($_POST['Submit']))
 						<td colspan="2">
 							<input type="submit" name="login_form" value="Login" />
 							<input type="button" value="New User" onClick="$('#registerDiv').fadeIn(250);" />
+							<input type="button" value="Forgot password" onClick="$('#forgotDiv').fadeIn(250);" />
+						</td>
+					</tr>				 
+				</table>
+			</form>
+		</div>
+		<div id="forgotDiv">
+       
+			<div id="whiteBgDiv"></div>
+			<form name="loginForm" action="/cfi-website-2014/PMP/forgot_password/forgotScript.php" method="POST">
+				<table>
+					<tr>
+						<td>
+							E-mail
+						</td>
+						<td>
+							<input type="text" name="email1" placeholder="E-mail" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Confirm E-mail
+						</td>
+						<td>
+							<input type="text" name="email2" placeholder="Confirm E-mail" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<input type="submit" name="login_form" value="submit" />
 						</td>
 					</tr>				 
 				</table>
@@ -139,6 +169,7 @@ if(isset($_POST['Submit']))
 			</form>
 		</div>
 		<script>$('#registerDiv').fadeOut(0);</script>
+		<script>$('#forgotDiv').fadeOut(0);</script>
 		<!--<div id="fileUploadDiv">
 			Want to upload file? Please do so below. <br>
 	    	<form name="fileUploadForm" action="index.php?action=uploadFile" method="POST" enctype="multipart/form-data">

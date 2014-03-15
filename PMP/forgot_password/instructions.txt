@@ -1,0 +1,16 @@
+prasanth is going to tell the credentials for working with smail until then i am using gmail for SMTP requests 
+following changes has to be done in the local server to work 
+follow this link
+http://blog.techwheels.net/send-email-using-wamp-server/
+
+create a table passwordResets present in sql folder
+
+changes in forgotScript.php
+configuration changes for different users on line 6
+link changes on line 51,54 and 60 
+
+changes in mailexample.php
+login credentials on lines 36 and 38  are to be set
+
+changes in loginForm.php
+link on line 50
