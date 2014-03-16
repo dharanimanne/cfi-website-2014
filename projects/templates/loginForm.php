@@ -151,7 +151,7 @@ if(isset($_POST['Submit']))
 		</div>
 		<?php if( !isset( $results['regErrorMessage'] ) ) { ?>
 			<script>
-				//$('#registerDiv').fadeOut(0);
+				$('#registerDiv').fadeOut(0);
 			</script>
 		<?php } ?>
 		<!--<div id="fileUploadDiv">

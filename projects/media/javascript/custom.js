@@ -7,4 +7,13 @@ $(document).ready(function(){
 	{
 		$(this).parents('.hasSubmenu:first').removeClass('active');
 	});
+
+	$('.preview').popover({
+		'trigger':'hover',
+		'html':true,
+		'content':function(){
+			return $(this).find('p').html();
+		}
+	});
+
 });
