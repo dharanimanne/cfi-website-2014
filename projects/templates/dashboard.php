@@ -25,7 +25,7 @@
 			<div class="tab-content">
 				<div class="tab-pane in active" id="preferences-tab">
 					<!--<div class="alert alert-warning">Registration Closed. You will be notified regarding the project you are allotted at 10 AM ,16th March.</div>-->
-					<?php require("temp/welcomeToCFIPMP.php"); ?>
+					<?php require("temp/welcomeToCFIPMPDashboard.php"); ?>
 				</div>
 				<div class="tab-pane fade" id="activity-tab" style="margin:5px; padding:10px; text-align:center;" >
 					No activity to display!
