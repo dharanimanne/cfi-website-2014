@@ -13,7 +13,7 @@
 <body>
 <?php
 $pref_id = $_GET['preference'];
-$con = mysqli_connect('localhost','cfi','cfi13iitmdb','cfi');
+$con = mysqli_connect('localhost','cfi','&CFI$13i3DbPw0','cfi');
 
 if (!$con){
   die('Could not connect: ' . mysqli_error($con));
