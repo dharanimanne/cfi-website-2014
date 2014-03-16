@@ -1,11 +1,6 @@
 <?php
 	include_once("db.php");
 	
-	ini_set('display_errors',1); 
-	error_reporting(E_ALL);
-	$con = mysql_connect('localhost','cfi','&CFI$13i3DbPw0');
-	mysql_select_db('cfi');
-	
 	$sql = "SELECT * from memberships WHERE userId = {$_SESSION['userId']} AND activityType = 'project' ";
 	$result = mysql_query( $sql );
 	$projects = array();
