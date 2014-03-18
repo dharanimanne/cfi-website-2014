@@ -62,6 +62,17 @@ td{
 	border: solid 1px #E4DDDD;
 	z-index:1;
 }
+#forgotPassDiv{
+	position: relative;
+	padding: 0px;
+	z-index:1;
+	border-top: solid 1px rgb(224, 224, 224);
+	padding-top: 8px;
+	margin-top:5px;
+}
+#forgotPassDiv td{
+	padding: 4px;  	
+}
 #bgDiv {
   background: url('../images/bg1.jpg');
   background-size:cover;

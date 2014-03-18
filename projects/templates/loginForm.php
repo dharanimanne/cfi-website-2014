@@ -32,7 +32,12 @@ if(isset($_POST['Submit']))
 							<input type="submit" name="login_form" value="Login" />
 							<input type="button" value="New User" onClick="$('#registerDiv').fadeIn(250);" />
 						</td>
-					</tr>				 
+					</tr>	
+					<tr>
+						<td colspan="2">
+							<a href="#" onClick="$('#forgotPassDiv').fadeIn(250);" >Forgot Password?</a>
+						</td>
+					</td>
 				</table>
 			</form>
 			<div id="returnMessage">
@@ -42,6 +47,22 @@ if(isset($_POST['Submit']))
 					<div class="alert alert-success"><?php echo $results['successMessage']; ?></div>
 				<?php } ?>
 			</div>
+		<div id="forgotPassDiv">    
+			<form name="recoverPasswordForm" action="index.php?action=resetPassword" method="POST">
+				<center>
+					<table>
+						<tr>
+							<td>
+								<input style="width:220px;margin-bottom:0px;" type="text" name="email" placeholder="Enter your email" />
+							</td>
+							<td>
+								<input type="submit" name="recoverPasswordBtn" value="Recover" />
+							</td>
+						</tr>				 
+					</table>
+				</center>
+			</form>
+		</div>
 		</div>
 		<div id="registerDiv">
 			<div id="whiteBgDiv"></div>
@@ -152,6 +173,7 @@ if(isset($_POST['Submit']))
 		<?php if( !isset( $results['regErrorMessage'] ) ) { ?>
 			<script>
 				$('#registerDiv').fadeOut(0);
+				$('#forgotPassDiv').fadeOut(0);
 			</script>
 		<?php } ?>
 		<!--<div id="fileUploadDiv">
