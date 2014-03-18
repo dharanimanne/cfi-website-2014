@@ -580,9 +580,9 @@
 				$resetDateTime = date("Y-m-d H:i:s");
 				//$iv = 'QLaXsdrd9fDFRTlvGFEmpF$';
 				$iv = generateRandomString( 22 );
-				$token = crypt( $username, '$2a$10$'.$iv.'$' );
+				$token = crypt( $username, '$2a$10$'.$iv.'$' ); 
 				$query = "SELECT * FROM passwordResets WHERE email='$username'";
-				$result = mysqli_query($con, $query);				
+				$result = mysqli_query($coni, $query);				
 				
 				$delta = 0;
 				if( mysqli_num_rows($result) > 0 ){
@@ -593,14 +593,14 @@
 					$rem = intval( (3600 - $delta)/60 );
 					if( $delta > 3600 ){				
 						$query = "DELETE FROM passwordResets WHERE email = '".$row['email']."'";
-						mysqli_query($con, $query);
+						mysqli_query($coni, $query);
 					}	
 				}
 				
 				if( mysqli_num_rows($result) == 0 || $delta > 3600 ){
 					$resetLink = 'http://students.iitm.ac.in/portal/cfi/projects/index.php?action=resetPassword&token='.$token;
 					$message = 'Hi '.$user->name.',<br>
-								&emsp;&emsp;&emsp;This mail is in response to your password reset request on CFI Projects Management Portal. Click on the following link to reset your pasword.<br>'.$resetLink.'<br><br>Thank You';
+								&emsp;&emsp;&emsp;This mail is in response to your password reset request on CFI Projects Management Portal. Click on the following link to reset your pasword.<br><a href="'.$resetLink.'">'.$resetLink.'</a><br><br>Thank You';
 					$subject = '[CFI Projects Management Portal] Password reset instructions';
 					$url = 'http://cfi-iitm.org/scripts/forgotpass/mail.php';
 					$urlStringData = $url.'?message='.urlencode($message).'&username='.$username.'&subject='.urlencode($subject);
@@ -616,7 +616,7 @@
 	
 					if( $return == 'SUCCESS' ){
 						$query = "INSERT INTO passwordResets (resetDateTime, email, token) VALUES ('$resetDateTime','$username','$token')";
-						mysqli_query($con, $query); 
+						mysqli_query($coni, $query); 
 						$results['successMessage'] = 'An mail containing password reset instrutions has<br>been sent to the given email address';
 					}	
 					else{
@@ -645,14 +645,14 @@
 			if( $pwd == $repwd ){
 				if( strlen( $pwd ) >= 6 ){
 					$query = "SELECT email FROM passwordResets WHERE token='$token'";
-					if( $result = mysqli_query($con, $query) ){
+					if( $result = mysqli_query($coni, $query) ){
 						$row = mysqli_fetch_array( $result, MYSQLI_ASSOC );
 						$password = Password::hash( $pwd );						
 						$query = "UPDATE users SET password = '".$password."' WHERE username = '".$row['email']."' ";
-						if( mysqli_query($con, $query) ){
+						if( mysqli_query($coni, $query) ){
 							$results['successMessage'] = 'Password successfully reset, please login';
 							$query = "DELETE FROM passwordResets WHERE email = '".$row['email']."'";
-							mysqli_query($con, $query);
+							mysqli_query($coni, $query);
 						}
 						else{
 							$results['errorMessage'] = "Query Falied: Line #637";
