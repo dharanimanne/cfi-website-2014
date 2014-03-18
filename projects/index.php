@@ -635,8 +635,15 @@
 		}
 		else if( isset( $_GET['token'] ) ){
 			$token = $_GET['token'];
-			$results['showPasswordResetForm'] = true;
-			$results['token'] = $token;
+			$query = "SELECT email FROM passwordResets WHERE token='$token'";
+			$result = mysqli_query($coni, $query);
+			if( mysqli_num_rows( $result ) > 0  ){
+				$results['showPasswordResetForm'] = true;
+				$results['token'] = $token;
+			}
+			else{
+				$results['errorMessage'] = 'Token Expired';
+			}
 		}
 		else if( isset( $_POST['changePasswordBtn'] ) ){
 			$pwd = $_POST['pwd'];
