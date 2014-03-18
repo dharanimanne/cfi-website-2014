@@ -2,3 +2,5 @@ projects/config.php
 config.bak.php
 projects/upload/*
 !projects/upload/ProfilePics/default.png
+curlproxy.php
+db.php

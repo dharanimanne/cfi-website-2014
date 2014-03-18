@@ -7,6 +7,7 @@ if(isset($_POST['Submit']))
 ?>
 	<div id="bgDiv"></div>
 	<div id="content" style="margin-left:0px;background:none;"><br><br><br>
+		<?php if( !isset( $results['showPasswordResetForm'] ) ) { ?>
 		<div id="loginDiv">
 			<div id="whiteBgDiv"></div>
 			<form name="loginForm" action="index.php?action=login" method="POST">
@@ -64,6 +65,44 @@ if(isset($_POST['Submit']))
 				</form>
 			</div>
 		</div>
+		<?php } else { ?>
+			<div id="loginDiv">
+				<div id="whiteBgDiv"></div>
+				<form name="changePasswordForm" action="index.php?action=resetPassword" method="POST">
+					<table>
+						<tr>
+							<td>
+								Enter a password
+							</td>
+							<td>
+								<input type="password" name="pwd" placeholder="Minimum six characters" />
+								<input type="hidden" name="token" value="<?php echo $results['token']; ?>" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Confirm Password
+							</td>
+							<td>
+								<input type="password" name="repwd" placeholder="Confirm Password" />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<input type="submit" name="changePasswordBtn" value="Change" />
+							</td>
+						</tr>	
+					</table>
+				</form>
+				<div id="returnMessage">
+					<?php if( isset( $results['errorMessage'] ) && strlen( $results['errorMessage'] ) > 0 ) { ?>
+						<div class="alert alert-error"><?php echo $results['errorMessage']; ?></div>
+					<?php } if( isset( $results['successMessage'] ) && strlen( $results['successMessage'] ) > 0 ) { ?>
+						<div class="alert alert-success"><?php echo $results['successMessage']; ?></div>
+					<?php } ?>
+				</div>
+			</div>
+		<?php } ?>
 		<div id="registerDiv">
 			<div id="whiteBgDiv"></div>
 			<form name="registrationForm" action="index.php?action=register" method="POST" enctype="multipart/form-data">
@@ -176,13 +215,6 @@ if(isset($_POST['Submit']))
 				$('#forgotPassDiv').fadeOut(0);
 			</script>
 		<?php } ?>
-		<!--<div id="fileUploadDiv">
-			Want to upload file? Please do so below. <br>
-	    	<form name="fileUploadForm" action="index.php?action=uploadFile" method="POST" enctype="multipart/form-data">
-				Choose a file <input type="file" name="file"><br>
-				<input type="submit" name="uploadFile" value="submit" /> 
-			</form>
-		</div>-->
 	</div>
 <?php include("include/footer.php"); ?>
 

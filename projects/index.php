@@ -572,38 +572,110 @@
 	
 	function resetPassword(){
 		global $results;
+		include('temp/db.php');
 		if( isset( $_POST['recoverPasswordBtn'] ) ){
 			$username = trim($_POST['email']);
 			$user = User::getByUsername( $username );
 			if( $user ){
 				$resetDateTime = date("Y-m-d H:i:s");
-				$iv = 'QLaXsdrd9fDFRTlvGFEmpF$';
-				$token = crypt( $username, '$2a$10$'.$iv );
-				include('temp/db.php');
+				//$iv = 'QLaXsdrd9fDFRTlvGFEmpF$';
+				$iv = generateRandomString( 22 );
+				$token = crypt( $username, '$2a$10$'.$iv.'$' );
+				$query = "SELECT * FROM passwordResets WHERE email='$username'";
+				$result = mysqli_query($con, $query);				
 				
-				$query = "SELECT email FROM passwordResets WHERE email='$username'";
-				$result = mysqli_query($con, $query);
-				if( mysqli_num_rows($result) == 0){
-					$message = 'Click on the link below';
+				$delta = 0;
+				if( mysqli_num_rows($result) > 0 ){
+					$row = mysqli_fetch_array( $result, MYSQLI_ASSOC );				
+					$resetDT = strtotime( $row['resetDateTime'] );
+					$now = time();
+					$delta = $now - $resetDT;
+					$rem = intval( (3600 - $delta)/60 );
+					if( $delta > 3600 ){				
+						$query = "DELETE FROM passwordResets WHERE email = '".$row['email']."'";
+						mysqli_query($con, $query);
+					}	
+				}
+				
+				if( mysqli_num_rows($result) == 0 || $delta > 3600 ){
 					$resetLink = 'http://students.iitm.ac.in/portal/cfi/projects/index.php?action=resetPassword&token='.$token;
-					include('mailexample.php');
-					if( $mail->send() ){
+					$message = 'Hi '.$user->name.',<br>
+								&emsp;&emsp;&emsp;This mail is in response to your password reset request on CFI Projects Management Portal. Click on the following link to reset your pasword.<br>'.$resetLink.'<br><br>Thank You';
+					$subject = '[CFI Projects Management Portal] Password reset instructions';
+					$url = 'http://cfi-iitm.org/scripts/forgotpass/mail.php';
+					$urlStringData = $url.'?message='.urlencode($message).'&username='.$username.'&subject='.urlencode($subject);
+					$ch = curl_init();	
+					include('temp/curlproxy.php');
+					curl_setopt($ch, CURLOPT_HEADER, 0);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+					curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,10);
+				    curl_setopt($ch, CURLOPT_USERAGENT , "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)");
+					curl_setopt($ch, CURLOPT_URL, $urlStringData ); 
+					$return = curl_exec($ch);
+					curl_close($ch);
+	
+					if( $return == 'SUCCESS' ){
 						$query = "INSERT INTO passwordResets (resetDateTime, email, token) VALUES ('$resetDateTime','$username','$token')";
 						mysqli_query($con, $query); 
-						$results['successMessage'] = 'An mail containing password reset instrutions<br>was sent to the given email address';
-					}
+						$results['successMessage'] = 'An mail containing password reset instrutions has<br>been sent to the given email address';
+					}	
 					else{
-						$results['errorMessage'] = "Error sending reset instructions email".$mail->ErrorInfo;
-						//$mail->ErrorInfo;
+						$results['errorMessage'] = "Error sending reset instructions email".$return;
+						//echo $return;
 					}
 				}
 				else{
-					$results['errorMessage'] = "An email with password reset instructions was<br> already sent. Please check your mailbox.";
+					$results['errorMessage'] = "An email with password reset instructions was already<br> sent. Please check your mailbox or wait for $rem minutes<br> to issue a new request";					
 				}
 				//echo $token; exit(0);
 			}
 			else{
 				$results['errorMessage'] = "Username not found";
+			}
+		}
+		else if( isset( $_GET['token'] ) ){
+			$token = $_GET['token'];
+			$results['showPasswordResetForm'] = true;
+			$results['token'] = $token;
+		}
+		else if( isset( $_POST['changePasswordBtn'] ) ){
+			$pwd = $_POST['pwd'];
+			$repwd = $_POST['repwd'];
+			$token = $_POST['token'];
+			if( $pwd == $repwd ){
+				if( strlen( $pwd ) >= 6 ){
+					$query = "SELECT email FROM passwordResets WHERE token='$token'";
+					if( $result = mysqli_query($con, $query) ){
+						$row = mysqli_fetch_array( $result, MYSQLI_ASSOC );
+						$password = Password::hash( $pwd );						
+						$query = "UPDATE users SET password = '".$password."' WHERE username = '".$row['email']."' ";
+						if( mysqli_query($con, $query) ){
+							$results['successMessage'] = 'Password successfully reset, please login';
+							$query = "DELETE FROM passwordResets WHERE email = '".$row['email']."'";
+							mysqli_query($con, $query);
+						}
+						else{
+							$results['errorMessage'] = "Query Falied: Line #637";
+							$results['showPasswordResetForm'] = true;
+							$results['token'] = $token;
+						}
+					}
+					else{
+						$results['errorMessage'] = "Link Expired";
+						$results['showPasswordResetForm'] = true;
+						$results['token'] = $token;
+					}
+				}
+				else{
+					$results['errorMessage'] = "Password to be minimum 6 characters";
+					$results['showPasswordResetForm'] = true;
+					$results['token'] = $token;
+				}
+			}
+			else{
+				$results['errorMessage'] = "Passwords do not match";
+				$results['showPasswordResetForm'] = true;
+				$results['token'] = $token;
 			}
 		}
 		else{
@@ -656,5 +728,14 @@
 				
 		$user = User::getByUsername( $_SESSION['username'] );
 		dashboard( $user );
+	}
+	
+	function generateRandomString($length = 10) {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, strlen($characters) - 1)];
+		}
+		return $randomString;
 	}
 ?>
