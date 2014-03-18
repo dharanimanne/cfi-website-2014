@@ -579,7 +579,28 @@
 				$resetDateTime = date("Y-m-d H:i:s");
 				$iv = 'QLaXsdrd9fDFRTlvGFEmpF$';
 				$token = crypt( $username, '$2a$10$'.$iv );
-				echo $token; exit(0);
+				include('temp/db.php');
+				
+				$query = "SELECT email FROM passwordResets WHERE email='$username'";
+				$result = mysqli_query($con, $query);
+				if( mysqli_num_rows($result) == 0){
+					$message = 'Click on the link below';
+					$resetLink = 'http://students.iitm.ac.in/portal/cfi/projects/index.php?action=resetPassword&token='.$token;
+					include('mailexample.php');
+					if( $mail->send() ){
+						$query = "INSERT INTO passwordResets (resetDateTime, email, token) VALUES ('$resetDateTime','$username','$token')";
+						mysqli_query($con, $query); 
+						$results['successMessage'] = 'An mail containing password reset instrutions<br>was sent to the given email address';
+					}
+					else{
+						$results['errorMessage'] = "Error sending reset instructions email".$mail->ErrorInfo;
+						//$mail->ErrorInfo;
+					}
+				}
+				else{
+					$results['errorMessage'] = "An email with password reset instructions was<br> already sent. Please check your mailbox.";
+				}
+				//echo $token; exit(0);
 			}
 			else{
 				$results['errorMessage'] = "Username not found";
