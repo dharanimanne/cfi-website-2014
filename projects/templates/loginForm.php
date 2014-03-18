@@ -47,22 +47,22 @@ if(isset($_POST['Submit']))
 					<div class="alert alert-success"><?php echo $results['successMessage']; ?></div>
 				<?php } ?>
 			</div>
-		<div id="forgotPassDiv">    
-			<form name="recoverPasswordForm" action="index.php?action=resetPassword" method="POST">
-				<center>
-					<table>
-						<tr>
-							<td>
-								<input style="width:220px;margin-bottom:0px;" type="text" name="email" placeholder="Enter your email" />
-							</td>
-							<td>
-								<input type="submit" name="recoverPasswordBtn" value="Recover" />
-							</td>
-						</tr>				 
-					</table>
-				</center>
-			</form>
-		</div>
+			<div id="forgotPassDiv" style="display: block;">    
+				<form name="recoverPasswordForm" action="index.php?action=resetPassword" method="POST">
+					<center>
+						<table>
+							<tbody><tr>
+								<td>
+									<input style="width:220px;margin-bottom:0px;" type="text" name="email" placeholder="Enter your email">
+								</td>
+								<td>
+									<input type="submit" name="recoverPasswordBtn" value="Recover">
+								</td>
+							</tr>				 
+						</tbody></table>
+					</center>
+				</form>
+			</div>
 		</div>
 		<div id="registerDiv">
 			<div id="whiteBgDiv"></div>

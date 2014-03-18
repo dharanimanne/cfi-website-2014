@@ -258,6 +258,7 @@
 			$row = $st->fetch();
 			$conn = null;
 			if( $row ) return new User( $row );
+			else return false;
 		}
 
 		public static function getByEmail( $email ){

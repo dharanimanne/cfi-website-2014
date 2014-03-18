@@ -571,7 +571,25 @@
 	}
 	
 	function resetPassword(){
+		global $results;
+		if( isset( $_POST['recoverPasswordBtn'] ) ){
+			$username = trim($_POST['email']);
+			$user = User::getByUsername( $username );
+			if( $user ){
+				$resetDateTime = date("Y-m-d H:i:s");
+				$iv = 'QLaXsdrd9fDFRTlvGFEmpF$';
+				$token = crypt( $username, '$2a$10$'.$iv );
+				echo $token; exit(0);
+			}
+			else{
+				$results['errorMessage'] = "Username not found";
+			}
+		}
+		else{
+			$results['errorMessage'] = "Invalid Request";
+		}
 		
+		require( TEMPLATE_PATH . "/loginForm.php" );	
 	}
 	
 	function addPreferences(){
