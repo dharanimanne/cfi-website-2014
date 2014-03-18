@@ -54,6 +54,9 @@
 		case 'addPreferences';
 			addPreferences();
 			break;
+		case 'resetPassword';
+			resetPassword();
+			break;
 		default:
 			login();
 	}
@@ -565,6 +568,10 @@
 		
 		$user = User::getByUsername( $_SESSION['username'] );
 		dashboard( $user );
+	}
+	
+	function resetPassword(){
+		
 	}
 	
 	function addPreferences(){
