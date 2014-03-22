@@ -1,3 +1,4 @@
+<?php define( "GANTT_URL", "/cfi-website-2014/projects/plugins/codebase/" ); //paste in your config file?>
 <!DOCTYPE html>
 <!--[if IE 8]>
 <html xmlns="http://www.w3.org/1999/xhtml" class=""  lang="en-US">
@@ -14,12 +15,14 @@
         <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/glyphicons.css">
         <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/style.css">
         <link rel="stylesheet" type="text/css" href="<?php echo MEDIA_URL;?>css/custom.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo GANTT_URL;?>dhtmlxgantt.css" >              <!--css for gantt -->  
         <script src="<?php echo MEDIA_URL;?>javascript/jquery-1.11.0.min.js"></script>
         <script src="<?php echo MEDIA_URL;?>javascript/jquery.slimscroll.min.js"></script>
         <script src="<?php echo MEDIA_URL;?>javascript/jquery.cmtextconstrain.js"></script>
         <script src="<?php echo MEDIA_URL;?>javascript/custom.js"></script>
 		<!--<script src="<?php echo MEDIA_URL;?>javascript/bootstrap.js"></script> -->
         <script src="<?php echo MEDIA_URL;?>javascript/bootstrap.min.js"></script>
+		<script src="<?php echo GANTT_URL;?>dhtmlxgantt.js"></script>                                        <!-- js for gantt -->
 		<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
 	
 	
