@@ -72,7 +72,11 @@
 	<button type="button" class="btn btn-primary close-edit-activity-btn">Back</button>
 	</form>
 </div>
-
+<div class="ganttDiv" style='width:100%; height:600px; position:relative;border:1px solid black;'>	
+    <div id="gantt_here" style='width:100%;height:90%; position:relative;border:1px solid black'></div>
+    <script src="/cfi-website-2014/projects/plugins/codebase/gantt.js"></script>
+	
+ </div>
 <div class="documentsDiv">	
 	<!-- Documents Secction -->
 	<?php include ("documents.php"); ?>
