@@ -74,7 +74,26 @@
 </div>
 <div class="ganttDiv" style='width:100%; height:600px; position:relative;border:1px solid black;'>	
     <div id="gantt_here" style='width:100%;height:90%; position:relative;border:1px solid black'></div>
-    <script src="/cfi-website-2014/projects/plugins/codebase/gantt.js"></script>
+    <script type="text/javascript">
+	gantt.config.fit_tasks = true;
+
+
+
+		gantt.config.xml_date = "%Y-%m-%d %H:%i";
+		gantt.init("gantt_here");
+		gantt.load('/cfi-website-2014/projects/plugins/data.php?activity_id='.$activity_id);//loads data to Gantt from the database
+		var dp=new dataProcessor("/cfi-website-2014/projects/plugins/data.php?activity_id=".$activity_id);   
+		dp.init(gantt);
+		
+		function showScaleDesc(){
+			var min = gantt.getState().min_date,
+				max = gantt.getState().max_date,
+				to_str = gantt.templates.task_date;
+
+			return dhtmlx.message("Scale shows days from " + to_str(min) + " to " + to_str(max));
+		}
+		gantt.attachEvent("onScaleAdjusted", showScaleDesc);
+    </script>
 	
  </div>
 <div class="documentsDiv">	
