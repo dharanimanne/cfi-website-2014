@@ -1,7 +1,7 @@
 <div class="read-tab-content">
 	<table>
 		<tr>
-			<td>UID <?php echo $activity->id; ?></td>
+			<td>UID <?php echo $activity_id=$activity->id; ?></td>
 			<td><strong><?php echo $activity->title; ?></strong></td>
 		</tr>
 		<tr>

@@ -6,8 +6,8 @@
 
 		gantt.config.xml_date = "%Y-%m-%d %H:%i";
 		gantt.init(".gantt_here");
-		gantt.load('/cfi-website-2014/projects/plugins/data.php');//loads data to Gantt from the database
-		var dp=new dataProcessor("/cfi-website-2014/projects/plugins/data.php");   
+		gantt.load('/cfi-website-2014/projects/plugins/data.php?activity_id='.$activity_id);//loads data to Gantt from the database
+		var dp=new dataProcessor("/cfi-website-2014/projects/plugins/data.php?activity_id=".$activity_id);   
 		dp.init(gantt);
 		
 		function showScaleDesc(){
